@@ -38,21 +38,29 @@ Sanctum with Cookie.
 
 ## Tables
 
-- users
+- users []
 
   - id
-  - name
-  - email
-  - password
+  - name [ユーザー名]
+  - email [メールアドレス]
+  - password [パスワード]
 
-- questions
+- questions [問題]
 
   - id
-  - word
-  - answer
+  - word [単語]
+  - correct_answer [正解]
+  - example [例文]
+
+- answers [回答]
+
+  - id
+  - question_id [問題 ID]
+  - user_id [ユーザー ID]
+  - answer [回答]
 
 - results
   - id
-  - user_id
-  - question_id
-  - execute_date
+  - user_id [ユーザー ID]
+  - question_id [問題 ID]
+  - execute_date [実施日]
