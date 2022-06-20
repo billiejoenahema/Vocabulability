@@ -12,13 +12,15 @@ use Illuminate\Support\Facades\DB;
 class QuestionController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * 問題一覧を取得する。
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $questions = Question::all();
+
+        return QuestionResource::collection($questions);
     }
 
     /**
