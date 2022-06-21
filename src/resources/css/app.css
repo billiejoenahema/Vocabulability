@@ -1,1 +1,18 @@
 @import url('~simpledotcss/simple.min.css');
+
+h4 {
+  padding: 8px 0;
+  margin: 40px 0 8px;
+  border-bottom: 1px solid #ccc;
+}
+nav {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: #333333;
+  padding: 8px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
