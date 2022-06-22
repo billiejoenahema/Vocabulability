@@ -7,7 +7,7 @@ const store = useStore();
 <template>
   <nav>
     <router-link to="/">Home</router-link>
-    <router-link to="/word_list">List</router-link>
+    <router-link to="/create">Create</router-link>
   </nav>
   <h3>英単語チェック</h3>
   <div>
