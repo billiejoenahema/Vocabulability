@@ -45,7 +45,7 @@ class QuestionController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * 問題を更新する。
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -53,7 +53,15 @@ class QuestionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $question = Question::findOrFail($id);
+        $data = $request->all();
+
+        $question = DB::transaction(function () use ($data, $question) {
+            $question->fill($data)->save();
+            return $question;
+        });
+
+        return new QuestionResource($question);
     }
 
     /**

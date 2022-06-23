@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
@@ -11,9 +11,13 @@ const newQuestion = reactive({
   correct_answer: '',
   example: '',
 });
+const editable = ref([false]);
 const addWord = () => {
-  console.log('clicked!');
   store.dispatch('question/post', newQuestion);
+};
+const updateQuestion = (question, index) => {
+  store.dispatch('question/update', question);
+  editable.value[index] = false;
 };
 </script>
 
@@ -34,12 +38,37 @@ const addWord = () => {
     </div>
     <button @click.prevent="addWord()">追加</button>
   </form>
-  <div>
+  <div class="word-list">
     <h4>登録済み単語リスト</h4>
-    <ul>
-      <li v-for="question in questions" :key="question.id">
+    <div class="row list-header">
+      <div class="list-column-title">単語</div>
+      <div class="list-column-title">正解</div>
+      <div class="list-column-title">例文</div>
+      <div class="list-column-title"></div>
+    </div>
+    <div
+      v-for="(question, index) in questions"
+      :key="question.id"
+      class="row list-body"
+    >
+      <input v-if="editable[index]" v-model="question.word" />
+      <div v-else @click="editable[index] = true" class="list-item">
         {{ question.word }}
-      </li>
-    </ul>
+      </div>
+      <input v-if="editable[index]" v-model="question.correct_answer" />
+      <div v-else @click="editable[index] = true" class="list-item">
+        {{ question.correct_answer }}
+      </div>
+      <input v-if="editable[index]" v-model="question.example" />
+      <div v-else @click="editable[index] = true" class="list-item">
+        {{ question.example }}
+      </div>
+      <button v-if="editable[index]" @click="updateQuestion(question, index)">
+        更新
+      </button>
+      <div v-else></div>
+      <button v-if="editable[index]" class="delete">削除</button>
+      <div v-else></div>
+    </div>
   </div>
 </template>

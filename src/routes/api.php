@@ -16,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/questions', [QuestionController::class, 'index']);
 Route::post('/questions', [QuestionController::class, 'store']);
+Route::patch('/questions/{question}', [QuestionController::class, 'update']);

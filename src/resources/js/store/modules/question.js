@@ -30,9 +30,9 @@ const actions = {
         commit('setErrors', err.message);
       });
   },
-  async post({ commit }, memo) {
+  async post({ commit }, data) {
     await axios
-      .post('/api/questions', memo)
+      .post('/api/questions', data)
       .then((res) => {
         commit('resetErrors');
         commit('toast/setData', MESSAGE.post.success, { root: true });
@@ -43,9 +43,9 @@ const actions = {
         commit('setErrors', err.message);
       });
   },
-  async update({ commit }, memo) {
+  async update({ commit }, data) {
     await axios
-      .patch(`/api/questions/${memo.id}`, memo)
+      .patch(`/api/questions/${data.id}`, data)
       .then((res) => {
         commit('resetErrors');
         commit('toast/setData', MESSAGE.update.success, { root: true });

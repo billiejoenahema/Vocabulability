@@ -11,8 +11,41 @@ nav {
   background-color: #333333;
   padding: 8px;
 }
+button {
+  font-size: 0.8rem;
+  margin: 0 0 8px;
+}
+input {
+  width: 100%;
+}
 
 .column {
   display: flex;
   flex-direction: column;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+}
+.word-list {
+  display: grid;
+}
+.list-header {
+  display: grid;
+  grid-template-columns: 2fr 2fr 6fr 1fr 1fr;
+  column-gap: 8px;
+}
+.list-column-title {
+  font-weight: 800;
+}
+.list-body {
+  display: grid;
+  grid-template-columns: 2fr 2fr 6fr 1fr 1fr;
+  column-gap: 8px;
+}
+.list-item {
+  margin: 8px 0 8px;
+}
+.delete {
+  background-color: rgb(255, 72, 72);
 }
