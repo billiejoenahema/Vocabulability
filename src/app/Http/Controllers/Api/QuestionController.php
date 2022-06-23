@@ -30,7 +30,7 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(StoreRequest $request)
+    public function store(StoreRequest $request)
     {
         $question = DB::transaction(function () use ($request) {
             $question = Question::create([
@@ -42,28 +42,6 @@ class QuestionController extends Controller
         });
 
         return new QuestionResource($question);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
