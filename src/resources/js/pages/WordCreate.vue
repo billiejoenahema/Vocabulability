@@ -19,6 +19,12 @@ const updateQuestion = (question, index) => {
   store.dispatch('question/update', question);
   editable.value[index] = false;
 };
+const cancel = (index) => {
+  editable.value[index] = false;
+};
+const deleteQuestion = (id) => {
+  store.dispatch('question/delete', id);
+};
 </script>
 
 <template>
@@ -67,7 +73,17 @@ const updateQuestion = (question, index) => {
         更新
       </button>
       <div v-else></div>
-      <button v-if="editable[index]" class="delete">削除</button>
+      <button v-if="editable[index]" class="cancel" @click="cancel(index)">
+        キャンセル
+      </button>
+      <div v-else></div>
+      <button
+        v-if="editable[index]"
+        class="delete"
+        @click="deleteQuestion(question.id)"
+      >
+        削除
+      </button>
       <div v-else></div>
     </div>
   </div>

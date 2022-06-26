@@ -8,6 +8,7 @@ use App\Http\Resources\QuestionResource;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 
 class QuestionController extends Controller
 {
@@ -65,13 +66,16 @@ class QuestionController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 問題を削除する。
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function destroy($id)
     {
-        //
+        $question = Question::findOrFail($id);
+        $question->delete();
+
+        return response()->json(['message' => 'Deleted'], Response::HTTP_NO_CONTENT);
     }
 }
