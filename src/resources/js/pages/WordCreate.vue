@@ -11,7 +11,11 @@ const newQuestion = reactive({
   correct_answer: '',
   example: '',
 });
-const editable = ref([false]);
+const editable = ref([]);
+const toEditable = (index) => {
+  editable.value = [];
+  editable.value[index] = true;
+};
 const addWord = async () => {
   await store.dispatch('question/post', newQuestion);
   await store.dispatch('question/get');
@@ -64,15 +68,15 @@ const deleteQuestion = async (id) => {
       class="row list-body"
     >
       <input v-if="editable[index]" v-model="question.word" />
-      <div v-else @click="editable[index] = true" class="list-item">
+      <div v-else @click="toEditable(index)" class="list-item">
         {{ question.word }}
       </div>
       <input v-if="editable[index]" v-model="question.correct_answer" />
-      <div v-else @click="editable[index] = true" class="list-item">
+      <div v-else @click="toEditable(index)" class="list-item">
         {{ question.correct_answer }}
       </div>
       <input v-if="editable[index]" v-model="question.example" />
-      <div v-else @click="editable[index] = true" class="list-item">
+      <div v-else @click="toEditable(index)" class="list-item">
         {{ question.example }}
       </div>
       <button v-if="editable[index]" @click="updateQuestion(question, index)">
