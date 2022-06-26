@@ -32,8 +32,10 @@ const cancel = (index) => {
   editable.value[index] = false;
 };
 const deleteQuestion = async (id) => {
-  await store.dispatch('question/delete', id);
-  await store.dispatch('question/get');
+  if (confirm('この問題を削除しますか？')) {
+    await store.dispatch('question/delete', id);
+    await store.dispatch('question/get');
+  }
 };
 </script>
 
