@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Question\StoreRequest;
+use App\Http\Requests\Question\UpdateRequest;
 use App\Http\Resources\QuestionResource;
 use App\Models\Question;
-use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class QuestionController extends Controller
@@ -15,9 +17,9 @@ class QuestionController extends Controller
     /**
      * 問題一覧を取得する。
      *
-     * @return \Illuminate\Http\Response
+     * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         $questions = Question::all();
 
@@ -29,40 +31,38 @@ class QuestionController extends Controller
      *
      * @param StoreRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): JsonResponse
     {
-        $question = DB::transaction(function () use ($request) {
-            $question = Question::create([
+         DB::transaction(function () use ($request) {
+            Question::create([
                 'word' => $request->word,
                 'correct_answer' => $request->correct_answer,
                 'example' => $request->example,
             ]);
-            return $question;
         });
 
-        return new QuestionResource($question);
+        return response()->json(['message' => '問題を追加しました。'], Response::HTTP_CREATED);
     }
 
     /**
      * 問題を更新する。
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param UpdateRequest  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id): JsonResponse
     {
         $question = Question::findOrFail($id);
         $data = $request->all();
 
-        $question = DB::transaction(function () use ($data, $question) {
+        DB::transaction(function () use ($data, $question) {
             $question->fill($data)->save();
-            return $question;
         });
 
-        return new QuestionResource($question);
+        return response()->json(['message' => '問題を更新しました。'], Response::HTTP_OK);
     }
 
     /**
@@ -71,7 +71,7 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         $question = Question::findOrFail($id);
         $question->delete();
