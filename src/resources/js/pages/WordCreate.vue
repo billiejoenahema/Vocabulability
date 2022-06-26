@@ -12,18 +12,24 @@ const newQuestion = reactive({
   example: '',
 });
 const editable = ref([false]);
-const addWord = () => {
-  store.dispatch('question/post', newQuestion);
+const addWord = async () => {
+  await store.dispatch('question/post', newQuestion);
+  await store.dispatch('question/get');
+  newQuestion.word = '';
+  newQuestion.correct_answer = '';
+  newQuestion.example = '';
 };
-const updateQuestion = (question, index) => {
-  store.dispatch('question/update', question);
+const updateQuestion = async (question, index) => {
+  await store.dispatch('question/update', question);
+  await store.dispatch('question/get');
   editable.value[index] = false;
 };
 const cancel = (index) => {
   editable.value[index] = false;
 };
-const deleteQuestion = (id) => {
-  store.dispatch('question/delete', id);
+const deleteQuestion = async (id) => {
+  await store.dispatch('question/delete', id);
+  await store.dispatch('question/get');
 };
 </script>
 
