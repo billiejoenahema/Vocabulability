@@ -28,6 +28,14 @@ const actions = {
       })
       .catch((err) => {
         commit('setErrors', err.message);
+        commit(
+          'toast/setData',
+          {
+            status: err.response.status,
+            content: err.response.data.message,
+          },
+          { root: true }
+        );
       });
   },
   async post({ commit }, data) {
@@ -35,12 +43,23 @@ const actions = {
       .post('/api/questions', data)
       .then((res) => {
         commit('resetErrors');
-        commit('toast/setData', MESSAGE.post.success, { root: true });
-        console.log(res.data.data);
+        commit(
+          'toast/setData',
+          { status: res.status, content: res.data.message },
+          { root: true }
+        );
       })
       .catch((err) => {
         console.log(err.message);
         commit('setErrors', err.message);
+        commit(
+          'toast/setData',
+          {
+            status: err.response.status,
+            content: err.response.data.message,
+          },
+          { root: true }
+        );
       });
   },
   async update({ commit }, data) {
@@ -48,12 +67,22 @@ const actions = {
       .patch(`/api/questions/${data.id}`, data)
       .then((res) => {
         commit('resetErrors');
-        commit('toast/setData', MESSAGE.update.success, { root: true });
-        console.log(res.data.data);
+        commit(
+          'toast/setData',
+          { status: res.status, content: res.data.message },
+          { root: true }
+        );
       })
       .catch((err) => {
-        console.log(err.message);
-        commit('setErrors', err.message);
+        commit('setErrors', err.response.data.message);
+        commit(
+          'toast/setData',
+          {
+            status: err.response.status,
+            content: err.response.data.message,
+          },
+          { root: true }
+        );
       });
   },
   async delete({ commit }, id) {
@@ -61,12 +90,23 @@ const actions = {
       .delete(`/api/questions/${id}`)
       .then((res) => {
         commit('resetErrors');
-        commit('toast/setData', MESSAGE.delete.success, { root: true });
-        console.log(res.data.message);
+        commit(
+          'toast/setData',
+          { status: res.status, content: res.data.message },
+          { root: true }
+        );
       })
       .catch((err) => {
         console.log(err.message);
         commit('setErrors', err.message);
+        commit(
+          'toast/setData',
+          {
+            status: err.response.status,
+            content: err.response.data.message,
+          },
+          { root: true }
+        );
       });
   },
 };

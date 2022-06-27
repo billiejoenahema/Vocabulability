@@ -76,6 +76,6 @@ class QuestionController extends Controller
         $question = Question::findOrFail($id);
         $question->delete();
 
-        return response()->json(['message' => 'Deleted'], Response::HTTP_NO_CONTENT);
+        return response()->json(['message' => '問題を削除しました。'], Response:: HTTP_OK);
     }
 }

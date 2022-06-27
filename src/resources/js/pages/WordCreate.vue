@@ -1,6 +1,7 @@
 <script setup>
 import { computed, reactive, ref } from 'vue';
 import { useStore } from 'vuex';
+import Toast from '../components/Toast.vue';
 
 const store = useStore();
 
@@ -40,6 +41,7 @@ const deleteQuestion = async (id) => {
 </script>
 
 <template>
+  <Toast />
   <form @submit.prevent>
     <h4>新規登録</h4>
     <div class="column">
