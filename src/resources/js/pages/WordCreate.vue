@@ -12,6 +12,7 @@ const newQuestion = reactive({
   correct_answer: '',
   example: '',
 });
+const hasErrors = computed(() => store.getters['question/hasErrors']);
 const editable = ref([]);
 const toEditable = (index) => {
   editable.value = [];
@@ -19,24 +20,29 @@ const toEditable = (index) => {
 };
 const addWord = async () => {
   await store.dispatch('question/post', newQuestion);
-  await store.dispatch('question/get');
+  store.dispatch('question/get');
   newQuestion.word = '';
   newQuestion.correct_answer = '';
   newQuestion.example = '';
 };
 const updateQuestion = async (question, index) => {
   await store.dispatch('question/update', question);
-  await store.dispatch('question/get');
-  editable.value[index] = false;
-};
-const cancel = (index) => {
-  editable.value[index] = false;
+  if (!hasErrors.value) {
+    editable.value[index] = false;
+    store.dispatch('question/get');
+  }
 };
 const deleteQuestion = async (id) => {
   if (confirm('この問題を削除しますか？')) {
     await store.dispatch('question/delete', id);
-    await store.dispatch('question/get');
+    if (!hasErrors.value) {
+      store.dispatch('question/get');
+    }
   }
+};
+const cancel = (index) => {
+  store.dispatch('question/get');
+  editable.value[index] = false;
 };
 </script>
 
