@@ -24,8 +24,8 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'word' => 'required|string|max:255',
-            'correct_answer' => 'required|string|max:255',
+            'word' => 'required|regex:/^[a-zA-Z]*$/|max:255',
+            'correct_answer' => 'required|not_regex:/^[a-zA-Z]*$/|max:255',
             'example' => 'nullable|string|max:255',
         ];
     }
