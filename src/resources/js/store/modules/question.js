@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const state = {
   data: [],
-  errors: [],
+  errors: {},
 };
 
 const getters = {
@@ -14,7 +14,7 @@ const getters = {
     return state.errors;
   },
   hasErrors(state) {
-    return state.errors?.length > 0;
+    return Object.keys(state.errors).length > 0;
   },
 };
 
@@ -27,15 +27,7 @@ const actions = {
         commit('setData', res.data);
       })
       .catch((err) => {
-        commit('setErrors', err.message);
-        commit(
-          'toast/setData',
-          {
-            status: err.response.status,
-            content: err.response.data.message,
-          },
-          { root: true }
-        );
+        commit('setErrors', err.response.data.errors);
       });
   },
   async post({ commit }, data) {
@@ -50,16 +42,7 @@ const actions = {
         );
       })
       .catch((err) => {
-        console.log(err.message);
-        commit('setErrors', err.message);
-        commit(
-          'toast/setData',
-          {
-            status: err.response.status,
-            content: err.response.data.message,
-          },
-          { root: true }
-        );
+        commit('setErrors', err.response.data.errors);
       });
   },
   async update({ commit }, data) {
@@ -74,15 +57,7 @@ const actions = {
         );
       })
       .catch((err) => {
-        commit('setErrors', err.response.data.message);
-        commit(
-          'toast/setData',
-          {
-            status: err.response.status,
-            content: err.response.data.message,
-          },
-          { root: true }
-        );
+        commit('setErrors', err.response.data.errors);
       });
   },
   async delete({ commit }, id) {
@@ -98,15 +73,7 @@ const actions = {
       })
       .catch((err) => {
         console.log(err.message);
-        commit('setErrors', err.message);
-        commit(
-          'toast/setData',
-          {
-            status: err.response.status,
-            content: err.response.data.message,
-          },
-          { root: true }
-        );
+        commit('setErrors', err.response.data.errors);
       });
   },
 };
@@ -117,7 +84,7 @@ const mutations = {
   },
   setErrors(state, data) {
     state.errors = [];
-    state.errors.push(data);
+    state.errors = data;
   },
   resetErrors(state) {
     state.errors = [];

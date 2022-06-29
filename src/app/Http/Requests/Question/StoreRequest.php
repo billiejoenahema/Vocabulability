@@ -29,4 +29,18 @@ class StoreRequest extends FormRequest
             'example' => 'nullable|string|max:255',
         ];
     }
+
+    /**
+     * バリデーションエラーのカスタム属性の取得
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'word' => '単語',
+            'correct_answer' => '正解',
+            'example' => '例文',
+        ];
+    }
 }

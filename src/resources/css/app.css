@@ -21,8 +21,11 @@ button {
 }
 input {
   width: 100%;
+  margin: 0;
 }
-
+form > .column {
+  margin: 16px 0 0;
+}
 .column {
   display: flex;
   flex-direction: column;
@@ -55,4 +58,11 @@ input {
 }
 .delete {
   background-color: rgb(255, 72, 72);
+}
+.invalid-feedback {
+  color: red;
+  font-size: 0.8rem;
+}
+.button-area {
+  margin: 16px 0 0;
 }

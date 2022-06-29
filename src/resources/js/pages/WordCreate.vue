@@ -12,14 +12,22 @@ const newQuestion = reactive({
   correct_answer: '',
   example: '',
 });
+const errors = computed(() => store.getters['question/errors']);
 const hasErrors = computed(() => store.getters['question/hasErrors']);
 const editable = ref([]);
+
+const invalidFeedback = (message) => {
+  return message ? message[0] : '';
+};
 const toEditable = (index) => {
   editable.value = [];
   editable.value[index] = true;
 };
 const addWord = async () => {
   await store.dispatch('question/post', newQuestion);
+  if (hasErrors.value) {
+    return;
+  }
   store.dispatch('question/get');
   newQuestion.word = '';
   newQuestion.correct_answer = '';
@@ -27,17 +35,19 @@ const addWord = async () => {
 };
 const updateQuestion = async (question, index) => {
   await store.dispatch('question/update', question);
-  if (!hasErrors.value) {
-    editable.value[index] = false;
-    store.dispatch('question/get');
+  if (hasErrors.value) {
+    return;
   }
+  editable.value[index] = false;
+  store.dispatch('question/get');
 };
 const deleteQuestion = async (id) => {
   if (confirm('この問題を削除しますか？')) {
     await store.dispatch('question/delete', id);
-    if (!hasErrors.value) {
-      store.dispatch('question/get');
+    if (hasErrors.value) {
+      return;
     }
+    store.dispatch('question/get');
   }
 };
 const cancel = (index) => {
@@ -53,16 +63,23 @@ const cancel = (index) => {
     <div class="column">
       <label>単語</label>
       <input type="text" v-model="newQuestion.word" />
+      <div class="invalid-feedback">{{ invalidFeedback(errors.word) }}</div>
     </div>
     <div class="column">
       <label>正解</label>
       <input type="text" v-model="newQuestion.correct_answer" />
+      <div class="invalid-feedback">
+        {{ invalidFeedback(errors.correct_answer) }}
+      </div>
     </div>
     <div class="column">
       <label>例文</label>
       <input type="text" v-model="newQuestion.example" />
+      <div class="invalid-feedback">{{ invalidFeedback(errors.example) }}</div>
     </div>
-    <button @click.prevent="addWord()">追加</button>
+    <div class="button-area">
+      <button @click.prevent="addWord()">追加</button>
+    </div>
   </form>
   <div class="word-list">
     <h4>登録済み単語リスト</h4>
