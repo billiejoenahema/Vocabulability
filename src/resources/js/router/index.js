@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import MainPage from '../pages/MainPage';
 import WordCreate from '../pages/WordCreate';
+import WordList from '../pages/WordList';
 
 const routes = [
   {
@@ -10,6 +11,10 @@ const routes = [
   {
     path: '/create',
     component: WordCreate,
+  },
+  {
+    path: '/list',
+    component: WordList,
   },
 ];
 
