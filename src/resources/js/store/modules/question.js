@@ -57,7 +57,7 @@ const actions = {
         );
       })
       .catch((err) => {
-        commit('setErrors', err.response.data.errors);
+        commit('setErrors', { update: err.response.data.errors });
       });
   },
   async delete({ commit }, id) {

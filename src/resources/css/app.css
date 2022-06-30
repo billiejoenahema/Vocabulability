@@ -61,7 +61,7 @@ form > .column {
 }
 .invalid-feedback {
   color: red;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }
 .button-area {
   margin: 16px 0 0;

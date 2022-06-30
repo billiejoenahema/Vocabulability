@@ -122,6 +122,12 @@ const cancel = (index) => {
         削除
       </button>
       <div v-else></div>
+      <div v-show="editable[index]" class="invalid-feedback">
+        {{ invalidFeedback(errors.update?.word) }}
+      </div>
+      <div v-show="editable[index]" class="invalid-feedback">
+        {{ invalidFeedback(errors.update?.correct_answer) }}
+      </div>
     </div>
   </div>
 </template>
