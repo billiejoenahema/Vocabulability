@@ -1,11 +1,14 @@
 <script setup>
-import { computed, reactive } from 'vue';
+import { computed, onUnmounted, reactive } from 'vue';
 import { useStore } from 'vuex';
 import Navigation from '../components/Navigation.vue';
 import Toast from '../components/Toast.vue';
 
 const store = useStore();
 
+onUnmounted(() => {
+  store.commit('question/resetErrors');
+});
 const newQuestion = reactive({
   word: '',
   correct_answer: '',
