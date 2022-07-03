@@ -7,11 +7,15 @@ const store = useStore();
 
 <template>
   <Navigation />
-  <h3>英単語チェッカー</h3>
-  <div>
-    <label>単語</label>
-    <p>issue</p>
-    <label>正解</label>
-    <p>answer</p>
+  <div class="main-page">
+    <div class="row header">
+      <div class="title">英単語チェッカー</div>
+    </div>
+    <div>
+      <label>単語</label>
+      <p>issue</p>
+      <label>正解</label>
+      <p>answer</p>
+    </div>
   </div>
 </template>

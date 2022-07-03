@@ -51,7 +51,12 @@ const cancel = (index) => {
   <Toast />
   <Navigation />
   <div class="word-list">
-    <h4>登録済み単語リスト</h4>
+    <div class="row header">
+      <div class="title">登録済み単語リスト</div>
+      <div class="search-input-wrapper">
+        <input placeholder="キーワード検索" />
+      </div>
+    </div>
     <div class="row list-header">
       <div class="list-column-title">単語</div>
       <div class="list-column-title">正解</div>

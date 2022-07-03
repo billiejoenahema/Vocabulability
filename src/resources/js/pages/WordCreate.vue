@@ -35,27 +35,33 @@ const addWord = async () => {
 <template>
   <Toast />
   <Navigation />
-  <form @submit.prevent>
-    <h4>新規登録</h4>
-    <div class="column">
-      <label>単語</label>
-      <input type="text" v-model="newQuestion.word" />
-      <div class="invalid-feedback">{{ invalidFeedback(errors.word) }}</div>
-    </div>
-    <div class="column">
-      <label>正解</label>
-      <input type="text" v-model="newQuestion.correct_answer" />
-      <div class="invalid-feedback">
-        {{ invalidFeedback(errors.correct_answer) }}
+  <div class="word-create">
+    <form @submit.prevent>
+      <div class="row header">
+        <div class="title">新規登録</div>
       </div>
-    </div>
-    <div class="column">
-      <label>例文</label>
-      <input type="text" v-model="newQuestion.example" />
-      <div class="invalid-feedback">{{ invalidFeedback(errors.example) }}</div>
-    </div>
-    <div class="button-area">
-      <button @click.prevent="addWord()">追加</button>
-    </div>
-  </form>
+      <div class="column">
+        <label>単語</label>
+        <input type="text" v-model="newQuestion.word" />
+        <div class="invalid-feedback">{{ invalidFeedback(errors.word) }}</div>
+      </div>
+      <div class="column">
+        <label>正解</label>
+        <input type="text" v-model="newQuestion.correct_answer" />
+        <div class="invalid-feedback">
+          {{ invalidFeedback(errors.correct_answer) }}
+        </div>
+      </div>
+      <div class="column">
+        <label>例文</label>
+        <input type="text" v-model="newQuestion.example" />
+        <div class="invalid-feedback">
+          {{ invalidFeedback(errors.example) }}
+        </div>
+      </div>
+      <div class="button-area">
+        <button @click.prevent="addWord()">追加</button>
+      </div>
+    </form>
+  </div>
 </template>
