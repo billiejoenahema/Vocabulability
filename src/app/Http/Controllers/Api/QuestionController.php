@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Question\IndexRequest;
 use App\Http\Requests\Question\StoreRequest;
 use App\Http\Requests\Question\UpdateRequest;
 use App\Http\Resources\QuestionResource;
@@ -17,11 +18,15 @@ class QuestionController extends Controller
     /**
      * 問題一覧を取得する。
      *
+     * @param IndexRequest $request
      * @return AnonymousResourceCollection
      */
-    public function index(): AnonymousResourceCollection
+    public function index(IndexRequest $request): AnonymousResourceCollection
     {
-        $questions = Question::all();
+        $keyword = $request['keyword'] ?? null;
+        $questions = Question::when($keyword, function ($query, $keyword) {
+            return $query->where('word', 'like', "%{$keyword}%");
+        })->paginate(10);
 
         return QuestionResource::collection($questions);
     }

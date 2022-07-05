@@ -1,22 +1,22 @@
 <script setup>
-import { computed, reactive, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import Navigation from '../components/Navigation.vue';
 import Toast from '../components/Toast.vue';
+import { useDebounce } from '../functions/useDebounce';
 
 const store = useStore();
 
 store.dispatch('question/get');
 const questions = computed(() => store.getters['question/data']);
-const newQuestion = reactive({
-  word: '',
-  correct_answer: '',
-  example: '',
-});
 const errors = computed(() => store.getters['question/errors']);
 const hasErrors = computed(() => store.getters['question/hasErrors']);
 const editable = ref([]);
+const keyword = ref('');
 
+const debounceSearch = useDebounce(() => {
+  store.dispatch('question/get', { keyword: keyword.value });
+});
 const invalidFeedback = (message) => {
   return message ? message[0] : '';
 };
@@ -54,7 +54,11 @@ const cancel = (index) => {
     <div class="row header">
       <div class="title">登録済み単語リスト</div>
       <div class="search-input-wrapper">
-        <input placeholder="キーワード検索" />
+        <input
+          v-model="keyword"
+          @input="debounceSearch()"
+          placeholder="キーワード検索"
+        />
       </div>
     </div>
     <div class="row list-header">
@@ -102,6 +106,9 @@ const cancel = (index) => {
       <div v-show="editable[index]" class="invalid-feedback">
         {{ invalidFeedback(errors.correct_answer) }}
       </div>
+    </div>
+    <div v-if="questions.length === 0">
+      検索に一致する単語はありませんでした。
     </div>
   </div>
 </template>
