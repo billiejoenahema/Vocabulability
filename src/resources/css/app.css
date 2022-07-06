@@ -2,7 +2,8 @@
 
 body {
   font-size: 0.9rem;
-  grid-template-columns: 1fr min(48rem, 90%) 1fr;
+  grid-template-columns: 1fr min(880px, 90%) 1fr;
+  overflow-y: scroll;
 }
 nav {
   display: flex;
@@ -45,18 +46,19 @@ form > .column {
   font-size: 1.5rem;
   font-weight: bold;
 }
-.word-list {
-  display: grid;
-}
 .list-header {
   display: grid;
   grid-template-columns: 6fr 6fr 14fr 3fr 5fr 3fr;
   column-gap: 8px;
+  padding: 8px 0;
+  position: sticky;
+  top: 0;
+  background: #212121;
 }
 .list-column-title {
   font-weight: 800;
 }
-.list-body {
+.list-row {
   display: grid;
   grid-template-columns: 6fr 6fr 14fr 3fr 5fr 3fr;
   column-gap: 8px;

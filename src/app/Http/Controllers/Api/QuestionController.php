@@ -26,7 +26,7 @@ class QuestionController extends Controller
         $keyword = $request['keyword'] ?? null;
         $questions = Question::when($keyword, function ($query, $keyword) {
             return $query->where('word', 'like', "%{$keyword}%");
-        })->paginate(10);
+        })->get();
 
         return QuestionResource::collection($questions);
     }

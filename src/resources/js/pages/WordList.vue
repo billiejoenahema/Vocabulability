@@ -67,48 +67,50 @@ const cancel = (index) => {
       <div class="list-column-title">例文</div>
       <div class="list-column-title"></div>
     </div>
-    <div
-      v-for="(question, index) in questions"
-      :key="question.id"
-      class="row list-body"
-    >
-      <input v-if="editable[index]" v-model="question.word" />
-      <div v-else @click="toEditable(index)" class="list-item">
-        {{ question.word }}
-      </div>
-      <input v-if="editable[index]" v-model="question.correct_answer" />
-      <div v-else @click="toEditable(index)" class="list-item">
-        {{ question.correct_answer }}
-      </div>
-      <input v-if="editable[index]" v-model="question.example" />
-      <div v-else @click="toEditable(index)" class="list-item">
-        {{ question.example }}
-      </div>
-      <button v-if="editable[index]" @click="updateQuestion(question, index)">
-        更新
-      </button>
-      <div v-else></div>
-      <button v-if="editable[index]" class="cancel" @click="cancel(index)">
-        キャンセル
-      </button>
-      <div v-else></div>
-      <button
-        v-if="editable[index]"
-        class="delete"
-        @click="deleteQuestion(question.id)"
+    <div class="list-body">
+      <div
+        v-for="(question, index) in questions"
+        :key="question.id"
+        class="row list-row"
       >
-        削除
-      </button>
-      <div v-else></div>
-      <div v-show="editable[index]" class="invalid-feedback">
-        {{ invalidFeedback(errors.word) }}
+        <input v-if="editable[index]" v-model="question.word" />
+        <div v-else @click="toEditable(index)" class="list-item">
+          {{ question.word }}
+        </div>
+        <input v-if="editable[index]" v-model="question.correct_answer" />
+        <div v-else @click="toEditable(index)" class="list-item">
+          {{ question.correct_answer }}
+        </div>
+        <input v-if="editable[index]" v-model="question.example" />
+        <div v-else @click="toEditable(index)" class="list-item">
+          {{ question.example }}
+        </div>
+        <button v-if="editable[index]" @click="updateQuestion(question, index)">
+          更新
+        </button>
+        <div v-else></div>
+        <button v-if="editable[index]" class="cancel" @click="cancel(index)">
+          キャンセル
+        </button>
+        <div v-else></div>
+        <button
+          v-if="editable[index]"
+          class="delete"
+          @click="deleteQuestion(question.id)"
+        >
+          削除
+        </button>
+        <div v-else></div>
+        <div v-show="editable[index]" class="invalid-feedback">
+          {{ invalidFeedback(errors.word) }}
+        </div>
+        <div v-show="editable[index]" class="invalid-feedback">
+          {{ invalidFeedback(errors.correct_answer) }}
+        </div>
       </div>
-      <div v-show="editable[index]" class="invalid-feedback">
-        {{ invalidFeedback(errors.correct_answer) }}
+      <div v-if="questions.length === 0">
+        検索に一致する単語はありませんでした。
       </div>
-    </div>
-    <div v-if="questions.length === 0">
-      検索に一致する単語はありませんでした。
     </div>
   </div>
 </template>
