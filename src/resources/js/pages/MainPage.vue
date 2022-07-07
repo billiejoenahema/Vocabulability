@@ -1,8 +1,27 @@
 <script setup>
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import Navigation from '../components/Navigation.vue';
 
 const store = useStore();
+store.dispatch('question/get');
+const questions = computed(() => store.getters['question/randomData']);
+const index = ref(0);
+const isShowAnswer = ref(false);
+const isLastQuestion = ref(false);
+const toNextQuestion = async () => {
+  if (isLastQuestion.value) {
+    await store.dispatch('question/get');
+    index.value = 0;
+    isLastQuestion.value = false;
+    return;
+  }
+  index.value++;
+  isShowAnswer.value = false;
+  if (index.value + 1 >= questions.value.length) {
+    isLastQuestion.value = true;
+  }
+};
 </script>
 
 <template>
@@ -11,11 +30,21 @@ const store = useStore();
     <div class="row header">
       <div class="title">英単語チェッカー</div>
     </div>
-    <div>
-      <label>単語</label>
-      <p>issue</p>
-      <label>正解</label>
-      <p>answer</p>
+    <div class="column">
+      <div class="column word-wrapper">
+        <label class="title">単語</label>
+        <div class="word">{{ questions[index]?.word }}</div>
+      </div>
+      <div class="column answer-wrapper">
+        <label class="title">正答</label>
+        <div v-if="isShowAnswer" class="answer">
+          {{ questions[index]?.correct_answer }}
+        </div>
+        <div v-else @click="isShowAnswer = true" class="answer show-answer">
+          正答を見る
+        </div>
+      </div>
+      <button @click="toNextQuestion()">次の問題</button>
     </div>
   </div>
 </template>

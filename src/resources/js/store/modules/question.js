@@ -1,4 +1,5 @@
 import { QUESTION_MESSAGES as MESSAGE } from '../../const/toastMessages';
+import { shuffle } from '../../functions/shuffle';
 import axios from 'axios';
 
 const state = {
@@ -9,6 +10,9 @@ const state = {
 const getters = {
   data(state) {
     return state.data ?? [];
+  },
+  randomData(state) {
+    return shuffle(state.data);
   },
   errors(state) {
     return state.errors;
