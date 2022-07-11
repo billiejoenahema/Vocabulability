@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import MainPage from '../pages/MainPage';
-import WordCreate from '../pages/WordCreate';
-import WordList from '../pages/WordList';
+import MainPage from '../views/MainPage';
+import WordCreate from '../views/WordCreate';
+import WordList from '../views/WordList';
 
 const routes = [
   {
