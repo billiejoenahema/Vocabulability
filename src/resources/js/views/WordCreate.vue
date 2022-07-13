@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onUnmounted, reactive } from 'vue';
+import { computed, onUnmounted, reactive, ref } from 'vue';
 import { useStore } from 'vuex';
 import Navigation from '../components/Navigation.vue';
 import Toast from '../components/Toast.vue';
@@ -16,6 +16,7 @@ const newQuestion = reactive({
 });
 const errors = computed(() => store.getters['question/errors']);
 const hasErrors = computed(() => store.getters['question/hasErrors']);
+const csv = ref(null);
 
 const invalidFeedback = (message) => {
   return message ? message[0] : '';
@@ -29,6 +30,12 @@ const addWord = async () => {
   newQuestion.correct_answer = '';
   newQuestion.example = '';
   store.commit('question/resetErrors');
+};
+const importCSV = async () => {
+  const formData = new FormData();
+
+  formData.append('file', csv.value.files[0]);
+  await store.dispatch('question/importCSV', formData);
 };
 </script>
 
@@ -61,6 +68,11 @@ const addWord = async () => {
       </div>
       <div class="button-area">
         <button @click.prevent="addWord()">追加</button>
+      </div>
+      <div class="csv-import">
+        <label>CSVインポート</label>
+        <input type="file" accept=".csv" ref="csv" />
+        <button @click="importCSV()">CSVファイルをインポート</button>
       </div>
     </form>
   </div>
