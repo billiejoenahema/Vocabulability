@@ -7,9 +7,11 @@ use App\Http\Requests\Question\IndexRequest;
 use App\Http\Requests\Question\StoreRequest;
 use App\Http\Requests\Question\UpdateRequest;
 use App\Http\Resources\QuestionResource;
+use App\Imports\QuestionImport;
 use App\Models\Question;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -47,6 +49,20 @@ class QuestionController extends Controller
                 'example' => $request->example,
             ]);
         });
+
+        return response()->json(['message' => '問題を追加しました。'], Response::HTTP_CREATED);
+    }
+
+    /**
+     * CSVファイルから問題を追加する。
+     *
+     * @param StoreRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function importCSV(): JsonResponse
+    {
+        Excel::import(new QuestionImport, request()->file('file'));
 
         return response()->json(['message' => '問題を追加しました。'], Response::HTTP_CREATED);
     }

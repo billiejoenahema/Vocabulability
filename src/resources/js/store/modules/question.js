@@ -49,6 +49,21 @@ const actions = {
         commit('setErrors', err.response.data.errors);
       });
   },
+  async importCSV({ commit }, formData) {
+    await axios
+      .post('/api/questions', formData)
+      .then((res) => {
+        commit('resetErrors');
+        commit(
+          'toast/setData',
+          { status: res.status, content: res.data.message },
+          { root: true }
+        );
+      })
+      .catch((err) => {
+        commit('setErrors', err.response.data.errors);
+      });
+  },
   async update({ commit }, data) {
     await axios
       .patch(`/api/questions/${data.id}`, data)
