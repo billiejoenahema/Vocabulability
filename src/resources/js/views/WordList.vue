@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import Navigation from '../components/Navigation.vue';
 import Toast from '../components/Toast.vue';
@@ -13,6 +13,10 @@ const errors = computed(() => store.getters['question/errors']);
 const hasErrors = computed(() => store.getters['question/hasErrors']);
 const editable = ref([]);
 const keyword = ref('');
+const hasQuestions = ref(true);
+onMounted(() => {
+  hasQuestions.value = questions.value.length > 0;
+});
 
 const debounceSearch = useDebounce(() => {
   store.dispatch('question/get', { keyword: keyword.value });
@@ -108,9 +112,7 @@ const cancel = (index) => {
           {{ invalidFeedback(errors.correct_answer) }}
         </div>
       </div>
-      <div v-if="questions.length === 0">
-        検索に一致する単語はありませんでした。
-      </div>
+      <div v-show="!hasQuestions">検索に一致する単語はありませんでした。</div>
     </div>
   </div>
 </template>
