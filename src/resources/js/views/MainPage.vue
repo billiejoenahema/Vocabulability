@@ -37,7 +37,7 @@ const toNextQuestion = async () => {
       </div>
       <div class="column answer-wrapper">
         <label class="title">正答</label>
-        <div v-if="isShowAnswer" class="answer">
+        <div v-if="isShowAnswer" class="answer" @click="toNextQuestion()">
           {{ questions[index]?.correct_answer }}
         </div>
         <div v-else @click="isShowAnswer = true" class="answer show-answer">

@@ -89,6 +89,7 @@ form > .column {
 .answer {
   font-size: 2rem;
   font-weight: bold;
+  cursor: pointer;
 }
 .show-answer:hover {
   cursor: pointer;
