@@ -16,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/questions', [QuestionController::class, 'index']);
 Route::post('/questions', [QuestionController::class, 'store']);
-Route::post('/questions', [QuestionController::class, 'importCSV']);
+Route::post('/questions/import', [QuestionController::class, 'importCSV']);
 Route::patch('/questions/{question}', [QuestionController::class, 'update']);
 Route::delete('/questions/{question}', [QuestionController::class, 'destroy']);

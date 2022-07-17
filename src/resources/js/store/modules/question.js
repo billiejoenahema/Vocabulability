@@ -51,7 +51,7 @@ const actions = {
   },
   async importCSV({ commit }, formData) {
     await axios
-      .post('/api/questions', formData)
+      .post('/api/questions/import', formData)
       .then((res) => {
         commit('resetErrors');
         commit(
