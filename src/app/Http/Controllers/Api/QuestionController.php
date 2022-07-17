@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Question\ImportRequest;
 use App\Http\Requests\Question\IndexRequest;
 use App\Http\Requests\Question\StoreRequest;
 use App\Http\Requests\Question\UpdateRequest;
@@ -56,13 +57,13 @@ class QuestionController extends Controller
     /**
      * CSVファイルから問題を追加する。
      *
-     * @param StoreRequest $request
+     * @param ImportRequest $request
      *
      * @return JsonResponse
      */
-    public function importCSV(): JsonResponse
+    public function importCSV(ImportRequest $request): JsonResponse
     {
-        Excel::import(new QuestionImport, request()->file('file'));
+        Excel::import(new QuestionImport, $request->file('file'));
 
         return response()->json(['message' => '問題を追加しました。'], Response::HTTP_CREATED);
     }
