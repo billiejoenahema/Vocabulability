@@ -72,6 +72,9 @@ const importCSV = async () => {
       <div class="csv-import">
         <label>CSVインポート</label>
         <input type="file" accept=".csv" ref="csv" />
+        <div class="invalid-feedback">
+          {{ invalidFeedback(errors.file) }}
+        </div>
         <button @click="importCSV()">CSVファイルをインポート</button>
       </div>
     </form>
