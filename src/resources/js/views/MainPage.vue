@@ -28,7 +28,7 @@ const toNextQuestion = async () => {
   <Navigation />
   <div class="main-page">
     <div class="row header">
-      <div class="title">英単語チェッカー</div>
+      <div class="title">エンジニア英単語チェック</div>
     </div>
     <div class="column">
       <div class="column word-wrapper">
