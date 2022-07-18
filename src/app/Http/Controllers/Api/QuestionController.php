@@ -27,8 +27,11 @@ class QuestionController extends Controller
     public function index(IndexRequest $request): AnonymousResourceCollection
     {
         $keyword = $request['keyword'] ?? null;
+        $filter = $request['filter'] ?? null;
         $questions = Question::when($keyword, function ($query, $keyword) {
             return $query->where('word', 'like', "%{$keyword}%");
+        })->when($filter, function ($query, $filter) {
+            return $query->where('word', 'like', "{$filter}%");
         })->get();
 
         return QuestionResource::collection($questions);

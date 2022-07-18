@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import Navigation from '../components/Navigation.vue';
 import Toast from '../components/Toast.vue';
@@ -9,18 +9,20 @@ const store = useStore();
 
 store.dispatch('question/get');
 const questions = computed(() => store.getters['question/data']);
+const alphabets = [...'abcdefghijklmnopqrstuvwxyz'];
 const errors = computed(() => store.getters['question/errors']);
 const hasErrors = computed(() => store.getters['question/hasErrors']);
 const editable = ref([]);
 const keyword = ref('');
-const hasQuestions = ref(true);
-onMounted(() => {
-  hasQuestions.value = questions.value.length > 0;
-});
+const hasQuestions = computed(() => questions.value.length > 0);
 
 const debounceSearch = useDebounce(() => {
   store.dispatch('question/get', { keyword: keyword.value });
 });
+const filter = (alphabet) => {
+  keyword.value = '';
+  store.dispatch('question/get', { filter: alphabet });
+};
 const invalidFeedback = (message) => {
   return message ? message[0] : '';
 };
@@ -63,6 +65,12 @@ const cancel = (index) => {
           @input="debounceSearch()"
           placeholder="キーワード検索"
         />
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="row" v-for="(alphabet, index) in alphabets" :key="index">
+        <span v-if="index > 0">/</span>
+        <div class="index-item" @click="filter(alphabet)">{{ alphabet }}</div>
       </div>
     </div>
     <div class="row list-header">
