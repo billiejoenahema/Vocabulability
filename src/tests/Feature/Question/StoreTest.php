@@ -18,8 +18,8 @@ class StoreTest extends TestCase
     {
         $response = $this->postJson('/api/questions', [
             'word' => 'test',
-            'correct_answer' => 'test',
-            'example' => 'test',
+            'correct_answer' => 'テスト',
+            'example' => 'test is テスト',
         ]);
 
         $response->assertCreated();
