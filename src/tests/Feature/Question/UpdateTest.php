@@ -15,7 +15,7 @@ class UpdateTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function test_updateQuestion()
     {
         $question = Question::factory()->create();
         $data = [
