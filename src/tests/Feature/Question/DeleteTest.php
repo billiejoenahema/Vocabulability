@@ -11,7 +11,7 @@ class DeleteTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * A basic feature test example.
+     * 問題を削除できるかどうかをテストする。
      *
      * @return void
      */
