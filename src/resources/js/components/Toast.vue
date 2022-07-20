@@ -22,7 +22,8 @@ const className = () => {
 <style scoped>
 main > .toast {
   position: fixed;
-  top: 0px;
+  top: 0;
+  left: 0;
   z-index: 10000;
   font-size: 1.2rem;
   width: 100vw;
