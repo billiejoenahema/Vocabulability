@@ -28,11 +28,14 @@ class QuestionController extends Controller
     {
         $keyword = $request['keyword'] ?? null;
         $filter = $request['filter'] ?? null;
-        $questions = Question::when($keyword, function ($query, $keyword) {
+
+        $query = Question::when($keyword, function ($query, $keyword) {
             return $query->where('word', 'like', "%{$keyword}%");
         })->when($filter, function ($query, $filter) {
             return $query->where('word', 'like', "{$filter}%");
-        })->get();
+        });
+
+        $questions = $query->orderBy('word', 'asc')->get();
 
         return QuestionResource::collection($questions);
     }
