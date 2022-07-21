@@ -14,8 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/questions', [QuestionController::class, 'index']);
-Route::post('/questions', [QuestionController::class, 'store']);
-Route::post('/questions/import', [QuestionController::class, 'importCSV']);
-Route::patch('/questions/{question}', [QuestionController::class, 'update']);
-Route::delete('/questions/{question}', [QuestionController::class, 'destroy']);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    // ログインユーザー情報
+    Route::get('/profile', ProfileController::class);
+
+    Route::get('/questions', [QuestionController::class, 'index']);
+    Route::post('/questions', [QuestionController::class, 'store']);
+    Route::post('/questions/import', [QuestionController::class, 'importCSV']);
+    Route::patch('/questions/{question}', [QuestionController::class, 'update']);
+    Route::delete('/questions/{question}', [QuestionController::class, 'destroy']);
+});
