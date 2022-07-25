@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\QuestionController;
 use Illuminate\Support\Facades\Route;
 
