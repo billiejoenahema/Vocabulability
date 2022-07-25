@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import LoginPage from '../views/LoginPage';
 import MainPage from '../views/MainPage';
 import WordCreate from '../views/WordCreate';
 import WordList from '../views/WordList';
@@ -15,6 +16,10 @@ const routes = [
   {
     path: '/list',
     component: WordList,
+  },
+  {
+    path: '/login',
+    component: LoginPage,
   },
 ];
 
