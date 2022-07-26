@@ -24,6 +24,6 @@ onMounted(async () => {
     <router-link to="/">Home</router-link>
     <router-link to="/list">List</router-link>
     <router-link to="/create">Create</router-link>
-    <div @click="logout()">Logout</div>
+    <a class="logout" @click.prevent.stop="logout()">Logout</a>
   </nav>
 </template>
