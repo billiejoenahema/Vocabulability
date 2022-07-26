@@ -109,3 +109,6 @@ form > .column {
   cursor: pointer;
   background-color: rgb(131, 131, 131);
 }
+.logout {
+  cursor: pointer;
+}
