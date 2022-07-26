@@ -49,12 +49,20 @@ const importCSV = async () => {
       </div>
       <div class="column">
         <label>単語</label>
-        <input type="text" v-model="newQuestion.word" />
+        <input
+          type="text"
+          :class="invalidFeedback(errors.word) && 'invalid'"
+          v-model="newQuestion.word"
+        />
         <div class="invalid-feedback">{{ invalidFeedback(errors.word) }}</div>
       </div>
       <div class="column">
         <label>正解</label>
-        <input type="text" v-model="newQuestion.correct_answer" />
+        <input
+          type="text"
+          :class="invalidFeedback(errors.correct_answer) && 'invalid'"
+          v-model="newQuestion.correct_answer"
+        />
         <div class="invalid-feedback">
           {{ invalidFeedback(errors.correct_answer) }}
         </div>
@@ -70,10 +78,12 @@ const importCSV = async () => {
         <button @click.prevent="addWord()">追加</button>
       </div>
       <div class="csv-import">
-        <label>CSVインポート</label>
-        <input type="file" accept=".csv" ref="csv" />
-        <div class="invalid-feedback">
-          {{ invalidFeedback(errors.file) }}
+        <div class="csv-import-input-area">
+          <label>CSVインポート</label>
+          <input type="file" accept=".csv" ref="csv" />
+          <div class="invalid-feedback">
+            {{ invalidFeedback(errors.file) }}
+          </div>
         </div>
         <button @click="importCSV()">CSVファイルをインポート</button>
       </div>
