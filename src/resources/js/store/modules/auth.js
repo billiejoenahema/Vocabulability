@@ -24,7 +24,7 @@ const actions = {
             commit('resetErrors');
           })
           .catch((err) => {
-            commit('setErrors', err.message);
+            commit('setErrors', err.response.data.errors);
           });
       });
   },

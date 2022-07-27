@@ -10,7 +10,11 @@ const user = reactive({
   email: '',
   password: '',
 });
+const errors = computed(() => store.getters['auth/errors']);
 const hasErrors = computed(() => store.getters['auth/hasErrors']);
+const invalidFeedback = (message) => {
+  return message ? message[0] : '';
+};
 
 const login = async () => {
   await store.dispatch('auth/login', user);
@@ -22,19 +26,27 @@ const login = async () => {
 
 <template>
   <form class="column">
-    <p class="row">
+    <p class="column">
       <label for="login-email">Email</label>
-      <input v-model="user.email" id="login-email" name="email" type="email" />
+      <input
+        :class="invalidFeedback(errors.email) && 'invalid'"
+        v-model="user.email"
+        id="login-email"
+        name="email"
+        type="email" />
+      <div class="invalid-feedback">{{ invalidFeedback(errors.email) }}</div>
     </p>
-    <p class="row">
+    <p class="column">
       <label for="login-password">Password</label>
       <input
+        :class="invalidFeedback(errors.password) && 'invalid'"
         v-model="user.password"
         id="login-password"
         name="password"
         type="password"
       />
-      <button @click.prevent.stop="login()">Sign in</button>
+      <div class="invalid-feedback">{{ invalidFeedback(errors.password) }}</div>
+      <button class="sign-in" @click.prevent.stop="login()">Sign in</button>
     </p>
   </form>
 </template>

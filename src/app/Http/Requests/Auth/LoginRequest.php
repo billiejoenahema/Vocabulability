@@ -24,8 +24,20 @@ final class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email'],
-            'password' => ['required', 'min:8'],
+            'email' => ['required', 'string', 'email:rfc'],
+            'password' => ['required', 'regex:/^[¥x20-¥x7F]+$/', 'min:8'],
+        ];
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'password.regex' => 'パスワードは半角英数字・半角記号で入力してください。',
         ];
     }
 }
