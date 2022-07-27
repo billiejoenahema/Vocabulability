@@ -119,3 +119,7 @@ form > .column {
 .csv-import-input-area {
   margin: 0 0 16px;
 }
+.sign-in {
+  width: 400px;
+  margin: 40px 0;
+}
