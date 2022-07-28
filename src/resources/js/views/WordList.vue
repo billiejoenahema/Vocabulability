@@ -14,13 +14,16 @@ const errors = computed(() => store.getters['question/errors']);
 const hasErrors = computed(() => store.getters['question/hasErrors']);
 const editable = ref([]);
 const keyword = ref('');
+const currentAlphabet = ref('');
 const hasQuestions = computed(() => questions.value.length > 0);
 
 const debounceSearch = useDebounce(() => {
+  currentAlphabet.value = '';
   store.dispatch('question/get', { keyword: keyword.value });
 });
 const filter = (alphabet) => {
   keyword.value = '';
+  currentAlphabet.value = alphabet;
   store.dispatch('question/get', { filter: alphabet });
 };
 const invalidFeedback = (message) => {
@@ -70,7 +73,13 @@ const cancel = (index) => {
     <div class="wrap">
       <div class="row" v-for="(alphabet, index) in alphabets" :key="index">
         <span v-if="index > 0">/</span>
-        <div class="index-item" @click="filter(alphabet)">{{ alphabet }}</div>
+        <div
+          class="index-item"
+          :class="alphabet === currentAlphabet && 'current-alphabet'"
+          @click="filter(alphabet)"
+        >
+          {{ alphabet }}
+        </div>
       </div>
     </div>
     <div class="row list-header">
