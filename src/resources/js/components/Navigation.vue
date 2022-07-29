@@ -8,8 +8,10 @@ const router = useRouter();
 
 const isLogin = computed(() => store.getters['profile/isLogin']);
 const logout = () => {
-  store.dispatch('auth/logout');
-  router.push('/login');
+  if (confirm('ログアウトしますか？')) {
+    store.dispatch('profile/logout');
+    router.push('/login');
+  }
 };
 onMounted(async () => {
   await store.dispatch('profile/getIfNeeded');
