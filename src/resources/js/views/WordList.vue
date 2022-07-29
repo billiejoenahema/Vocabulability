@@ -84,8 +84,6 @@ const cancel = (index) => {
     <div class="row list-header">
       <div class="list-column-title">単語</div>
       <div class="list-column-title">正解</div>
-      <div class="list-column-title">例文</div>
-      <div class="list-column-title"></div>
     </div>
     <div class="list-body">
       <div
@@ -109,18 +107,14 @@ const cancel = (index) => {
         <div v-else @click="toEditable(index)" class="list-item">
           {{ question.correct_answer }}
         </div>
-        <input v-if="editable[index]" v-model="question.example" />
-        <div v-else @click="toEditable(index)" class="list-item">
-          {{ question.example }}
-        </div>
         <button v-if="editable[index]" @click="updateQuestion(question, index)">
           更新
         </button>
-        <div v-else></div>
+        <div v-else @click="toEditable(index)"></div>
         <button v-if="editable[index]" class="cancel" @click="cancel(index)">
           キャンセル
         </button>
-        <div v-else></div>
+        <div v-else @click="toEditable(index)"></div>
         <button
           v-if="editable[index]"
           class="delete"
@@ -128,7 +122,7 @@ const cancel = (index) => {
         >
           削除
         </button>
-        <div v-else></div>
+        <div v-else @click="toEditable(index)"></div>
         <div
           v-if="editable[index] && invalidFeedback('word')"
           class="invalid-feedback"

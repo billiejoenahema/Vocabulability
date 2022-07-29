@@ -42,7 +42,7 @@ const importCSV = async () => {
   <Toast />
   <Navigation />
   <div class="word-create">
-    <form @submit.prevent>
+    <div>
       <div class="row header">
         <div class="title">新規登録</div>
       </div>
@@ -75,22 +75,7 @@ const importCSV = async () => {
           </div>
         </div>
       </div>
-      <div class="column">
-        <label>例文</label>
-        <input
-          type="text"
-          v-model="newQuestion.example"
-          :class="invalidFeedback('example') && 'invalid'"
-        />
-        <div class="invalid-feedback" v-if="invalidFeedback('example')">
-          <div
-            v-for="(error, index) in invalidFeedback('example')"
-            :key="index"
-          >
-            {{ error }}
-          </div>
-        </div>
-      </div>
+      <div class="column"></div>
       <div class="button-area">
         <button @click.prevent="addWord()">追加</button>
       </div>
@@ -111,6 +96,6 @@ const importCSV = async () => {
         </div>
         <button @click="importCSV()">CSVファイルをインポート</button>
       </div>
-    </form>
+    </div>
   </div>
 </template>
