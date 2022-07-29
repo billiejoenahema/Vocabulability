@@ -5,11 +5,11 @@ const state = {
 };
 
 const getters = {
+  invalidFeedback: (state) => (props) => {
+    return state.errors[props] ?? '';
+  },
   hasErrors(state) {
     return Object.keys(state.errors).length > 0;
-  },
-  errors(state) {
-    return state.errors ?? {};
   },
 };
 

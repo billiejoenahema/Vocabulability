@@ -14,8 +14,8 @@ const getters = {
   randomData(state) {
     return shuffle(state.data);
   },
-  errors(state) {
-    return state.errors;
+  invalidFeedback: (state) => (props) => {
+    return state.errors[props] ?? '';
   },
   hasErrors(state) {
     return Object.keys(state.errors).length > 0;
