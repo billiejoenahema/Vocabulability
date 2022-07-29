@@ -10,7 +10,9 @@ const store = useStore();
 store.dispatch('question/get');
 const questions = computed(() => store.getters['question/data']);
 const alphabets = [...'abcdefghijklmnopqrstuvwxyz'];
-const errors = computed(() => store.getters['question/errors']);
+const invalidFeedback = computed(
+  () => store.getters['question/invalidFeedback']
+);
 const hasErrors = computed(() => store.getters['question/hasErrors']);
 const editable = ref([]);
 const keyword = ref('');
@@ -25,9 +27,6 @@ const filter = (alphabet) => {
   keyword.value = '';
   currentAlphabet.value = alphabet;
   store.dispatch('question/get', { filter: alphabet });
-};
-const invalidFeedback = (message) => {
-  return message ? message[0] : '';
 };
 const toEditable = (index) => {
   editable.value = [];
@@ -94,11 +93,19 @@ const cancel = (index) => {
         :key="question.id"
         class="row list-row"
       >
-        <input v-if="editable[index]" v-model="question.word" />
+        <input
+          v-if="editable[index]"
+          v-model="question.word"
+          :class="invalidFeedback('word') && 'invalid'"
+        />
         <div v-else @click="toEditable(index)" class="list-item">
           {{ question.word }}
         </div>
-        <input v-if="editable[index]" v-model="question.correct_answer" />
+        <input
+          v-if="editable[index]"
+          v-model="question.correct_answer"
+          :class="invalidFeedback('correct_answer') && 'invalid'"
+        />
         <div v-else @click="toEditable(index)" class="list-item">
           {{ question.correct_answer }}
         </div>
@@ -122,11 +129,24 @@ const cancel = (index) => {
           削除
         </button>
         <div v-else></div>
-        <div v-show="editable[index]" class="invalid-feedback">
-          {{ invalidFeedback(errors.word) }}
+        <div
+          v-if="editable[index] && invalidFeedback('word')"
+          class="invalid-feedback"
+        >
+          <div v-for="(error, index) in invalidFeedback('word')" :key="index">
+            {{ error }}
+          </div>
         </div>
-        <div v-show="editable[index]" class="invalid-feedback">
-          {{ invalidFeedback(errors.correct_answer) }}
+        <div
+          v-if="editable[index] && invalidFeedback('correct_answer')"
+          class="invalid-feedback"
+        >
+          <div
+            v-for="(error, index) in invalidFeedback('correct_answer')"
+            :key="index"
+          >
+            {{ error }}
+          </div>
         </div>
       </div>
       <div v-show="!hasQuestions">検索に一致する単語はありませんでした。</div>
