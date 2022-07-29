@@ -5,6 +5,10 @@ body {
   grid-template-columns: 1fr min(880px, 90%) 1fr;
   overflow-y: scroll;
 }
+main {
+  max-width: 640px;
+  margin: 0 auto;
+}
 nav {
   display: flex;
   justify-content: space-evenly;
@@ -12,16 +16,17 @@ nav {
   padding: 8px;
 }
 button {
-  font-size: 0.7rem;
-  margin: 0 0 8px;
+  font-size: 0.5rem;
+  margin: 0;
 }
 input {
   max-width: 400px;
   width: 100%;
   margin: 0;
 }
-form > .column {
-  margin: 16px 0 0;
+form {
+  margin: 16px auto;
+  max-width: 400px;
 }
 .main-page,
 .word-create,
@@ -54,7 +59,7 @@ form > .column {
 }
 .list-header {
   display: grid;
-  grid-template-columns: 6fr 6fr 14fr 3fr 5fr 3fr;
+  grid-template-columns: 4fr 11fr 2fr 3fr 2fr;
   column-gap: 8px;
   padding: 8px 0;
   position: sticky;
@@ -66,7 +71,7 @@ form > .column {
 }
 .list-row {
   display: grid;
-  grid-template-columns: 6fr 6fr 14fr 3fr 5fr 3fr;
+  grid-template-columns: 4fr 11fr 2fr 3fr 2fr;
   column-gap: 8px;
 }
 .list-item {
@@ -96,6 +101,9 @@ form > .column {
   font-size: 2rem;
   font-weight: bold;
   cursor: pointer;
+}
+.show-answer {
+  user-select: none;
 }
 .show-answer:hover {
   cursor: pointer;
