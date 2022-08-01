@@ -1,11 +1,18 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
+import LoadingOverlay from '../components/LoadingOverlay.vue';
 import Navigation from '../components/Navigation.vue';
 import Toast from '../components/Toast.vue';
 import { useDebounce } from '../functions/useDebounce';
 
 const store = useStore();
+
+onMounted(async () => {
+  setIsLoading(true);
+  await store.dispatch('question/get');
+  setIsLoading(false);
+});
 
 store.dispatch('question/get');
 const questions = computed(() => store.getters['question/data']);
@@ -18,6 +25,8 @@ const editable = ref([]);
 const keyword = ref('');
 const currentAlphabet = ref('');
 const hasQuestions = computed(() => questions.value.length > 0);
+const isLoading = computed(() => store.getters['loading/isLoading']);
+const setIsLoading = (bool) => store.commit('loading/setIsLoading', bool);
 
 const debounceSearch = useDebounce(() => {
   currentAlphabet.value = '';
@@ -33,7 +42,9 @@ const toEditable = (index) => {
   editable.value[index] = true;
 };
 const updateQuestion = async (question, index) => {
+  setIsLoading(true);
   await store.dispatch('question/update', question);
+  setIsLoading(false);
   if (hasErrors.value) {
     return;
   }
@@ -42,7 +53,9 @@ const updateQuestion = async (question, index) => {
 };
 const deleteQuestion = async (id) => {
   if (confirm('この問題を削除しますか？')) {
+    setIsLoading(true);
     await store.dispatch('question/delete', id);
+    setIsLoading(false);
     if (hasErrors.value) {
       return;
     }
@@ -56,6 +69,7 @@ const cancel = (index) => {
 </script>
 
 <template>
+  <LoadingOverlay :isLoading="isLoading" />
   <Toast />
   <Navigation />
   <div class="word-list">
