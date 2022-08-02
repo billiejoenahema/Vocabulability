@@ -30,7 +30,20 @@ final class LoginRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * バリデーションエラーのカスタム属性の取得
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'email' => 'メールアドレス',
+            'password' => 'パスワード',
+        ];
+    }
+
+    /**
+     * 定義済みバリデーションルールのエラーメッセージ取得
      *
      * @return array
      */

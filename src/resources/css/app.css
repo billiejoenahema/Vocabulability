@@ -85,10 +85,6 @@ form {
 .delete {
   background-color: rgb(255, 72, 72);
 }
-.invalid-feedback {
-  color: red;
-  font-size: 0.7rem;
-}
 .button-area {
   margin: 16px 0 0;
 }
