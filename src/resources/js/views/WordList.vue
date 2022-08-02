@@ -34,6 +34,7 @@ const debounceSearch = useDebounce(() => {
 });
 const filter = (alphabet) => {
   keyword.value = '';
+  editable.value = [];
   currentAlphabet.value = alphabet;
   store.dispatch('question/get', { filter: alphabet });
 };
