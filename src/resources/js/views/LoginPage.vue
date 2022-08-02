@@ -2,6 +2,7 @@
 import { computed, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import InvalidFeedback from '../components/InvalidFeedback.vue';
 
 const router = useRouter();
 const store = useStore();
@@ -30,12 +31,12 @@ const login = async () => {
         v-model="user.email"
         id="login-email"
         name="email"
-        type="email" />
-      <div class="invalid-feedback" v-if="invalidFeedback('email')">
-            <div v-for="(error, index) in invalidFeedback('email')" :key="index">
-              {{ error }}
-            </div>
-          </div>
+        type="email"
+      />
+      <InvalidFeedback
+        v-if="invalidFeedback('email')"
+        :errors="invalidFeedback('email')"
+      />
     </p>
     <p class="column">
       <label for="login-password">Password</label>
@@ -46,11 +47,10 @@ const login = async () => {
         name="password"
         type="password"
       />
-      <div class="invalid-feedback" v-if="invalidFeedback('password')">
-            <div v-for="(error, index) in invalidFeedback('password')" :key="index">
-              {{ error }}
-            </div>
-          </div>
+      <InvalidFeedback
+        v-if="invalidFeedback('password')"
+        :errors="invalidFeedback('password')"
+      />
       <button class="sign-in" @click.prevent.stop="login()">Sign in</button>
     </p>
   </form>

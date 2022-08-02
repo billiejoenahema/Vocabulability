@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
+import InvalidFeedback from '../components/InvalidFeedback.vue';
 import LoadingOverlay from '../components/LoadingOverlay.vue';
 import Navigation from '../components/Navigation.vue';
 import Toast from '../components/Toast.vue';
@@ -138,25 +139,14 @@ const cancel = (index) => {
           削除
         </button>
         <div v-else @click="toEditable(index)"></div>
-        <div
+        <InvalidFeedback
           v-if="editable[index] && invalidFeedback('word')"
-          class="invalid-feedback"
-        >
-          <div v-for="(error, index) in invalidFeedback('word')" :key="index">
-            {{ error }}
-          </div>
-        </div>
-        <div
+          :errors="invalidFeedback('word')"
+        />
+        <InvalidFeedback
           v-if="editable[index] && invalidFeedback('correct_answer')"
-          class="invalid-feedback"
-        >
-          <div
-            v-for="(error, index) in invalidFeedback('correct_answer')"
-            :key="index"
-          >
-            {{ error }}
-          </div>
-        </div>
+          :errors="invalidFeedback('correct_answer')"
+        />
       </div>
       <div v-show="!hasQuestions">検索に一致する単語はありませんでした。</div>
     </div>

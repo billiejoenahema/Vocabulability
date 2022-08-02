@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onUnmounted, reactive, ref } from 'vue';
 import { useStore } from 'vuex';
+import InvalidFeedback from '../components/InvalidFeedback.vue';
 import Navigation from '../components/Navigation.vue';
 import Toast from '../components/Toast.vue';
 
@@ -53,11 +54,10 @@ const importCSV = async () => {
           v-model="newQuestion.word"
           :class="invalidFeedback('word') && 'invalid'"
         />
-        <div class="invalid-feedback" v-if="invalidFeedback('word')">
-          <div v-for="(error, index) in invalidFeedback('word')" :key="index">
-            {{ error }}
-          </div>
-        </div>
+        <InvalidFeedback
+          v-if="invalidFeedback('word')"
+          :errors="invalidFeedback('word')"
+        />
       </div>
       <div class="column">
         <label>正解</label>
@@ -66,14 +66,10 @@ const importCSV = async () => {
           v-model="newQuestion.correct_answer"
           :class="invalidFeedback('correct_answer') && 'invalid'"
         />
-        <div class="invalid-feedback" v-if="invalidFeedback('correct_answer')">
-          <div
-            v-for="(error, index) in invalidFeedback('correct_answer')"
-            :key="index"
-          >
-            {{ error }}
-          </div>
-        </div>
+        <InvalidFeedback
+          v-if="invalidFeedback('correct_answer')"
+          :errors="invalidFeedback('correct_answer')"
+        />
       </div>
       <div class="column"></div>
       <div class="button-area">
@@ -88,11 +84,10 @@ const importCSV = async () => {
             ref="csv"
             :class="invalidFeedback('file') && 'invalid'"
           />
-          <div class="invalid-feedback" v-if="invalidFeedback('file')">
-            <div v-for="(error, index) in invalidFeedback('file')" :key="index">
-              {{ error }}
-            </div>
-          </div>
+          <InvalidFeedback
+            v-if="invalidFeedback('file')"
+            :errors="invalidFeedback('file')"
+          />
         </div>
         <button @click="importCSV()">CSVファイルをインポート</button>
       </div>
