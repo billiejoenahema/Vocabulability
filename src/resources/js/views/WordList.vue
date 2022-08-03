@@ -17,6 +17,7 @@ onMounted(async () => {
 
 store.dispatch('question/get');
 const questions = computed(() => store.getters['question/data']);
+const noMatch = '検索に一致する単語はありませんでした。';
 const alphabets = [...'abcdefghijklmnopqrstuvwxyz'];
 const invalidFeedback = computed(
   () => store.getters['question/invalidFeedback']
@@ -101,7 +102,8 @@ const cancel = (index) => {
       <div class="list-column-title">単語</div>
       <div class="list-column-title">正解</div>
     </div>
-    <div class="list-body">
+    <div v-if="!isLoading && !questions.length">{{ noMatch }}</div>
+    <div v-else class="list-body">
       <div
         v-for="(question, index) in questions"
         :key="question.id"
@@ -148,7 +150,6 @@ const cancel = (index) => {
           :errors="invalidFeedback('correct_answer')"
         />
       </div>
-      <div v-show="!hasQuestions">検索に一致する単語はありませんでした。</div>
     </div>
   </div>
 </template>
