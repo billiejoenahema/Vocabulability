@@ -39,4 +39,17 @@ class ImportRequest extends FormRequest
             'file' => 'ファイル',
         ];
     }
+
+    /**
+     * 定義済みバリデーションルールのエラーメッセージ取得
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'file.required' => 'ファイルを指定してください。',
+            'file.mimes' => 'CSVファイルを指定してください。',
+        ];
+    }
 }

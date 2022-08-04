@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Question;
 
+use App\Rules\EnglishWord;
+use App\Rules\NotOnlyEnglish;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
@@ -24,9 +26,8 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'word' => 'required|regex:/^[a-zA-Z]*$/|max:255|unique:questions',
-            'correct_answer' => 'required|not_regex:/^[a-zA-Z]*$/|max:255',
-            'example' => 'nullable|string|max:255',
+            'word' => ['required', 'max:255', 'unique:questions', new EnglishWord],
+            'correct_answer' => [ 'required', 'max:255', new NotOnlyEnglish],
         ];
     }
 
@@ -40,7 +41,6 @@ class StoreRequest extends FormRequest
         return [
             'word' => '単語',
             'correct_answer' => '正解',
-            'example' => '例文',
         ];
     }
 }
