@@ -63,6 +63,7 @@ const deleteQuestion = async (id) => {
       return;
     }
     store.dispatch('question/get');
+    editable.value = [];
   }
 };
 const cancel = (index) => {
