@@ -20,6 +20,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // ログインユーザー情報
     Route::get('/profile', ProfileController::class);
 
+    // 問題
     Route::get('/questions', [QuestionController::class, 'index'])->can('viewAny', Question::class);
     Route::post('/questions', [QuestionController::class, 'store'])->can('create', Question::class);
     Route::post('/questions/import', [QuestionController::class, 'importCSV'])->can('create', Question::class);
