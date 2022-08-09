@@ -39,7 +39,11 @@ class QuestionPolicy
      */
     public function create(User $user)
     {
-        return $user->id === auth()->id();
+        if($user->id === auth()->id() && $user->is_admin) {
+            return true;
+        } else {
+            return abort(403, '権限がありません。');
+        }
     }
 
     /**
@@ -50,7 +54,11 @@ class QuestionPolicy
      */
     public function update(User $user)
     {
-        return $user->id === auth()->id();
+        if($user->id === auth()->id() && $user->is_admin) {
+            return true;
+        } else {
+            return abort(403, '権限がありません。');
+        }
     }
 
     /**
@@ -61,6 +69,10 @@ class QuestionPolicy
      */
     public function delete(User $user)
     {
-        return $user->id === auth()->id();
+        if($user->id === auth()->id() && $user->is_admin) {
+            return true;
+        } else {
+            return abort(403, '権限がありません。');
+        }
     }
 }
