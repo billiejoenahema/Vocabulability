@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class GenerateAdminUser extends Command
 {
@@ -28,17 +30,20 @@ class GenerateAdminUser extends Command
     public function handle()
     {
         $userName = $this->argument('userName');
-        $user = DB::transaction(function () use ($userName) {
+        $password = str()->random(32);
+
+        $user = DB::transaction(function () use ($userName, $password) {
             $user = User::create([
                 'name' => $userName,
                 'email' => $userName . '@example.com',
-                'password' => bcrypt(str()->random(32)),
-                'is_admin' => true,
+                'password' => bcrypt($password),
             ]);
             return $user;
         });
+        $user->is_admin = true;
+        $user->save();
 
         $this->info("email: {$user->email}");
-        $this->info("password: {$user->password}");
+        $this->info("password: {$password}");
     }
 }
