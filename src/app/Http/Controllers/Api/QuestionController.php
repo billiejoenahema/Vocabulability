@@ -69,6 +69,7 @@ class QuestionController extends Controller
      */
     public function importCSV(ImportRequest $request): JsonResponse
     {
+
         Excel::import(new QuestionImport, $request->file('file'));
 
         return response()->json(['message' => '問題を追加しました。'], Response::HTTP_CREATED);

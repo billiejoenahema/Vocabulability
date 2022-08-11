@@ -32,6 +32,11 @@ const actions = {
       })
       .catch((err) => {
         commit('setErrors', err.response.data.errors);
+        commit(
+          'toast/setData',
+          { status: err.response.status, content: err.response.data.message },
+          { root: true }
+        );
       });
   },
   async post({ commit }, data) {
@@ -47,6 +52,11 @@ const actions = {
       })
       .catch((err) => {
         commit('setErrors', err.response.data.errors);
+        commit(
+          'toast/setData',
+          { status: err.response.status, content: err.response.data.message },
+          { root: true }
+        );
       });
   },
   async importCSV({ commit }, formData) {
@@ -62,6 +72,11 @@ const actions = {
       })
       .catch((err) => {
         commit('setErrors', err.response.data.errors);
+        commit(
+          'toast/setData',
+          { status: err.response.status, content: err.response.data.message },
+          { root: true }
+        );
       });
   },
   async update({ commit }, data) {
@@ -77,6 +92,11 @@ const actions = {
       })
       .catch((err) => {
         commit('setErrors', err.response.data.errors);
+        commit(
+          'toast/setData',
+          { status: err.response.status, content: err.response.data.message },
+          { root: true }
+        );
       });
   },
   async delete({ commit }, id) {
@@ -91,19 +111,23 @@ const actions = {
         );
       })
       .catch((err) => {
-        console.log(err.message);
         commit('setErrors', err.response.data.errors);
+        commit(
+          'toast/setData',
+          { status: err.response.status, content: err.response.data.message },
+          { root: true }
+        );
       });
   },
 };
 
 const mutations = {
   setData(state, data) {
-    state.data = data.data;
+    state.data = data.data ?? [];
   },
   setErrors(state, data) {
     state.errors = [];
-    state.errors = data;
+    state.errors = data ?? [];
   },
   resetErrors(state) {
     state.errors = [];
