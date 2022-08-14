@@ -89,7 +89,7 @@ const cancel = (index) => {
     </div>
     <div class="wrap">
       <div class="row" v-for="(alphabet, index) in alphabets" :key="index">
-        <span v-if="index > 0">/</span>
+        <span v-if="index">/</span>
         <div
           class="index-item"
           :class="alphabet === currentAlphabet && 'current-alphabet'"

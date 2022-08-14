@@ -11,7 +11,7 @@ defineProps({
 const { color, background, opacity } = {
   color: '#fff',
   background: '#fff',
-  opacity: 0.1,
+  opacity: 0,
 };
 </script>
 

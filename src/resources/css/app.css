@@ -99,6 +99,7 @@ form {
   font-size: 2rem;
   font-weight: bold;
   cursor: pointer;
+  user-select: none;
 }
 .show-answer {
   user-select: none;
