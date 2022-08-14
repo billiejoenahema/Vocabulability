@@ -5,6 +5,7 @@ namespace App\Http\Requests\Question;
 use App\Rules\EnglishWord;
 use App\Rules\NotOnlyEnglish;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -26,7 +27,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'word' => ['required', 'max:255', 'unique:questions', new EnglishWord],
+            'word' => ['required', 'max:255', Rule::unique('questions')->ignore($this->id), new EnglishWord],
             'correct_answer' => [ 'required', 'max:255', new NotOnlyEnglish],
         ];
     }
