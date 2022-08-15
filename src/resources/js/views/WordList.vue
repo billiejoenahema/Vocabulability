@@ -5,6 +5,7 @@ import InvalidFeedback from '../components/InvalidFeedback.vue';
 import LoadingOverlay from '../components/LoadingOverlay.vue';
 import Navigation from '../components/Navigation.vue';
 import Toast from '../components/Toast.vue';
+import { ALPHABETS, DELETE_CONFIRM, NO_MATCH } from '../const/questions';
 import { useDebounce } from '../functions/useDebounce';
 
 const store = useStore();
@@ -17,8 +18,6 @@ onMounted(async () => {
 
 store.dispatch('question/get');
 const questions = computed(() => store.getters['question/data']);
-const noMatch = '検索に一致する単語はありませんでした。';
-const alphabets = [...'abcdefghijklmnopqrstuvwxyz'];
 const invalidFeedback = computed(
   () => store.getters['question/invalidFeedback']
 );
@@ -26,7 +25,6 @@ const hasErrors = computed(() => store.getters['question/hasErrors']);
 const editable = ref([]);
 const keyword = ref('');
 const currentAlphabet = ref('');
-const hasQuestions = computed(() => questions.value.length > 0);
 const isLoading = computed(() => store.getters['loading/isLoading']);
 const setIsLoading = (bool) => store.commit('loading/setIsLoading', bool);
 
@@ -40,7 +38,7 @@ const filter = (alphabet) => {
   currentAlphabet.value = alphabet;
   store.dispatch('question/get', { filter: alphabet });
 };
-const toEditable = (index) => {
+const onEdit = (index) => {
   editable.value = [];
   editable.value[index] = true;
 };
@@ -55,7 +53,7 @@ const updateQuestion = async (question, index) => {
   store.dispatch('question/get');
 };
 const deleteQuestion = async (id) => {
-  if (confirm('この問題を削除しますか？')) {
+  if (confirm(DELETE_CONFIRM)) {
     setIsLoading(true);
     await store.dispatch('question/delete', id);
     setIsLoading(false);
@@ -88,7 +86,7 @@ const cancel = (index) => {
       </div>
     </div>
     <div class="wrap">
-      <div class="row" v-for="(alphabet, index) in alphabets" :key="index">
+      <div class="row" v-for="(alphabet, index) in ALPHABETS" :key="index">
         <span v-if="index">/</span>
         <div
           class="index-item"
@@ -103,7 +101,7 @@ const cancel = (index) => {
       <div class="list-column-title">単語</div>
       <div class="list-column-title">正解</div>
     </div>
-    <div v-if="!isLoading && !questions.length">{{ noMatch }}</div>
+    <div v-if="!isLoading && !questions.length">{{ NO_MATCH }}</div>
     <div v-else class="list-body">
       <div
         v-for="(question, index) in questions"
@@ -115,7 +113,7 @@ const cancel = (index) => {
           v-model="question.word"
           :class="invalidFeedback('word') && 'invalid'"
         />
-        <div v-else @click="toEditable(index)" class="list-item">
+        <div v-else @click="onEdit(index)" class="list-item">
           {{ question.word }}
         </div>
         <input
@@ -123,17 +121,17 @@ const cancel = (index) => {
           v-model="question.correct_answer"
           :class="invalidFeedback('correct_answer') && 'invalid'"
         />
-        <div v-else @click="toEditable(index)" class="list-item">
+        <div v-else @click="onEdit(index)" class="list-item">
           {{ question.correct_answer }}
         </div>
         <button v-if="editable[index]" @click="updateQuestion(question, index)">
           更新
         </button>
-        <div v-else @click="toEditable(index)"></div>
+        <div v-else @click="onEdit(index)"></div>
         <button v-if="editable[index]" class="cancel" @click="cancel(index)">
           キャンセル
         </button>
-        <div v-else @click="toEditable(index)"></div>
+        <div v-else @click="onEdit(index)"></div>
         <button
           v-if="editable[index]"
           class="delete"
@@ -141,7 +139,7 @@ const cancel = (index) => {
         >
           削除
         </button>
-        <div v-else @click="toEditable(index)"></div>
+        <div v-else @click="onEdit(index)"></div>
         <InvalidFeedback
           v-if="editable[index] && invalidFeedback('word')"
           :errors="invalidFeedback('word')"

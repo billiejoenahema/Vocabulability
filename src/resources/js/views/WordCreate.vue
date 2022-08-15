@@ -75,6 +75,7 @@ const importCSV = async () => {
       <div class="button-area">
         <button @click.prevent="addWord()">追加</button>
       </div>
+      <hr />
       <div class="csv-import">
         <div class="csv-import-input-area">
           <label>CSVインポート</label>
