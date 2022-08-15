@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Consts\PolicyConst;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -42,7 +43,7 @@ class QuestionPolicy
         if($user->id === auth()->id() && $user->is_admin) {
             return true;
         } else {
-            return abort(403, '権限がありません。');
+            return abort(PolicyConst::ABORT_STATUS, PolicyConst::ABORT_MESSAGE);
         }
     }
 
@@ -57,7 +58,7 @@ class QuestionPolicy
         if($user->id === auth()->id() && $user->is_admin) {
             return true;
         } else {
-            return abort(403, '権限がありません。');
+            return abort(PolicyConst::ABORT_STATUS, PolicyConst::ABORT_MESSAGE);
         }
     }
 
@@ -72,7 +73,7 @@ class QuestionPolicy
         if($user->id === auth()->id() && $user->is_admin) {
             return true;
         } else {
-            return abort(403, '権限がありません。');
+            return abort(PolicyConst::ABORT_STATUS, PolicyConst::ABORT_MESSAGE);
         }
     }
 }
