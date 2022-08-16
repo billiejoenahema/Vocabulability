@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive } from 'vue';
+import { computed, onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import InvalidFeedback from '../components/InvalidFeedback.vue';
@@ -11,9 +11,15 @@ const user = reactive({
   email: '',
   password: '',
 });
+const isLogin = computed(() => store.getters['profile/isLogin']);
 const invalidFeedback = computed(() => store.getters['auth/invalidFeedback']);
 const hasErrors = computed(() => store.getters['auth/hasErrors']);
-
+onMounted(async () => {
+  await store.dispatch('profile/getIfNeeded');
+  if (isLogin.value) {
+    router.push('/');
+  }
+});
 const login = async () => {
   await store.dispatch('auth/login', user);
   if (!hasErrors.value) {

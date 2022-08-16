@@ -7,9 +7,10 @@ const store = useStore();
 const router = useRouter();
 
 const isLogin = computed(() => store.getters['profile/isLogin']);
-const logout = () => {
+const logout = async () => {
   if (confirm('ログアウトしますか？')) {
-    store.dispatch('profile/logout');
+    await store.dispatch('auth/logout');
+    store.commit('profile/resetData');
     router.push('/login');
   }
 };

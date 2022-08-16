@@ -4,7 +4,6 @@ const state = {
   data: {
     id: null,
   },
-  isLogin: false,
   errors: {},
 };
 
@@ -13,7 +12,7 @@ const getters = {
     return state.data.id > 0 ? state.data : {};
   },
   isLogin(state) {
-    return state.data && state.data.id > 0;
+    return state.data?.id > 0;
   },
   hasErrors(state) {
     return Object.keys(state.errors).length > 0;
@@ -45,6 +44,9 @@ const actions = {
 const mutations = {
   setData(state, data) {
     state.data = data;
+  },
+  resetData(state) {
+    state.data = {};
   },
   setErrors(state, data) {
     state.errors = {};
