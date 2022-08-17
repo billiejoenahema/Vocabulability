@@ -112,6 +112,7 @@ const cancel = (index) => {
           v-if="editable[index]"
           v-model="question.word"
           :class="invalidFeedback('word') && 'invalid'"
+          maxlength="255"
         />
         <div v-else @click="onEdit(index)" class="list-item">
           {{ question.word }}
@@ -120,6 +121,7 @@ const cancel = (index) => {
           v-if="editable[index]"
           v-model="question.correct_answer"
           :class="invalidFeedback('correct_answer') && 'invalid'"
+          maxlength="255"
         />
         <div v-else @click="onEdit(index)" class="list-item">
           {{ question.correct_answer }}

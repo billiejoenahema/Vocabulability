@@ -38,6 +38,7 @@ const login = async () => {
         id="login-email"
         name="email"
         type="email"
+        maxlength="255"
       />
       <InvalidFeedback
         v-if="invalidFeedback('email')"
@@ -52,6 +53,7 @@ const login = async () => {
         id="login-password"
         name="password"
         type="password"
+        maxlength="128"
       />
       <InvalidFeedback
         v-if="invalidFeedback('password')"

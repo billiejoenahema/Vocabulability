@@ -53,6 +53,7 @@ const importCSV = async () => {
           type="text"
           v-model="newQuestion.word"
           :class="invalidFeedback('word') && 'invalid'"
+          maxlength="255"
         />
         <InvalidFeedback
           v-if="invalidFeedback('word')"
@@ -65,6 +66,7 @@ const importCSV = async () => {
           type="text"
           v-model="newQuestion.correct_answer"
           :class="invalidFeedback('correct_answer') && 'invalid'"
+          maxlength="255"
         />
         <InvalidFeedback
           v-if="invalidFeedback('correct_answer')"
