@@ -24,7 +24,18 @@ const actions = {
             commit('resetErrors');
           })
           .catch((err) => {
-            commit('setErrors', err.response.data.errors);
+            commit(
+              'setErrors',
+              err.response.data.errors ?? err.response.data.message
+            );
+            commit(
+              'toast/setData',
+              {
+                status: err.response.status,
+                content: err.response.data.message,
+              },
+              { root: true }
+            );
           });
       });
   },
@@ -36,7 +47,7 @@ const actions = {
 const mutations = {
   setErrors(state, data) {
     state.errors = {};
-    state.errors = data;
+    state.errors = data ?? {};
   },
   resetErrors(state) {
     state.errors = {};

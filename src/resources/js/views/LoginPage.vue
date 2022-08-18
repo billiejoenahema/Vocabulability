@@ -3,6 +3,7 @@ import { computed, onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import InvalidFeedback from '../components/InvalidFeedback.vue';
+import Toast from '../components/Toast.vue';
 
 const router = useRouter();
 const store = useStore();
@@ -29,6 +30,7 @@ const login = async () => {
 </script>
 
 <template>
+  <Toast />
   <form class="column">
     <p class="column">
       <label for="login-email">Email</label>
