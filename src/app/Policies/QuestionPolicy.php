@@ -40,7 +40,7 @@ class QuestionPolicy
      */
     public function create(User $user)
     {
-        if($user->id === auth()->id() && $user->is_admin) {
+        if ($user->id === auth()->id() && $user->is_admin) {
             return true;
         } else {
             return abort(PolicyConst::ABORT_STATUS, PolicyConst::ABORT_MESSAGE);
@@ -55,7 +55,7 @@ class QuestionPolicy
      */
     public function update(User $user)
     {
-        if($user->id === auth()->id() && $user->is_admin) {
+        if ($user->id === auth()->id() && $user->is_admin) {
             return true;
         } else {
             return abort(PolicyConst::ABORT_STATUS, PolicyConst::ABORT_MESSAGE);
@@ -70,7 +70,7 @@ class QuestionPolicy
      */
     public function delete(User $user)
     {
-        if($user->id === auth()->id() && $user->is_admin) {
+        if ($user->id === auth()->id() && $user->is_admin) {
             return true;
         } else {
             return abort(PolicyConst::ABORT_STATUS, PolicyConst::ABORT_MESSAGE);

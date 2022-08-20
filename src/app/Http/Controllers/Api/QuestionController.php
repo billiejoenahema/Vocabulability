@@ -50,7 +50,7 @@ class QuestionController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-         DB::transaction(function () use ($request) {
+        DB::transaction(function () use ($request) {
             Question::create([
                 'word' => $request->word,
                 'correct_answer' => $request->correct_answer,
@@ -106,6 +106,6 @@ class QuestionController extends Controller
         $question = Question::findOrFail($id);
         $question->delete();
 
-        return response()->json(['message' => QuestionConst::DELETED_MESSAGE], Response:: HTTP_OK);
+        return response()->json(['message' => QuestionConst::DELETED_MESSAGE], Response::HTTP_OK);
     }
 }

@@ -9,8 +9,8 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 class QuestionImport implements ToCollection
 {
     /**
-    * @param Collection $rows
-    */
+     * @param Collection $rows
+     */
     public function collection(Collection $rows)
     {
         foreach ($rows as $row) {

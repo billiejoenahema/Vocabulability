@@ -27,7 +27,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'word' => ['required', 'max:255', 'unique:questions', new EnglishWord],
-            'correct_answer' => [ 'required', 'max:255', new NotOnlyEnglish],
+            'correct_answer' => ['required', 'max:255', new NotOnlyEnglish],
         ];
     }
 

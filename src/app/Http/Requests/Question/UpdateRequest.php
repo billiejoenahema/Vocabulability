@@ -28,7 +28,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'word' => ['required', 'max:255', Rule::unique('questions')->ignore($this->id), new EnglishWord],
-            'correct_answer' => [ 'required', 'max:255', new NotOnlyEnglish],
+            'correct_answer' => ['required', 'max:255', new NotOnlyEnglish],
         ];
     }
 
