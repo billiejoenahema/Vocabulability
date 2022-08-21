@@ -27,6 +27,12 @@ const login = async () => {
     router.push('/');
   }
 };
+const guestLogin = async () => {
+  await store.dispatch('auth/guestLogin');
+  if (!hasErrors.value) {
+    router.push('/');
+  }
+};
 </script>
 
 <template>
@@ -63,5 +69,8 @@ const login = async () => {
       />
       <button class="sign-in" @click.prevent.stop="login()">Sign in</button>
     </p>
+    <div>
+      <button @click.prevent.stop="guestLogin()">Guest Login</button>
+    </div>
   </form>
 </template>

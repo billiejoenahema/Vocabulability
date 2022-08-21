@@ -15,11 +15,11 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // 一般ユーザー
+        // ゲストユーザー
         User::create([
-            'name' => 'general_user',
-            'email' => 'user@example.com',
-            'password' => Hash::make('11111111'),
+            'name' => 'guest_user',
+            'email' => 'guest@example.com',
+            'password' => Hash::make('guest_user'),
             'is_admin' => false,
         ]);
     }
