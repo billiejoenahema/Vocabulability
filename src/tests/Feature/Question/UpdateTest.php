@@ -11,6 +11,26 @@ class UpdateTest extends TestCase
 {
     use RefreshDatabase;
 
+    private $user;
+    private $question;
+    private $data;
+
+    /**
+     * テスト前の共通処理
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
+        $this->user = User::factory()->create();
+        $this->question = Question::factory()->create();
+        $this->data = [
+            'word' => 'test',
+            'correct_answer' => 'テスト更新',
+        ];
+    }
+
     /**
      * 一般ユーザーが問題を更新できないことを確認するテスト。
      *
@@ -18,17 +38,8 @@ class UpdateTest extends TestCase
      */
     public function test_generalUserCannotUpdateQuestion()
     {
-        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
-        $user = User::factory()->create();
-
-        $question = Question::factory()->create();
-        $data = [
-            'word' => 'test',
-            'correct_answer' => 'テスト更新',
-        ];
-
         // 実行
-        $response = $this->actingAs($user)->patchJson('/api/questions/' . $question->id, $data);
+        $response = $this->actingAs($this->user)->patchJson('/api/questions/' . $this->question->id, $this->data);
         $response->assertForbidden();
     }
 
@@ -39,24 +50,16 @@ class UpdateTest extends TestCase
      */
     public function test_adminUserCanUpdateQuestion()
     {
-        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
-        $user = User::factory()->create();
-        $user->is_admin = true;
-        $user->save();
-
-        $question = Question::factory()->create();
-        $data = [
-            'word' => 'test',
-            'correct_answer' => 'テスト更新',
-        ];
+        $this->user->is_admin = true;
+        $this->user->save();
 
         // 実行
-        $response = $this->actingAs($user)->patchJson('/api/questions/' . $question->id, $data);
+        $response = $this->actingAs($this->user)->patchJson('/api/questions/' . $this->question->id, $this->data);
         $response->assertOk();
         $this->assertDatabaseHas('questions', [
-            'id' => $question->id,
-            'word' => $data['word'],
-            'correct_answer' => $data['correct_answer'],
+            'id' => $this->question->id,
+            'word' => $this->data['word'],
+            'correct_answer' => $this->data['correct_answer'],
         ]);
     }
 }

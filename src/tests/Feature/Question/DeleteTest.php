@@ -11,6 +11,21 @@ class DeleteTest extends TestCase
 {
     use RefreshDatabase;
 
+    private $user;
+    private $question;
+
+    /**
+     * テスト前の共通処理
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
+        $this->user = User::factory()->create();
+        $this->question = Question::factory()->create();
+    }
+
     /**
      * 一般ユーザーが問題を削除できないことを確認するテスト。
      *
@@ -18,11 +33,7 @@ class DeleteTest extends TestCase
      */
     public function test_generalUserCannotDeleteQuestion()
     {
-        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
-        $user = User::factory()->create();
-
-        $question = Question::factory()->create();
-        $response = $this->actingAs($user)->deleteJson('/api/questions/' . $question->id);
+        $response = $this->actingAs($this->user)->deleteJson('/api/questions/' . $this->question->id);
         $response->assertForbidden();
     }
 
@@ -33,13 +44,10 @@ class DeleteTest extends TestCase
      */
     public function test_adminUserCanDeleteQuestion()
     {
-        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
-        $user = User::factory()->create();
-        $user->is_admin = true;
-        $user->save();
+        $this->user->is_admin = true;
+        $this->user->save();
 
-        $question = Question::factory()->create();
-        $response = $this->actingAs($user)->deleteJson('/api/questions/' . $question->id);
+        $response = $this->actingAs($this->user)->deleteJson('/api/questions/' . $this->question->id);
         $response->assertOk();
     }
 }
