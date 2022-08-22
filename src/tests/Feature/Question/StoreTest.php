@@ -10,6 +10,24 @@ class StoreTest extends TestCase
 {
     use RefreshDatabase;
 
+    private $user;
+    private $data;
+
+    /**
+     * テスト前の共通処理
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
+        $this->user = User::factory()->create();
+        $this->data = [
+            'word' => 'test',
+            'correct_answer' => 'テスト',
+        ];
+    }
+
     /**
      * 一般ユーザーが問題を追加できないことを確認するテスト。
      *
@@ -17,14 +35,7 @@ class StoreTest extends TestCase
      */
     public function test_generalUserCannotPostQuestion()
     {
-        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)->postJson('/api/questions', [
-            'word' => 'test',
-            'correct_answer' => 'テスト',
-            'example' => 'test is テスト',
-        ]);
+        $response = $this->actingAs($this->user)->postJson('/api/questions', $this->data);
 
         $response->assertForbidden();
         $this->assertDatabaseCount('questions', 0);
@@ -37,15 +48,10 @@ class StoreTest extends TestCase
      */
     public function test_adminUserCanPostQuestion()
     {
-        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
-        $user = User::factory()->create();
-        $user->is_admin = true;
-        $user->save();
+        $this->user->is_admin = true;
+        $this->user->save();
 
-        $response = $this->actingAs($user)->postJson('/api/questions', [
-            'word' => 'test',
-            'correct_answer' => 'テスト',
-        ]);
+        $response = $this->actingAs($this->user)->postJson('/api/questions', $this->data);
         $response->assertCreated();
         $this->assertDatabaseCount('questions', 1);
     }
