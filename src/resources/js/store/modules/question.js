@@ -1,4 +1,3 @@
-import { QUESTION_MESSAGES as MESSAGE } from '../../const/toastMessages';
 import { shuffle } from '../../functions/shuffle';
 import axios from 'axios';
 
@@ -52,11 +51,13 @@ const actions = {
       })
       .catch((err) => {
         commit('setErrors', err.response.data.errors);
-        commit(
-          'toast/setData',
-          { status: err.response.status, content: err.response.data.message },
-          { root: true }
-        );
+        if (err.response.status === 403) {
+          commit(
+            'toast/setData',
+            { status: err.response.status, content: err.response.data.message },
+            { root: true }
+          );
+        }
       });
   },
   async importCSV({ commit }, formData) {
@@ -72,11 +73,13 @@ const actions = {
       })
       .catch((err) => {
         commit('setErrors', err.response.data.errors);
-        commit(
-          'toast/setData',
-          { status: err.response.status, content: err.response.data.message },
-          { root: true }
-        );
+        if (err.response.status === 403) {
+          commit(
+            'toast/setData',
+            { status: err.response.status, content: err.response.data.message },
+            { root: true }
+          );
+        }
       });
   },
   async update({ commit }, data) {
@@ -92,11 +95,13 @@ const actions = {
       })
       .catch((err) => {
         commit('setErrors', err.response.data.errors);
-        commit(
-          'toast/setData',
-          { status: err.response.status, content: err.response.data.message },
-          { root: true }
-        );
+        if (err.response.status === 403) {
+          commit(
+            'toast/setData',
+            { status: err.response.status, content: err.response.data.message },
+            { root: true }
+          );
+        }
       });
   },
   async delete({ commit }, id) {
@@ -112,11 +117,13 @@ const actions = {
       })
       .catch((err) => {
         commit('setErrors', err.response.data.errors);
-        commit(
-          'toast/setData',
-          { status: err.response.status, content: err.response.data.message },
-          { root: true }
-        );
+        if (err.response.status === 403) {
+          commit(
+            'toast/setData',
+            { status: err.response.status, content: err.response.data.message },
+            { root: true }
+          );
+        }
       });
   },
 };
