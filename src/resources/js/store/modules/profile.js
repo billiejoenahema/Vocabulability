@@ -1,15 +1,13 @@
 import axios from 'axios';
 
 const state = {
-  data: {
-    id: null,
-  },
+  data: {},
   errors: {},
 };
 
 const getters = {
   profile(state) {
-    return state.data.id > 0 ? state.data : {};
+    return Object.entries(state.data).length > 0;
   },
   isLogin(state) {
     return state.data?.id > 0;
@@ -27,7 +25,7 @@ const actions = {
     await axios
       .get('/api/profile')
       .then((res) => {
-        commit('resetErrors');
+        commit('setErrors', {});
         commit('setData', res.data.data);
       })
       .catch((err) => {
@@ -51,10 +49,6 @@ const mutations = {
   setErrors(state, data) {
     state.errors = {};
     state.errors = data;
-  },
-  resetErrors(state) {
-    state.errors = {};
-    state.hasErrors = false;
   },
 };
 

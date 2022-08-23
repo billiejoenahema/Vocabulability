@@ -15,6 +15,7 @@ const user = reactive({
 const isLogin = computed(() => store.getters['profile/isLogin']);
 const invalidFeedback = computed(() => store.getters['auth/invalidFeedback']);
 const hasErrors = computed(() => store.getters['auth/hasErrors']);
+const isInvalid = computed(() => store.getters['auth/isInvalid']);
 onMounted(async () => {
   await store.dispatch('profile/getIfNeeded');
   if (isLogin.value) {
@@ -41,7 +42,7 @@ const guestLogin = async () => {
     <p class="column">
       <label for="login-email">Email</label>
       <input
-        :class="invalidFeedback('email') && 'invalid'"
+        :class="isInvalid('email')"
         v-model="user.email"
         id="login-email"
         name="email"
@@ -56,7 +57,7 @@ const guestLogin = async () => {
     <p class="column">
       <label for="login-password">Password</label>
       <input
-        :class="invalidFeedback('password') && 'invalid'"
+        :class="isInvalid('password')"
         v-model="user.password"
         id="login-password"
         name="password"

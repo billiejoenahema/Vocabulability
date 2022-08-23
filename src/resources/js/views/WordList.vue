@@ -22,6 +22,7 @@ const invalidFeedback = computed(
   () => store.getters['question/invalidFeedback']
 );
 const hasErrors = computed(() => store.getters['question/hasErrors']);
+const isInvalid = computed(() => store.getters['question/isInvalid']);
 const editable = ref([]);
 const keyword = ref('');
 const currentAlphabet = ref('');
@@ -41,6 +42,7 @@ const filter = (alphabet) => {
 const onEdit = (index) => {
   editable.value = [];
   editable.value[index] = true;
+  store.commit('question/setErrors', {});
 };
 const updateQuestion = async (question, index) => {
   setIsLoading(true);
@@ -111,7 +113,7 @@ const cancel = (index) => {
         <input
           v-if="editable[index]"
           v-model="question.word"
-          :class="invalidFeedback('word') && 'invalid'"
+          :class="isInvalid('word')"
           maxlength="255"
         />
         <div v-else @click="onEdit(index)" class="list-item">
@@ -120,7 +122,7 @@ const cancel = (index) => {
         <input
           v-if="editable[index]"
           v-model="question.correct_answer"
-          :class="invalidFeedback('correct_answer') && 'invalid'"
+          :class="isInvalid('correct_answer')"
           maxlength="255"
         />
         <div v-else @click="onEdit(index)" class="list-item">
