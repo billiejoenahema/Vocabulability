@@ -19,6 +19,9 @@ const getters = {
   hasErrors(state) {
     return Object.keys(state.errors).length > 0;
   },
+  isInvalid: (state) => (key) => {
+    return state.errors?.[key] ? 'invalid' : '';
+  },
 };
 
 const actions = {
@@ -26,7 +29,7 @@ const actions = {
     await axios
       .get('/api/questions', { params })
       .then((res) => {
-        commit('resetErrors', []);
+        commit('setErrors', {});
         commit('setData', res.data);
       })
       .catch((err) => {
@@ -42,7 +45,7 @@ const actions = {
     await axios
       .post('/api/questions', data)
       .then((res) => {
-        commit('resetErrors');
+        commit('setErrors', {});
         commit(
           'toast/setData',
           { status: res.status, content: res.data.message },
@@ -64,7 +67,7 @@ const actions = {
     await axios
       .post('/api/questions/import', formData)
       .then((res) => {
-        commit('resetErrors');
+        commit('setErrors', {});
         commit(
           'toast/setData',
           { status: res.status, content: res.data.message },
@@ -86,7 +89,7 @@ const actions = {
     await axios
       .patch(`/api/questions/${data.id}`, data)
       .then((res) => {
-        commit('resetErrors');
+        commit('setErrors', {});
         commit(
           'toast/setData',
           { status: res.status, content: res.data.message },
@@ -108,7 +111,7 @@ const actions = {
     await axios
       .delete(`/api/questions/${id}`)
       .then((res) => {
-        commit('resetErrors');
+        commit('setErrors', {});
         commit(
           'toast/setData',
           { status: res.status, content: res.data.message },
@@ -135,10 +138,6 @@ const mutations = {
   setErrors(state, data) {
     state.errors = [];
     state.errors = data ?? [];
-  },
-  resetErrors(state) {
-    state.errors = [];
-    state.hasErrors = false;
   },
 };
 

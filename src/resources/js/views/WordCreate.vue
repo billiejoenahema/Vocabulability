@@ -19,6 +19,7 @@ const invalidFeedback = computed(
   () => store.getters['question/invalidFeedback']
 );
 const hasErrors = computed(() => store.getters['question/hasErrors']);
+const isInvalid = computed(() => store.getters['question/isInvalid']);
 const csv = ref(null);
 
 const addWord = async () => {
@@ -52,7 +53,7 @@ const importCSV = async () => {
         <input
           type="text"
           v-model="newQuestion.word"
-          :class="invalidFeedback('word') && 'invalid'"
+          :class="isInvalid('word')"
           maxlength="255"
         />
         <InvalidFeedback
@@ -65,7 +66,7 @@ const importCSV = async () => {
         <input
           type="text"
           v-model="newQuestion.correct_answer"
-          :class="invalidFeedback('correct_answer') && 'invalid'"
+          :class="isInvalid('correct_answer')"
           maxlength="255"
         />
         <InvalidFeedback
@@ -85,7 +86,7 @@ const importCSV = async () => {
             type="file"
             accept=".csv"
             ref="csv"
-            :class="invalidFeedback('file') && 'invalid'"
+            :class="isInvalid('file')"
           />
           <InvalidFeedback
             v-if="invalidFeedback('file')"

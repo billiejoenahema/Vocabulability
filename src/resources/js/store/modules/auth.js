@@ -14,9 +14,10 @@ const getters = {
     return state.errors[props] ?? '';
   },
   hasErrors(state) {
-    console.log(state.errors);
-
     return Object.keys(state.errors).length > 0;
+  },
+  isInvalid: (state) => (key) => {
+    return state.errors?.[key] ? 'invalid' : '';
   },
 };
 
@@ -28,7 +29,7 @@ const actions = {
         await axios
           .post('/login', guest)
           .then((res) => {
-            commit('resetErrors');
+            commit('setErrors', {});
           })
           .catch((err) => {
             commit(
@@ -74,9 +75,6 @@ const mutations = {
   setErrors(state, data) {
     state.errors = {};
     state.errors = data ?? {};
-  },
-  resetErrors(state) {
-    state.errors = {};
   },
 };
 
