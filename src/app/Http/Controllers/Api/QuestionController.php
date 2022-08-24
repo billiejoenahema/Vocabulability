@@ -80,12 +80,11 @@ class QuestionController extends Controller
      * 問題を更新する。
      *
      * @param UpdateRequest  $request
-     * @param  int  $id
+     * @param  Question  $question
      * @return JsonResponse
      */
-    public function update(UpdateRequest $request, $id): JsonResponse
+    public function update(UpdateRequest $request, Question $question): JsonResponse
     {
-        $question = Question::findOrFail($id);
         $data = $request->all();
 
         DB::transaction(function () use ($data, $question) {
@@ -98,12 +97,11 @@ class QuestionController extends Controller
     /**
      * 問題を削除する。
      *
-     * @param  int  $id
+     * @param  Question  $question
      * @return JsonResponse
      */
-    public function destroy($id): JsonResponse
+    public function destroy(Question $question): JsonResponse
     {
-        $question = Question::findOrFail($id);
         $question->delete();
 
         return response()->json(['message' => QuestionConst::DELETED_MESSAGE], Response::HTTP_OK);
