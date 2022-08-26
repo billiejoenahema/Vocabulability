@@ -43,7 +43,7 @@ class QuestionPolicy
         if ($user->id === auth()->id() && $user->is_admin) {
             return true;
         } else {
-            return abort(403, PolicyEnum::ABORT_MESSAGE);
+            return abort(403, PolicyEnum::ABORT_MESSAGE->value);
         }
     }
 
@@ -58,7 +58,7 @@ class QuestionPolicy
         if ($user->id === auth()->id() && $user->is_admin) {
             return true;
         } else {
-            return abort(403, PolicyEnum::ABORT_MESSAGE);
+            return abort(403, PolicyEnum::ABORT_MESSAGE->value);
         }
     }
 
@@ -73,7 +73,7 @@ class QuestionPolicy
         if ($user->id === auth()->id() && $user->is_admin) {
             return true;
         } else {
-            return abort(403, PolicyEnum::ABORT_MESSAGE);
+            return abort(403, PolicyEnum::ABORT_MESSAGE->value);
         }
     }
 }
