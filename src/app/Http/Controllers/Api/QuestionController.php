@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Consts\QuestionConst;
+use App\Enums\QuestionEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Question\ImportRequest;
 use App\Http\Requests\Question\IndexRequest;
@@ -58,7 +58,7 @@ class QuestionController extends Controller
             ]);
         });
 
-        return response()->json(['message' => QuestionConst::CREATED_MESSAGE], Response::HTTP_CREATED);
+        return response()->json(['message' => QuestionEnum::CREATED_MESSAGE], Response::HTTP_CREATED);
     }
 
     /**
@@ -73,7 +73,7 @@ class QuestionController extends Controller
 
         Excel::import(new QuestionImport, $request->file('file'));
 
-        return response()->json(['message' => QuestionConst::CREATED_MESSAGE], Response::HTTP_CREATED);
+        return response()->json(['message' => QuestionEnum::CREATED_MESSAGE], Response::HTTP_CREATED);
     }
 
     /**
@@ -91,7 +91,7 @@ class QuestionController extends Controller
             $question->fill($data)->save();
         });
 
-        return response()->json(['message' => QuestionConst::UPDATED_MESSAGE], Response::HTTP_OK);
+        return response()->json(['message' => QuestionEnum::UPDATED_MESSAGE], Response::HTTP_OK);
     }
 
     /**
@@ -104,6 +104,6 @@ class QuestionController extends Controller
     {
         $question->delete();
 
-        return response()->json(['message' => QuestionConst::DELETED_MESSAGE], Response::HTTP_OK);
+        return response()->json(['message' => QuestionEnum::DELETED_MESSAGE], Response::HTTP_OK);
     }
 }

@@ -8,7 +8,7 @@ import Toast from '../components/Toast.vue';
 const store = useStore();
 
 onUnmounted(() => {
-  store.commit('question/resetErrors');
+  store.commit('question/setErrors', {});
 });
 const newQuestion = reactive({
   word: '',
@@ -30,7 +30,7 @@ const addWord = async () => {
   newQuestion.word = '';
   newQuestion.correct_answer = '';
   newQuestion.example = '';
-  store.commit('question/resetErrors');
+  store.commit('question/setErrors', {});
 };
 const importCSV = async () => {
   const formData = new FormData();
