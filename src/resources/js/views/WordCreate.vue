@@ -10,11 +10,12 @@ const store = useStore();
 onUnmounted(() => {
   store.commit('question/setErrors', {});
 });
-const newQuestion = reactive({
+const initialValue = {
   word: '',
   correct_answer: '',
   example: '',
-});
+};
+const newQuestion = reactive({ ...initialValue });
 const invalidFeedback = computed(
   () => store.getters['question/invalidFeedback']
 );
@@ -24,12 +25,8 @@ const csv = ref(null);
 
 const addWord = async () => {
   await store.dispatch('question/post', newQuestion);
-  if (hasErrors.value) {
-    return;
-  }
-  newQuestion.word = '';
-  newQuestion.correct_answer = '';
-  newQuestion.example = '';
+  if (hasErrors.value) return;
+  newQuestion = { ...initialValue };
   store.commit('question/setErrors', {});
 };
 const importCSV = async () => {

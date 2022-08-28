@@ -120,13 +120,12 @@ const actions = {
       })
       .catch((err) => {
         commit('setErrors', err.response.data.errors);
-        if (err.response.status === 403) {
-          commit(
-            'toast/setData',
-            { status: err.response.status, content: err.response.data.message },
-            { root: true }
-          );
-        }
+        if (err.response.status !== 403) return;
+        commit(
+          'toast/setData',
+          { status: err.response.status, content: err.response.data.message },
+          { root: true }
+        );
       });
   },
 };

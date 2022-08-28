@@ -53,16 +53,15 @@ const actions = {
               'setErrors',
               err.response.data.errors ?? err.response.data.message
             );
-            if (err.response.status === 401) {
-              commit(
-                'toast/setData',
-                {
-                  status: err.response.status,
-                  content: 'ログインに失敗しました。',
-                },
-                { root: true }
-              );
-            }
+            if (err.response.status !== 401) return;
+            commit(
+              'toast/setData',
+              {
+                status: err.response.status,
+                content: 'ログインに失敗しました。',
+              },
+              { root: true }
+            );
           });
       });
   },
