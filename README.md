@@ -35,32 +35,3 @@ This application allows you to learn English vocabulary necessary for engineers.
 ## Authentication
 
 Sanctum with Cookie.
-
-## Tables
-
-- users []
-
-  - id
-  - name [ユーザー名]
-  - email [メールアドレス]
-  - password [パスワード]
-
-- questions [問題]
-
-  - id
-  - word [単語]
-  - correct_answer [正解]
-  - example [例文]
-
-- answers [回答]
-
-  - id
-  - question_id [問題 ID]
-  - user_id [ユーザー ID]
-  - answer [回答]
-
-- results
-  - id
-  - user_id [ユーザー ID]
-  - question_id [問題 ID]
-  - execute_date [実施日]
