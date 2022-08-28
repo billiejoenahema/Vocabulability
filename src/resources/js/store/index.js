@@ -9,7 +9,6 @@ export const store = createStore({
   modules: {
     auth,
     loading,
-
     question,
     profile,
     toast,

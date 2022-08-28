@@ -33,11 +33,14 @@ const debounceSearch = useDebounce(() => {
   currentAlphabet.value = '';
   store.dispatch('question/get', { keyword: keyword.value });
 });
+const fetchData = (alphabet) => {
+  store.dispatch('question/get', { filter: alphabet });
+};
 const filter = (alphabet) => {
   keyword.value = '';
   editable.value = [];
   currentAlphabet.value = alphabet;
-  store.dispatch('question/get', { filter: alphabet });
+  fetchData(alphabet);
 };
 const onEdit = (index) => {
   editable.value = [];
@@ -52,22 +55,19 @@ const updateQuestion = async (question, index) => {
     return;
   }
   editable.value[index] = false;
-  store.dispatch('question/get');
+  fetchData(currentAlphabet.value);
 };
 const deleteQuestion = async (id) => {
   if (confirm(DELETE_CONFIRM)) {
     setIsLoading(true);
     await store.dispatch('question/delete', id);
     setIsLoading(false);
-    if (hasErrors.value) {
-      return;
-    }
-    store.dispatch('question/get');
+    if (hasErrors.value) return;
+    fetchData(currentAlphabet.value);
     editable.value = [];
   }
 };
 const cancel = (index) => {
-  store.dispatch('question/get');
   editable.value[index] = false;
 };
 </script>
