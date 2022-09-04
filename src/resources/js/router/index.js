@@ -1,8 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginPage from '../views/LoginPage';
 import MainPage from '../views/MainPage';
-import WordCreate from '../views/WordCreate';
-import WordList from '../views/WordList';
+import WordCheck from '../views/Word/WordCheck';
+import WordCreate from '../views/Word/WordCreate';
+import WordList from '../views/Word/WordList';
+import ItemCreate from '../views/Item/ItemCreate';
+import ItemList from '../views/Item/ItemList';
 
 const routes = [
   {
@@ -10,12 +13,24 @@ const routes = [
     component: MainPage,
   },
   {
-    path: '/create',
+    path: '/word_check',
+    component: WordCheck,
+  },
+  {
+    path: '/word_create',
     component: WordCreate,
   },
   {
-    path: '/list',
+    path: '/word_list',
     component: WordList,
+  },
+  {
+    path: '/item_create',
+    component: ItemCreate,
+  },
+  {
+    path: '/item_list',
+    component: ItemList,
   },
   {
     path: '/login',

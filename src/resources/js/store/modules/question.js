@@ -34,11 +34,6 @@ const actions = {
       })
       .catch((err) => {
         commit('setErrors', err.response.data.errors);
-        commit(
-          'toast/setData',
-          { status: err.response.status, content: err.response.data.message },
-          { root: true }
-        );
       });
   },
   async post({ commit }, data) {
