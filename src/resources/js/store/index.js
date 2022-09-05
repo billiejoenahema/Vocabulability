@@ -1,16 +1,18 @@
 import { createStore } from 'vuex';
 import auth from './modules/auth';
+import item from './modules/item';
 import loading from './modules/loading';
-import question from './modules/question';
 import profile from './modules/profile';
+import question from './modules/question';
 import toast from './modules/toast';
 
 export const store = createStore({
   modules: {
     auth,
+    item,
     loading,
-    question,
     profile,
+    question,
     toast,
   },
 });
