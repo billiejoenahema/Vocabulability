@@ -7,34 +7,43 @@ import Toast from '../../components/Toast';
 
 const store = useStore();
 
-onUnmounted(() => {
-  store.commit('question/setErrors', {});
+const newItem = reactive({
+  category: null,
+  name: null,
+  precedents: [
+    {
+      name: null,
+    },
+  ],
 });
-const initialValue = {
-  word: '',
-  correct_answer: '',
-  example: '',
-};
-const newQuestion = reactive({ ...initialValue });
-const invalidFeedback = computed(
-  () => store.getters['question/invalidFeedback']
-);
-const hasErrors = computed(() => store.getters['question/hasErrors']);
-const isInvalid = computed(() => store.getters['question/isInvalid']);
+const invalidFeedback = computed(() => store.getters['item/invalidFeedback']);
+const hasErrors = computed(() => store.getters['item/hasErrors']);
+const isInvalid = computed(() => store.getters['item/isInvalid']);
 const csv = ref(null);
 
-const addWord = async () => {
-  await store.dispatch('question/post', newQuestion);
+const add = () => {
+  newItem.precedents.push({ name: '' });
+};
+const remove = (index) => {
+  newItem.precedents.splice(index, 1);
+};
+const create = async () => {
+  await store.dispatch('item/post', newItem);
   if (hasErrors.value) return;
-  newQuestion = { ...initialValue };
-  store.commit('question/setErrors', {});
+  newItem.category = null;
+  newItem.name = null;
+  newItem.precedents = [{ name: null }];
+  store.commit('item/setErrors', {});
 };
 const importCSV = async () => {
   const formData = new FormData();
 
   formData.append('file', csv.value.files[0]);
-  await store.dispatch('question/importCSV', formData);
+  await store.dispatch('item/importCSV', formData);
 };
+onUnmounted(() => {
+  store.commit('item/setErrors', {});
+});
 </script>
 
 <template>
@@ -46,34 +55,57 @@ const importCSV = async () => {
         <div class="title">新規登録</div>
       </div>
       <div class="column">
-        <label>単語</label>
-        <input
-          type="text"
-          v-model="newQuestion.word"
-          :class="isInvalid('word')"
+        <label>カテゴリ</label>
+        <select
+          v-model="newItem.category"
+          :class="isInvalid('category')"
           maxlength="255"
-        />
-        <InvalidFeedback
-          v-if="invalidFeedback('word')"
-          :errors="invalidFeedback('word')"
+        >
+          <option value="01">01</option>
+        </select>
+        <invalid-feedback
+          v-if="invalidFeedback('category')"
+          :errors="invalidFeedback('category')"
         />
       </div>
       <div class="column">
-        <label>正解</label>
+        <label>項目</label>
         <input
           type="text"
-          v-model="newQuestion.correct_answer"
-          :class="isInvalid('correct_answer')"
+          v-model="newItem.name"
+          :class="isInvalid('name')"
           maxlength="255"
         />
-        <InvalidFeedback
-          v-if="invalidFeedback('correct_answer')"
-          :errors="invalidFeedback('correct_answer')"
+        <invalid-feedback
+          v-if="invalidFeedback('name')"
+          :errors="invalidFeedback('name')"
         />
       </div>
-      <div class="column"></div>
+      <div v-for="(precedent, index) in newItem.precedents" class="column">
+        <label>名前{{ index + 1 }}</label>
+        <div class="row">
+          <input
+            type="text"
+            v-model="precedent.name"
+            :class="isInvalid('precedents.precedents[' + index + '].name')"
+            maxlength="255"
+          />
+          <button
+            v-if="index > 0"
+            class="item-remove-button"
+            @click="remove(index)"
+          >
+            削除
+          </button>
+        </div>
+        <invalid-feedback
+          v-if="invalidFeedback('precedents.precedents[' + index + '].name')"
+          :errors="invalidFeedback('precedents.precedents[' + index + '].name')"
+        />
+      </div>
+      <button class="item-add-button" @click="add()">入力欄を追加</button>
       <div class="button-area">
-        <button @click.prevent="addWord()">追加</button>
+        <button @click.prevent="create()">登録</button>
       </div>
       <hr />
       <div class="csv-import">
@@ -85,7 +117,7 @@ const importCSV = async () => {
             ref="csv"
             :class="isInvalid('file')"
           />
-          <InvalidFeedback
+          <invalid-feedback
             v-if="invalidFeedback('file')"
             :errors="invalidFeedback('file')"
           />
