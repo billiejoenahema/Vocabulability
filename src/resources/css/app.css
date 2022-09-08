@@ -59,7 +59,7 @@ form {
 }
 .list-header {
   display: grid;
-  grid-template-columns: 4fr 11fr 2fr 3fr 2fr;
+  grid-template-columns: 4fr 8fr 1fr 1fr 1fr;
   column-gap: 8px;
   padding: 8px 0;
   position: sticky;
@@ -72,7 +72,7 @@ form {
 }
 .list-row {
   display: grid;
-  grid-template-columns: 4fr 11fr 2fr 3fr 2fr;
+  grid-template-columns: 4fr 8fr 1fr 1fr 1fr;
   column-gap: 8px;
 }
 .list-item {
@@ -113,6 +113,9 @@ form {
   font-weight: bold;
   border-radius: 8px;
 }
+.jp-character {
+  font-size: 0.7rem;
+}
 .index-item:hover {
   cursor: pointer;
   background-color: rgb(131, 131, 131);
@@ -139,4 +142,9 @@ form {
 }
 .item-remove-button {
   margin-left: 16px;
+}
+.precedent {
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
 }

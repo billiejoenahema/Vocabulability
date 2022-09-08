@@ -16,59 +16,60 @@ const store = useStore();
 
 onMounted(async () => {
   setIsLoading(true);
-  await store.dispatch('question/get');
+  await store.dispatch('item/get');
   setIsLoading(false);
 });
 
-store.dispatch('question/get');
-const questions = computed(() => store.getters['question/data']);
-const invalidFeedback = computed(
-  () => store.getters['question/invalidFeedback']
-);
-const hasErrors = computed(() => store.getters['question/hasErrors']);
-const isInvalid = computed(() => store.getters['question/isInvalid']);
+store.dispatch('item/get');
+const items = computed(() => store.getters['item/data']);
+const invalidFeedback = computed(() => store.getters['item/invalidFeedback']);
+const hasErrors = computed(() => store.getters['item/hasErrors']);
+const isInvalid = computed(() => store.getters['item/isInvalid']);
 const editable = ref([]);
 const keyword = ref('');
-const currentAlphabet = ref('');
+const currentCharacter = ref('');
 const isLoading = computed(() => store.getters['loading/isLoading']);
 const setIsLoading = (bool) => store.commit('loading/setIsLoading', bool);
 
 const debounceSearch = useDebounce(() => {
-  currentAlphabet.value = '';
-  store.dispatch('question/get', { keyword: keyword.value });
+  currentCharacter.value = '';
+  store.dispatch('item/get', { keyword: keyword.value });
 });
-const fetchData = (alphabet) => {
-  store.dispatch('question/get', { filter: alphabet });
+const fetchData = (character) => {
+  store.dispatch('item/get', { filter: character });
 };
-const filter = (alphabet) => {
+const filter = (character) => {
   keyword.value = '';
   editable.value = [];
-  currentAlphabet.value = alphabet;
-  fetchData(alphabet);
+  currentCharacter.value = character;
+  fetchData(character);
 };
 const onEdit = (index) => {
   editable.value = [];
   editable.value[index] = true;
-  store.commit('question/setErrors', {});
+  store.commit('item/setErrors', {});
 };
-const updateQuestion = async (question, index) => {
+const updateItem = async (item, index) => {
   setIsLoading(true);
-  await store.dispatch('question/update', question);
+  await store.dispatch('item/update', item);
   setIsLoading(false);
-  if (hasErrors.value) {
-    return;
-  }
-  editable.value[index] = false;
-  fetchData(currentAlphabet.value);
+  if (hasErrors.value) return;
+  setTimeout(() => {
+    editable.value[index] = false;
+    fetchData(currentCharacter.value);
+  }, 2000);
 };
-const deleteQuestion = async (id) => {
+const deleteItem = async (id) => {
   if (confirm(DELETE_ITEM_CONFIRM)) {
     setIsLoading(true);
-    await store.dispatch('question/delete', id);
+    await store.dispatch('item/delete', id);
+
     setIsLoading(false);
     if (hasErrors.value) return;
-    fetchData(currentAlphabet.value);
-    editable.value = [];
+    setTimeout(() => {
+      fetchData(currentCharacter.value);
+      editable.value = [];
+    }, 2000);
   }
 };
 const cancel = (index) => {
@@ -94,62 +95,74 @@ const cancel = (index) => {
     <div class="wrap">
       <div
         class="row"
-        v-for="(alphabet, index) in JAPANESE_SYLLABARY"
+        v-for="(character, index) in JAPANESE_SYLLABARY"
         :key="index"
       >
         <span v-if="index">/</span>
         <div
-          class="index-item"
-          :class="alphabet === currentAlphabet && 'current-alphabet'"
-          @click="filter(alphabet)"
+          class="index-item jp-character"
+          :class="character === currentCharacter && 'current-character'"
+          @click="filter(character)"
         >
-          {{ alphabet }}
+          {{ character }}
         </div>
       </div>
     </div>
     <div class="row list-header">
-      <div class="list-column-title">単語</div>
-      <div class="list-column-title">正解</div>
+      <div class="list-column-title">項目</div>
+      <div class="list-column-title">事例</div>
     </div>
-    <div v-if="!isLoading && !questions.length">{{ NO_MATCH_ITEMS }}</div>
+    <div v-if="!isLoading && !items.length">{{ NO_MATCH_ITEMS }}</div>
     <div v-else class="list-body">
-      <div
-        v-for="(question, index) in questions"
-        :key="question.id"
-        class="row list-row"
-      >
+      <div v-for="(item, index) in items" :key="item.id" class="row list-row">
         <input
           v-if="editable[index]"
-          v-model="question.word"
-          :class="isInvalid('word')"
+          v-model="item.name"
+          :class="isInvalid('name')"
           maxlength="255"
         />
         <div v-else @click="onEdit(index)" class="list-item">
-          {{ question.word }}
+          {{ item.name }}
         </div>
-        <input
+        <div class="row">
+          <template v-for="(precedent, _index) in item.precedents">
+            <input
+              v-if="editable[index]"
+              :key="precedent.id"
+              v-model="item.precedents[_index].name"
+              class="precedent-input"
+              :class="isInvalid('precedents[' + _index + '].name')"
+              maxlength="255"
+            />
+            <div v-else @click="onEdit(index)" class="list-item precedent">
+              {{ item.precedents[_index].name }}
+            </div>
+          </template>
+        </div>
+        <button
           v-if="editable[index]"
-          v-model="question.correct_answer"
-          :class="isInvalid('correct_answer')"
-          maxlength="255"
-        />
-        <div v-else @click="onEdit(index)" class="list-item">
-          {{ question.correct_answer }}
-        </div>
-        <button v-if="editable[index]" @click="updateQuestion(question, index)">
-          更新
-        </button>
-        <div v-else @click="onEdit(index)"></div>
-        <button v-if="editable[index]" class="cancel" @click="cancel(index)">
-          キャンセル
+          title="更新"
+          @click="updateItem(item, index)"
+        >
+          ✅
         </button>
         <div v-else @click="onEdit(index)"></div>
         <button
           v-if="editable[index]"
-          class="delete"
-          @click="deleteQuestion(question.id)"
+          title="キャンセル"
+          class="cancel"
+          @click="cancel(index)"
         >
-          削除
+          ✖
+        </button>
+        <div v-else @click✖="onEdit(index)"></div>
+        <button
+          v-if="editable[index]"
+          title="削除"
+          class="delete"
+          @click="deleteItem(item.id)"
+        >
+          -
         </button>
         <div v-else @click="onEdit(index)"></div>
         <InvalidFeedback

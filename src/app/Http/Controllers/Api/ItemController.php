@@ -61,7 +61,9 @@ class ItemController extends Controller
         $data = $request->all();
         DB::transaction(function () use ($data, $item) {
             $item->fill($data)->save();
-            $item->precedents()->upsert($data['precedents'], ['id'], ['name']);
+            foreach ($data['precedents'] as $precedent) {
+                Precedent::updateOrCreate(['id' => $precedent['id']], $precedent);
+            }
         });
 
         return response()->json(['message' => ResponseEnum::ITEM_UPDATED->value], Response::HTTP_OK);
