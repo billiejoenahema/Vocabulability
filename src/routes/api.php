@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ItemController;
+use App\Http\Controllers\Api\PrecedentController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\QuestionController;
 use App\Models\Item;
@@ -34,4 +35,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/items', [ItemController::class, 'store'])->can('create', Item::class);
     Route::patch('/items/{item}', [ItemController::class, 'update'])->can('update', Item::class);
     Route::delete('/items/{item}', [ItemController::class, 'destroy'])->can('delete', Item::class);
+    // 事例
+    Route::delete('/precedents/{precedent}', [PrecedentController::class, 'destroy'])->can('delete', Item::class);
 });

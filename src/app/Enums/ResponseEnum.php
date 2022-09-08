@@ -11,4 +11,5 @@ enum ResponseEnum: string
     case ITEM_CREATED = '項目を追加しました。';
     case ITEM_UPDATED = '項目を更新しました。';
     case ITEM_DELETED = '項目を削除しました。';
+    case PRECEDENT_DELETED = '事例を削除しました。';
 }
