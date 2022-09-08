@@ -50,7 +50,11 @@ const onEdit = (index) => {
   editable.value[index] = true;
   store.commit('item/setErrors', {});
 };
-const removePrecedent = async (id) => {
+const removePrecedent = async (index, _index, id = null) => {
+  if (!id) {
+    items.value[index].precedents.splice(_index, 1);
+    return;
+  }
   if (!confirm('事例を削除しますか？')) return;
   await store.dispatch('precedent/delete', id);
   if (hasErrorsPrecedent.value) return;
@@ -58,6 +62,9 @@ const removePrecedent = async (id) => {
     editable.value = [];
     fetchData(currentCharacter.value);
   }, 2000);
+};
+const addPrecedent = (index) => {
+  items.value[index].precedents.push({});
 };
 const updateItem = async (item, index) => {
   setIsLoading(true);
@@ -73,7 +80,6 @@ const deleteItem = async (id) => {
   if (confirm(DELETE_ITEM_CONFIRM)) {
     setIsLoading(true);
     await store.dispatch('item/delete', id);
-
     setIsLoading(false);
     if (hasErrors.value) return;
     setTimeout(() => {
@@ -146,7 +152,7 @@ const cancel = (index) => {
               />
               <div
                 class="precedent-input-xmark"
-                @click="removePrecedent(precedent.id)"
+                @click="removePrecedent(index, _index, precedent.id)"
               >
                 <font-awesome-icon class="xmark-icon" icon="xmark" />
               </div>
@@ -155,6 +161,13 @@ const cancel = (index) => {
               {{ item.precedents[_index].name }}
             </div>
           </template>
+          <div
+            v-if="editable[index]"
+            class="precedent-input-plus"
+            @click="addPrecedent(index)"
+          >
+            <font-awesome-icon class="plus-icon" icon="plus" />
+          </div>
         </div>
         <button
           v-if="editable[index]"
@@ -170,7 +183,7 @@ const cancel = (index) => {
           class="cancel"
           @click="cancel(index)"
         >
-          <font-awesome-icon class="minus-icon" icon="minus" />
+          <font-awesome-icon class="xmark-icon" icon="xmark" />
         </button>
         <div v-else @click✖="onEdit(index)"></div>
         <button
