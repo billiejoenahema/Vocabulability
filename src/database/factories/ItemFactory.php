@@ -17,8 +17,10 @@ class ItemFactory extends Factory
      */
     public function definition()
     {
+        $index = array_rand(config('const.JAPANESE_SYLLABARY'));
         return [
             'name' => $this->faker->realText(10, 5),
+            'name_kana' => config('const.JAPANESE_SYLLABARY')[$index],
             'category' => CategoryEnum::PERSON->value,
         ];
     }

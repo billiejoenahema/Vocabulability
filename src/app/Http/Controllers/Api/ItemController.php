@@ -23,7 +23,7 @@ class ItemController extends Controller
     public function index(): AnonymousResourceCollection
     {
         $query = Item::query();
-        $items = $query->orderBy('name', 'asc')->get();
+        $items = $query->orderBy('name_kana', 'asc')->get();
 
         return ItemResource::collection($items);
     }
@@ -36,12 +36,14 @@ class ItemController extends Controller
      */
     public function store(SaveRequest $request): JsonResponse
     {
-        DB::transaction(function () use ($request) {
+        $data = $request->all();
+        DB::transaction(function () use ($data) {
             $item = Item::create([
-                'name' => $request->name,
-                'category' => $request->category,
+                'name' => $data['name'],
+                'name_kana' => $data['name_kana'],
+                'category' => $data['category'],
             ]);
-            $item->precedents()->createMany($request['precedents']);
+            $item->precedents()->createMany($data['precedents']);
         });
 
         return response()->json(['message' => ResponseEnum::ITEM_CREATED->value], Response::HTTP_CREATED);

@@ -18,6 +18,7 @@ return new class extends Migration
 
             $table->id();
             $table->string('name')->comment('項目名');
+            $table->string('name_kana')->comment('項目名ふりがな');
             $table->char('category', 2)->comment('カテゴリ');
 
             $table->softDeletes();

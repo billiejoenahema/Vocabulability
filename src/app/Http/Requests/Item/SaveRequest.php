@@ -25,6 +25,7 @@ class SaveRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:50',
+            'name_kana' => 'required|string|max:50',
             'category' => 'required|string|max:2', // TODO CategoryEnum に存在する value のみ許可する
             'precedents' => 'required|array',
             'precedents.*.name' => 'required|string|max:50',

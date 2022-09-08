@@ -17,6 +17,7 @@ class ItemResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'name_kana' => $this->name_kana,
             'category' => $this->category,
             'precedents' => PrecedentResource::collection($this->precedents),
         ];

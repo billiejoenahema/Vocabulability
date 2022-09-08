@@ -10,6 +10,7 @@ const store = useStore();
 const newItem = reactive({
   category: null,
   name: null,
+  name_kana: null,
   precedents: [
     {
       name: null,
@@ -32,6 +33,7 @@ const create = async () => {
   if (hasErrors.value) return;
   newItem.category = null;
   newItem.name = null;
+  newItem.name_kana = null;
   newItem.precedents = [{ name: null }];
   store.commit('item/setErrors', {});
 };
@@ -69,7 +71,7 @@ onUnmounted(() => {
         />
       </div>
       <div class="column">
-        <label>項目</label>
+        <label>項目名</label>
         <input
           type="text"
           v-model="newItem.name"
@@ -79,6 +81,19 @@ onUnmounted(() => {
         <invalid-feedback
           v-if="invalidFeedback('name')"
           :errors="invalidFeedback('name')"
+        />
+      </div>
+      <div class="column">
+        <label>項目名ふりがな</label>
+        <input
+          type="text"
+          v-model="newItem.name_kana"
+          :class="isInvalid('name_kana')"
+          maxlength="255"
+        />
+        <invalid-feedback
+          v-if="invalidFeedback('name_kana')"
+          :errors="invalidFeedback('name_kana')"
         />
       </div>
       <div v-for="(precedent, index) in newItem.precedents" class="column">

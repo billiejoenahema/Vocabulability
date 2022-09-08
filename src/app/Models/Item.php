@@ -46,6 +46,7 @@ class Item extends Model
      */
     protected $fillable = [
         'name',
+        'name_kana',
         'category',
     ];
 
