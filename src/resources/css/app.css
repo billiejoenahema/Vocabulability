@@ -148,3 +148,12 @@ form {
   display: flex;
   align-items: center;
 }
+.check-icon,
+.xmark-icon,
+.minus-icon {
+  font-size: 1rem;
+}
+.precedent-input-xmark {
+  position: relative;
+  left: -16px;
+}
