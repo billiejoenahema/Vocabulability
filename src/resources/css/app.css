@@ -133,7 +133,8 @@ form {
   width: 400px;
   margin: 40px 0;
 }
-.current-alphabet {
+.current-alphabet,
+.current-character {
   font-weight: bold;
   background-color: rgb(131, 131, 131);
 }

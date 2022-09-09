@@ -114,7 +114,6 @@ const cancel = (index) => {
         v-for="(character, index) in JAPANESE_SYLLABARY"
         :key="index"
       >
-        <span v-if="index">/</span>
         <div
           class="index-item jp-character"
           :class="character === currentCharacter && 'current-character'"
@@ -122,7 +121,9 @@ const cancel = (index) => {
         >
           {{ character }}
         </div>
+        <span>/</span>
       </div>
+      <div class="index-item jp-character" @click="filter('')">すべて</div>
     </div>
     <div class="row list-header">
       <div class="list-column-title">項目</div>

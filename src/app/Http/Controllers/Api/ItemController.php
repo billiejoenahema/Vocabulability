@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\ResponseEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Item\IndexRequest;
 use App\Http\Requests\Item\SaveRequest;
 use App\Http\Resources\ItemResource;
 use App\Models\Item;
@@ -18,11 +19,19 @@ class ItemController extends Controller
     /**
      * 項目一覧を取得する。
      *
+     * @param IndexRequest $request
      * @return AnonymousResourceCollection
      */
-    public function index(): AnonymousResourceCollection
+    public function index(IndexRequest $request): AnonymousResourceCollection
     {
-        $query = Item::query();
+        $keyword = $request['keyword'] ?? null;
+        $filter = $request['filter'] ?? null;
+
+        $query = Item::when($keyword, function ($query, $keyword) {
+            return $query->where('name', 'like', "%{$keyword}%");
+        })->when($filter, function ($query, $filter) {
+            return $query->where('name_kana', 'like', "{$filter}%");
+        });
         $items = $query->orderBy('name_kana', 'asc')->get();
 
         return ItemResource::collection($items);
