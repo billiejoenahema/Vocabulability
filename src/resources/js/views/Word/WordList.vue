@@ -1,12 +1,12 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
-import InvalidFeedback from '../components/InvalidFeedback.vue';
-import LoadingOverlay from '../components/LoadingOverlay.vue';
-import Navigation from '../components/Navigation.vue';
-import Toast from '../components/Toast.vue';
-import { ALPHABETS, DELETE_CONFIRM, NO_MATCH } from '../const/questions';
-import { useDebounce } from '../functions/useDebounce';
+import InvalidFeedback from '../../components/InvalidFeedback';
+import LoadingOverlay from '../../components/LoadingOverlay';
+import Navigation from '../../components/Navigation';
+import Toast from '../../components/Toast';
+import { ALPHABETS, DELETE_CONFIRM, NO_MATCH } from '../../const/const';
+import { useDebounce } from '../../functions/useDebounce';
 
 const store = useStore();
 

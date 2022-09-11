@@ -1,9 +1,9 @@
 <script setup>
 import { computed, onUnmounted, reactive, ref } from 'vue';
 import { useStore } from 'vuex';
-import InvalidFeedback from '../components/InvalidFeedback.vue';
-import Navigation from '../components/Navigation.vue';
-import Toast from '../components/Toast.vue';
+import InvalidFeedback from '../../components/InvalidFeedback';
+import Navigation from '../../components/Navigation';
+import Toast from '../../components/Toast';
 
 const store = useStore();
 

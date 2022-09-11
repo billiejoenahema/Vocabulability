@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\ResponseEnum;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Question\ImportRequest;
+use App\Http\Requests\ImportRequest;
 use App\Http\Requests\Question\IndexRequest;
 use App\Http\Requests\Question\StoreRequest;
 use App\Http\Requests\Question\UpdateRequest;

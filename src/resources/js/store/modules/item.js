@@ -27,7 +27,7 @@ const getters = {
 const actions = {
   async get({ commit }, params) {
     await axios
-      .get('/api/questions', { params })
+      .get('/api/items', { params })
       .then((res) => {
         commit('setErrors', {});
         commit('setData', res.data);
@@ -38,7 +38,7 @@ const actions = {
   },
   async post({ commit }, data) {
     await axios
-      .post('/api/questions', data)
+      .post('/api/items', data)
       .then((res) => {
         commit('setErrors', {});
         commit(
@@ -60,7 +60,7 @@ const actions = {
   },
   async importCSV({ commit }, formData) {
     await axios
-      .post('/api/questions/import', formData)
+      .post('/api/items/import', formData)
       .then((res) => {
         commit('setErrors', {});
         commit(
@@ -82,7 +82,7 @@ const actions = {
   },
   async update({ commit }, data) {
     await axios
-      .patch(`/api/questions/${data.id}`, data)
+      .patch(`/api/items/${data.id}`, data)
       .then((res) => {
         commit('setErrors', {});
         commit(
@@ -104,7 +104,7 @@ const actions = {
   },
   async delete({ commit }, id) {
     await axios
-      .delete(`/api/questions/${id}`)
+      .delete(`/api/items/${id}`)
       .then((res) => {
         commit('setErrors', {});
         commit(
