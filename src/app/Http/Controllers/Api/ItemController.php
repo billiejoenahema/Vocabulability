@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\ResponseEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ImportRequest;
 use App\Http\Requests\Item\IndexRequest;
 use App\Http\Requests\Item\SaveRequest;
 use App\Http\Resources\ItemResource;
+use App\Imports\ItemImport;
 use App\Models\Item;
 use App\Models\Precedent;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -58,6 +61,20 @@ class ItemController extends Controller
         return response()->json(['message' => ResponseEnum::ITEM_CREATED->value], Response::HTTP_CREATED);
     }
 
+    /**
+     * CSVファイルから項目を追加する。
+     *
+     * @param ImportRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function importCSV(ImportRequest $request): JsonResponse
+    {
+
+        Excel::import(new ItemImport, $request->file('file'));
+
+        return response()->json(['message' => ResponseEnum::ITEM_CREATED->value], Response::HTTP_CREATED);
+    }
 
 
     /**

@@ -33,6 +33,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // 項目
     Route::get('/items', [ItemController::class, 'index'])->can('viewAny', Item::class);
     Route::post('/items', [ItemController::class, 'store'])->can('create', Item::class);
+    Route::post('/items/import', [ItemController::class, 'importCSV'])->can('create', Item::class);
     Route::patch('/items/{item}', [ItemController::class, 'update'])->can('update', Item::class);
     Route::delete('/items/{item}', [ItemController::class, 'destroy'])->can('delete', Item::class);
     // 事例
