@@ -25,10 +25,25 @@ class SaveRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:50',
-            'name_kana' => 'required|string|max:50',
+            'name_kana' => 'required|string|max:50|regex:/^[ぁ-ん]+$/',
             'category' => 'required|string|max:2', // TODO CategoryEnum に存在する value のみ許可する
             'precedents' => 'required|array',
             'precedents.*.name' => 'required|string|max:50',
+        ];
+    }
+
+    /**
+     * バリデーションエラーのカスタム属性の取得
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'name' => '項目名',
+            'name_kana' => 'ふりがな',
+            'category' => 'カテゴリ',
+            'precedents.*.name' => '事例',
         ];
     }
 }

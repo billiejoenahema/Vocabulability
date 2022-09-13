@@ -20,7 +20,7 @@ const newItem = reactive({
 const invalidFeedback = computed(() => store.getters['item/invalidFeedback']);
 const hasErrors = computed(() => store.getters['item/hasErrors']);
 const isInvalid = computed(() => store.getters['item/isInvalid']);
-const csv = ref(null);
+const csvRef = ref(null);
 
 const add = () => {
   newItem.precedents.push({ name: '' });
@@ -39,9 +39,10 @@ const create = async () => {
 };
 const importCSV = async () => {
   const formData = new FormData();
-
-  formData.append('file', csv.value.files[0]);
+  formData.append('file', csvRef.value.files[0]);
   await store.dispatch('item/importCSV', formData);
+  if (hasErrors.value) return;
+  csvRef.value.files[0] = null;
 };
 onUnmounted(() => {
   store.commit('item/setErrors', {});
@@ -65,10 +66,7 @@ onUnmounted(() => {
         >
           <option value="01">01</option>
         </select>
-        <invalid-feedback
-          v-if="invalidFeedback('category')"
-          :errors="invalidFeedback('category')"
-        />
+        <InvalidFeedback :errors="invalidFeedback('category')" />
       </div>
       <div class="column">
         <label>項目名</label>
@@ -78,10 +76,7 @@ onUnmounted(() => {
           :class="isInvalid('name')"
           maxlength="255"
         />
-        <invalid-feedback
-          v-if="invalidFeedback('name')"
-          :errors="invalidFeedback('name')"
-        />
+        <InvalidFeedback :errors="invalidFeedback('name')" />
       </div>
       <div class="column">
         <label>項目名ふりがな</label>
@@ -91,10 +86,7 @@ onUnmounted(() => {
           :class="isInvalid('name_kana')"
           maxlength="255"
         />
-        <invalid-feedback
-          v-if="invalidFeedback('name_kana')"
-          :errors="invalidFeedback('name_kana')"
-        />
+        <InvalidFeedback :errors="invalidFeedback('name_kana')" />
       </div>
       <div v-for="(precedent, index) in newItem.precedents" class="column">
         <label>名前{{ index + 1 }}</label>
@@ -102,7 +94,7 @@ onUnmounted(() => {
           <input
             type="text"
             v-model="precedent.name"
-            :class="isInvalid('precedents.precedents[' + index + '].name')"
+            :class="isInvalid('precedents.' + index + '.name')"
             maxlength="255"
           />
           <button
@@ -113,9 +105,8 @@ onUnmounted(() => {
             削除
           </button>
         </div>
-        <invalid-feedback
-          v-if="invalidFeedback('precedents.precedents[' + index + '].name')"
-          :errors="invalidFeedback('precedents.precedents[' + index + '].name')"
+        <InvalidFeedback
+          :errors="invalidFeedback('precedents.' + index + '.name')"
         />
       </div>
       <button class="item-add-button" @click="add()">入力欄を追加</button>
@@ -129,13 +120,10 @@ onUnmounted(() => {
           <input
             type="file"
             accept=".csv"
-            ref="csv"
+            ref="csvRef"
             :class="isInvalid('file')"
           />
-          <invalid-feedback
-            v-if="invalidFeedback('file')"
-            :errors="invalidFeedback('file')"
-          />
+          <invalid-feedback :errors="invalidFeedback('file')" />
         </div>
         <button @click="importCSV()">CSVファイルをインポート</button>
       </div>
