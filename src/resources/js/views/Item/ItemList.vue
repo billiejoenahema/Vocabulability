@@ -88,8 +88,8 @@ const deleteItem = async (id) => {
     }, 2000);
   }
 };
-const cancel = (index) => {
-  editable.value[index] = false;
+const cancel = () => {
+  editable.value = [];
 };
 </script>
 
@@ -132,32 +132,39 @@ const cancel = (index) => {
     <div v-if="!isLoading && !items.length">{{ NO_MATCH_ITEMS }}</div>
     <div v-else class="list-body">
       <div v-for="(item, index) in items" :key="item.id" class="row list-row">
-        <input
-          v-if="editable[index]"
-          v-model="item.name"
-          :class="isInvalid('name')"
-          maxlength="255"
-        />
+        <div v-if="editable[index]" class="column">
+          <input
+            v-model="item.name"
+            :class="isInvalid('name')"
+            maxlength="255"
+          />
+          <InvalidFeedback :errors="invalidFeedback('name')" />
+        </div>
         <div v-else @click="onEdit(index)" class="list-item">
           {{ item.name }}
         </div>
         <div class="precedent row">
           <template v-for="(precedent, _index) in item.precedents">
-            <template v-if="editable[index]">
-              <input
-                :key="precedent.id"
-                v-model="item.precedents[_index].name"
-                class="precedent-input"
-                :class="isInvalid('precedents[' + _index + '].name')"
-                maxlength="255"
-              />
-              <div
-                class="precedent-input-xmark"
-                @click="removePrecedent(index, _index, precedent.id)"
-              >
-                <font-awesome-icon class="xmark-icon" icon="xmark" />
+            <div v-if="editable[index]" class="column">
+              <div class="row">
+                <input
+                  :key="precedent.id"
+                  v-model="item.precedents[_index].name"
+                  class="precedent-input"
+                  :class="isInvalid('precedents' + _index + '.name')"
+                  maxlength="255"
+                />
+                <div
+                  class="precedent-input-xmark"
+                  @click="removePrecedent(index, _index, precedent.id)"
+                >
+                  <font-awesome-icon class="xmark-icon" icon="xmark" />
+                </div>
               </div>
-            </template>
+              <InvalidFeedback
+                :errors="invalidFeedback('precedents.' + index + '.name')"
+              />
+            </div>
             <div v-else @click="onEdit(index)" class="list-item precedent">
               {{ item.precedents[_index].name }}
             </div>
@@ -182,11 +189,11 @@ const cancel = (index) => {
           v-if="editable[index]"
           title="キャンセル"
           class="cancel"
-          @click="cancel(index)"
+          @click="cancel()"
         >
           <font-awesome-icon class="xmark-icon" icon="xmark" />
         </button>
-        <div v-else @click✖="onEdit(index)"></div>
+        <div v-else @click="onEdit(index)"></div>
         <button
           v-if="editable[index]"
           title="削除"
@@ -196,14 +203,6 @@ const cancel = (index) => {
           <font-awesome-icon class="minus-icon" icon="minus" />
         </button>
         <div v-else @click="onEdit(index)"></div>
-        <InvalidFeedback
-          v-if="editable[index] && invalidFeedback('word')"
-          :errors="invalidFeedback('word')"
-        />
-        <InvalidFeedback
-          v-if="editable[index] && invalidFeedback('correct_answer')"
-          :errors="invalidFeedback('correct_answer')"
-        />
       </div>
     </div>
   </div>

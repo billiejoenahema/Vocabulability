@@ -67,8 +67,8 @@ const deleteQuestion = async (id) => {
     editable.value = [];
   }
 };
-const cancel = (index) => {
-  editable.value[index] = false;
+const cancel = () => {
+  editable.value = [];
 };
 </script>
 
@@ -129,11 +129,11 @@ const cancel = (index) => {
           {{ question.correct_answer }}
         </div>
         <button v-if="editable[index]" @click="updateQuestion(question, index)">
-          更新
+          <font-awesome-icon class="check-icon" icon="check" />
         </button>
         <div v-else @click="onEdit(index)"></div>
-        <button v-if="editable[index]" class="cancel" @click="cancel(index)">
-          キャンセル
+        <button v-if="editable[index]" class="cancel" @click="cancel()">
+          <font-awesome-icon class="xmark-icon" icon="xmark" />
         </button>
         <div v-else @click="onEdit(index)"></div>
         <button
@@ -141,15 +141,15 @@ const cancel = (index) => {
           class="delete"
           @click="deleteQuestion(question.id)"
         >
-          削除
+          <font-awesome-icon class="minus-icon" icon="minus" />
         </button>
         <div v-else @click="onEdit(index)"></div>
         <InvalidFeedback
-          v-if="editable[index] && invalidFeedback('word')"
+          v-if="editable[index]"
           :errors="invalidFeedback('word')"
         />
         <InvalidFeedback
-          v-if="editable[index] && invalidFeedback('correct_answer')"
+          v-if="editable[index]"
           :errors="invalidFeedback('correct_answer')"
         />
       </div>

@@ -53,10 +53,7 @@ const importCSV = async () => {
           :class="isInvalid('word')"
           maxlength="255"
         />
-        <InvalidFeedback
-          v-if="invalidFeedback('word')"
-          :errors="invalidFeedback('word')"
-        />
+        <invalid-feedback :errors="invalidFeedback('word')" />
       </div>
       <div class="column">
         <label>正解</label>
@@ -66,10 +63,7 @@ const importCSV = async () => {
           :class="isInvalid('correct_answer')"
           maxlength="255"
         />
-        <InvalidFeedback
-          v-if="invalidFeedback('correct_answer')"
-          :errors="invalidFeedback('correct_answer')"
-        />
+        <InvalidFeedback :errors="invalidFeedback('correct_answer')" />
       </div>
       <div class="column"></div>
       <div class="button-area">
@@ -85,10 +79,7 @@ const importCSV = async () => {
             ref="csv"
             :class="isInvalid('file')"
           />
-          <InvalidFeedback
-            v-if="invalidFeedback('file')"
-            :errors="invalidFeedback('file')"
-          />
+          <InvalidFeedback :errors="invalidFeedback('file')" />
         </div>
         <button @click="importCSV()">CSVファイルをインポート</button>
       </div>
