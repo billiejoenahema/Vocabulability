@@ -157,6 +157,7 @@ form {
 .precedent-input-xmark {
   position: relative;
   left: -16px;
+  top: 8px;
 }
 .precedent-input-plus {
   height: 32px;
