@@ -36,7 +36,7 @@ const debounceSearch = useDebounce(() => {
   currentCharacter.value = '';
   store.dispatch('item/get', { keyword: keyword.value });
 });
-const fetchData = (character) => {
+const fetchData = (character = '') => {
   store.dispatch('item/get', { filter: character });
 };
 const filter = (character) => {
@@ -90,6 +90,7 @@ const deleteItem = async (id) => {
 };
 const cancel = () => {
   editable.value = [];
+  fetchData(currentCharacter.value);
 };
 </script>
 
