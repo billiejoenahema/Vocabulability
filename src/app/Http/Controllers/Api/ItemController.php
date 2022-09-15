@@ -87,9 +87,11 @@ class ItemController extends Controller
     public function update(SaveRequest $request, Item $item): JsonResponse
     {
         $data = $request->all();
+
         DB::transaction(function () use ($data, $item) {
             $item->fill($data)->save();
             foreach ($data['precedents'] as $precedent) {
+                $precedent['item_id'] = $item->id;
                 Precedent::updateOrCreate(['id' => $precedent['id']], $precedent);
             }
         });
