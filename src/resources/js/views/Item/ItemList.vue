@@ -31,6 +31,11 @@ const keyword = ref('');
 const currentCharacter = ref('');
 const isLoading = computed(() => store.getters['loading/isLoading']);
 const setIsLoading = (bool) => store.commit('loading/setIsLoading', bool);
+const defaultPrecedent = {
+  id: null,
+  item_id: null,
+  name: null,
+};
 
 const debounceSearch = useDebounce(() => {
   currentCharacter.value = '';
@@ -64,7 +69,7 @@ const removePrecedent = async (index, _index, id = null) => {
   }, 2000);
 };
 const addPrecedent = (index) => {
-  items.value[index].precedents.push({});
+  items.value[index].precedents.push({ ...defaultPrecedent });
 };
 const updateItem = async (item, index) => {
   setIsLoading(true);
@@ -163,7 +168,7 @@ const cancel = () => {
                 </div>
               </div>
               <InvalidFeedback
-                :errors="invalidFeedback('precedents.' + index + '.name')"
+                :errors="invalidFeedback('precedents.' + _index + '.name')"
               />
             </div>
             <div v-else @click="onEdit(index)" class="list-item precedent">
