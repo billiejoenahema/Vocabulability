@@ -41,11 +41,11 @@ const actions = {
 
 const mutations = {
   setData(state, data) {
-    state.data = data.data ?? [];
+    state.data = data.data;
   },
   setErrors(state, data) {
     state.errors = [];
-    state.errors = data ?? [];
+    state.errors = data;
   },
 };
 

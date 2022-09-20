@@ -10,11 +10,11 @@ const state = {
 };
 
 const getters = {
-  invalidFeedback: (state) => (props) => {
-    return state.errors[props] ?? '';
-  },
   hasErrors(state) {
     return Object.keys(state.errors).length > 0;
+  },
+  invalidFeedback: (state) => (props) => {
+    return state.errors[props] ?? [];
   },
   isInvalid: (state) => (key) => {
     return state.errors?.[key] ? 'invalid' : '';
@@ -73,7 +73,7 @@ const actions = {
 const mutations = {
   setErrors(state, data) {
     state.errors = {};
-    state.errors = data ?? {};
+    state.errors = data;
   },
 };
 

@@ -43,9 +43,6 @@ const mutations = {
   setData(state, data) {
     state.data = data;
   },
-  resetData(state) {
-    state.data = {};
-  },
   setErrors(state, data) {
     state.errors = {};
     state.errors = data;
