@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Item;
 
+use App\Enums\CategoryEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SaveRequest extends FormRequest
 {
@@ -26,7 +28,7 @@ class SaveRequest extends FormRequest
         return [
             'name' => 'required|string|max:50',
             'name_kana' => 'required|string|max:50|regex:/^[ぁ-ん]+$/',
-            'category' => 'required|string|max:2', // TODO CategoryEnum に存在する value のみ許可する
+            'category' => ['required', 'string', Rule::in(CategoryEnum::values())],
             'precedents' => 'required|array',
             'precedents.*.name' => 'required|string|max:50',
         ];
