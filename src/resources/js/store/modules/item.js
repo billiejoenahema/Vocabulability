@@ -10,14 +10,11 @@ const getters = {
   data(state) {
     return state.data ?? [];
   },
-  randomData(state) {
-    return shuffle(state.data);
-  },
-  invalidFeedback: (state) => (props) => {
-    return state.errors[props] ?? '';
-  },
   hasErrors(state) {
     return Object.keys(state.errors).length > 0;
+  },
+  invalidFeedback: (state) => (props) => {
+    return state.errors[props] ?? [];
   },
   isInvalid: (state) => (key) => {
     return state.errors?.[key] ? 'invalid' : '';
@@ -127,11 +124,11 @@ const actions = {
 
 const mutations = {
   setData(state, data) {
-    state.data = data.data ?? [];
+    state.data = data.data;
   },
   setErrors(state, data) {
     state.errors = [];
-    state.errors = data ?? [];
+    state.errors = data;
   },
 };
 
