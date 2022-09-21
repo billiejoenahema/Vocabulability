@@ -105,7 +105,7 @@ const cancel = () => {
   <Navigation />
   <div class="word-list">
     <div class="row header">
-      <div class="title">登録済み単語リスト</div>
+      <div class="title">登録済みカラム名リスト</div>
       <div class="search-input-wrapper">
         <input
           v-model="keyword"
@@ -133,7 +133,7 @@ const cancel = () => {
     </div>
     <div class="row list-header">
       <div class="list-column-title">項目</div>
-      <div class="list-column-title">事例</div>
+      <div class="list-column-title">カラム名</div>
     </div>
     <div v-if="!isLoading && !items.length">{{ NO_MATCH_ITEMS }}</div>
     <div v-else class="list-body">

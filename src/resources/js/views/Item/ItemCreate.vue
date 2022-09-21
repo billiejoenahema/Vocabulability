@@ -89,7 +89,7 @@ onUnmounted(() => {
         <InvalidFeedback :errors="invalidFeedback('name_kana')" />
       </div>
       <div v-for="(precedent, index) in newItem.precedents" class="column">
-        <label>名前{{ index + 1 }}</label>
+        <label>カラム名{{ index + 1 }}</label>
         <div class="row">
           <input
             type="text"
