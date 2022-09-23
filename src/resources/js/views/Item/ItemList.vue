@@ -163,6 +163,7 @@ const cancel = () => {
                 <div
                   class="precedent-input-xmark"
                   @click="removePrecedent(index, _index, precedent.id)"
+                  title="カラム名を削除する"
                 >
                   <font-awesome-icon class="xmark-icon" icon="xmark" />
                 </div>
@@ -179,6 +180,7 @@ const cancel = () => {
             v-if="editable[index]"
             class="precedent-input-plus"
             @click="addPrecedent(index)"
+            title="カラム名を追加する"
           >
             <font-awesome-icon class="plus-icon" icon="plus" />
           </div>
