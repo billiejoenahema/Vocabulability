@@ -5,7 +5,6 @@ import InvalidFeedback from '../../components/InvalidFeedback';
 import LoadingOverlay from '../../components/LoadingOverlay';
 import Navigation from '../../components/Navigation';
 import Toast from '../../components/Toast';
-import { ALPHABETS, DELETE_CONFIRM, NO_MATCH } from '../../const/const';
 import { useDebounce } from '../../functions/useDebounce';
 
 const store = useStore();
@@ -18,6 +17,7 @@ onMounted(async () => {
 
 store.dispatch('question/get');
 const questions = computed(() => store.getters['question/data']);
+const alphabets = computed(() => store.getters['consts/alphabets']);
 const invalidFeedback = computed(
   () => store.getters['question/invalidFeedback']
 );
@@ -58,7 +58,7 @@ const updateQuestion = async (question, index) => {
   fetchData(currentAlphabet.value);
 };
 const deleteQuestion = async (id) => {
-  if (confirm(DELETE_CONFIRM)) {
+  if (confirm('削除しますか？')) {
     setIsLoading(true);
     await store.dispatch('question/delete', id);
     setIsLoading(false);
@@ -88,7 +88,7 @@ const cancel = () => {
       </div>
     </div>
     <div class="wrap">
-      <div class="row" v-for="(alphabet, index) in ALPHABETS" :key="index">
+      <div class="row" v-for="(alphabet, index) in alphabets" :key="index">
         <span v-if="index">/</span>
         <div
           class="index-item"
@@ -103,7 +103,9 @@ const cancel = () => {
       <div class="list-column-title">単語</div>
       <div class="list-column-title">正解</div>
     </div>
-    <div v-if="!isLoading && !questions.length">{{ NO_MATCH }}</div>
+    <div v-if="!isLoading && !questions.length">
+      検索に一致する単語はありませんでした。
+    </div>
     <div v-else class="list-body">
       <div
         v-for="(question, index) in questions"

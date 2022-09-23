@@ -23,6 +23,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // ログインユーザー情報
     Route::get('/profile', ProfileController::class);
 
+    // 定数
+    Route::get('/const', fn () => config('const'));
+
     // 問題
     Route::get('/questions', [QuestionController::class, 'index'])->can('viewAny', Question::class);
     Route::post('/questions', [QuestionController::class, 'store'])->can('create', Question::class);

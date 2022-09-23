@@ -5,11 +5,6 @@ import InvalidFeedback from '../../components/InvalidFeedback';
 import LoadingOverlay from '../../components/LoadingOverlay';
 import Navigation from '../../components/Navigation';
 import Toast from '../../components/Toast';
-import {
-  DELETE_ITEM_CONFIRM,
-  JAPANESE_SYLLABARY,
-  NO_MATCH_ITEMS,
-} from '../../const/const';
 import { useDebounce } from '../../functions/useDebounce';
 
 const store = useStore();
@@ -22,6 +17,9 @@ onMounted(async () => {
 
 store.dispatch('item/get');
 const items = computed(() => store.getters['item/data']);
+const japaneseSyllabary = computed(
+  () => store.getters['consts/japaneseSyllabary']
+);
 const invalidFeedback = computed(() => store.getters['item/invalidFeedback']);
 const hasErrors = computed(() => store.getters['item/hasErrors']);
 const hasErrorsPrecedent = computed(() => store.getters['precedent/hasErrors']);
@@ -60,7 +58,7 @@ const removePrecedent = async (index, _index, id = null) => {
     items.value[index].precedents.splice(_index, 1);
     return;
   }
-  if (!confirm('事例を削除しますか？')) return;
+  if (!confirm('削除しますか？')) return;
   await store.dispatch('precedent/delete', id);
   if (hasErrorsPrecedent.value) return;
   setTimeout(() => {
@@ -82,7 +80,7 @@ const updateItem = async (item, index) => {
   }, 2000);
 };
 const deleteItem = async (id) => {
-  if (confirm(DELETE_ITEM_CONFIRM)) {
+  if (confirm('削除しますか？')) {
     setIsLoading(true);
     await store.dispatch('item/delete', id);
     setIsLoading(false);
@@ -117,7 +115,7 @@ const cancel = () => {
     <div class="wrap">
       <div
         class="row"
-        v-for="(character, index) in JAPANESE_SYLLABARY"
+        v-for="(character, index) in japaneseSyllabary"
         :key="index"
       >
         <div
@@ -135,7 +133,9 @@ const cancel = () => {
       <div class="list-column-title">項目</div>
       <div class="list-column-title">カラム名</div>
     </div>
-    <div v-if="!isLoading && !items.length">{{ NO_MATCH_ITEMS }}</div>
+    <div v-if="!isLoading && !items.length">
+      検索に一致する項目はありませんでした。
+    </div>
     <div v-else class="list-body">
       <div v-for="(item, index) in items" :key="item.id" class="row list-row">
         <div v-if="editable[index]" class="column">

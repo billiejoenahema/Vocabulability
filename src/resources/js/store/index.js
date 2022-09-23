@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
 import auth from './modules/auth';
+import consts from './modules/consts';
 import item from './modules/item';
 import loading from './modules/loading';
 import precedent from './modules/precedent';
@@ -10,6 +11,7 @@ import toast from './modules/toast';
 export const store = createStore({
   modules: {
     auth,
+    consts,
     item,
     loading,
     precedent,
