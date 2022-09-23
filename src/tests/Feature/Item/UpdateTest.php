@@ -28,12 +28,13 @@ class UpdateTest extends TestCase
         $this->precedent = $this->item->precedents()->createMany([['item_id' => $this->item->id, 'name' => 'test1']]);
         $this->data = [
             'name' => 'テスト',
+            'name_kana' => $this->item->name_kana,
             'category' => '01',
             'precedents' => [
                 [
                     'id' => $this->precedent[0]->id,
                     'item_id' => $this->item->id,
-                    'name' => 'test1_updated!'
+                    'name' => 'test1_updated!',
                 ],
                 [
                     'id' => null,
