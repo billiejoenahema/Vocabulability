@@ -127,7 +127,7 @@ const mutations = {
     state.data = data.data;
   },
   setErrors(state, data) {
-    state.errors = [];
+    state.errors = {};
     state.errors = data;
   },
 };

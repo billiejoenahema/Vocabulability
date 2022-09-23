@@ -16,6 +16,7 @@ const logout = async () => {
 };
 onMounted(async () => {
   await store.dispatch('profile/getIfNeeded');
+  await store.dispatch('consts/get');
   if (!isLogin.value) {
     router.push('/login');
   }
