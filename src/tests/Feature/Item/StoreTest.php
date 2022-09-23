@@ -24,6 +24,7 @@ class StoreTest extends TestCase
         $this->user = User::factory()->create();
         $this->data = [
             'name' => 'テスト',
+            'name_kana' => 'てすと',
             'category' => '01',
             'precedents' => [
                 ['name' => 'test1'],
