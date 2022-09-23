@@ -6,7 +6,7 @@ body {
   overflow-y: scroll;
 }
 main {
-  max-width: 640px;
+  max-width: 880px;
   margin: 0 auto;
 }
 nav {
@@ -59,7 +59,7 @@ form {
 }
 .list-header {
   display: grid;
-  grid-template-columns: 4fr 8fr 1fr 1fr 1fr;
+  grid-template-columns: 4fr 12fr 1fr 1fr 1fr;
   column-gap: 8px;
   padding: 8px 0;
   position: sticky;
@@ -72,7 +72,7 @@ form {
 }
 .list-row {
   display: grid;
-  grid-template-columns: 4fr 8fr 1fr 1fr 1fr;
+  grid-template-columns: 4fr 12fr 1fr 1fr 1fr;
   column-gap: 8px;
 }
 .list-item {
