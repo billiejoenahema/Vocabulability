@@ -50,11 +50,7 @@ class ItemController extends Controller
     {
         $data = $request->all();
         DB::transaction(function () use ($data) {
-            $item = Item::create([
-                'name' => $data['name'],
-                'name_kana' => $data['name_kana'],
-                'category' => $data['category'],
-            ]);
+            $item = Item::create($data);
             $item->precedents()->createMany($data['precedents']);
         });
 
@@ -70,7 +66,6 @@ class ItemController extends Controller
      */
     public function importCSV(ImportRequest $request): JsonResponse
     {
-
         Excel::import(new ItemImport, $request->file('file'));
 
         return response()->json(['message' => ResponseEnum::ITEM_CREATED->value], Response::HTTP_CREATED);
@@ -90,10 +85,7 @@ class ItemController extends Controller
 
         DB::transaction(function () use ($data, $item) {
             $item->fill($data)->save();
-            foreach ($data['precedents'] as $precedent) {
-                $precedent['item_id'] = $item->id;
-                Precedent::updateOrCreate(['id' => $precedent['id']], $precedent);
-            }
+            $item->precedents()->upsert($data['precedents'], ['id']);
         });
 
         return response()->json(['message' => ResponseEnum::ITEM_UPDATED->value], Response::HTTP_OK);
@@ -105,7 +97,7 @@ class ItemController extends Controller
      * @param  Item $item
      * @return JsonResponse
      */
-    public function destroy(Item $item)
+    public function destroy(Item $item): JsonResponse
     {
         $item->delete();
 
