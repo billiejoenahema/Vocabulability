@@ -50,12 +50,9 @@ class QuestionController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        DB::transaction(function () use ($request) {
-            Question::create([
-                'word' => $request->word,
-                'correct_answer' => $request->correct_answer,
-                'example' => $request->example,
-            ]);
+        $data = $request->all();
+        DB::transaction(function () use ($data) {
+            Question::create($data);
         });
 
         return response()->json(['message' => ResponseEnum::QUESTION_CREATED->value], Response::HTTP_CREATED);
@@ -70,7 +67,6 @@ class QuestionController extends Controller
      */
     public function importCSV(ImportRequest $request): JsonResponse
     {
-
         Excel::import(new QuestionImport, $request->file('file'));
 
         return response()->json(['message' => ResponseEnum::QUESTION_CREATED->value], Response::HTTP_CREATED);
@@ -86,7 +82,6 @@ class QuestionController extends Controller
     public function update(UpdateRequest $request, Question $question): JsonResponse
     {
         $data = $request->all();
-
         DB::transaction(function () use ($data, $question) {
             $question->fill($data)->save();
         });
