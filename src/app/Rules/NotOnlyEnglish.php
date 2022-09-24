@@ -16,8 +16,13 @@ class NotOnlyEnglish implements InvokableRule
      */
     public function __invoke($attribute, $value, $fail)
     {
+        $attribute = match ($attribute) {
+            'correct_answer' => '正解',
+            'name' => '項目名'
+        };
+
         if (preg_match('/^[a-zA-Z]*$/', $value)) {
-            $fail('英字のみでは登録できません。');
+            $fail("{$attribute}は英字のみでは登録できません。");
         }
     }
 }

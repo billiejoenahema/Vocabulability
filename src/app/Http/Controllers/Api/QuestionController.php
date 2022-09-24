@@ -6,8 +6,7 @@ use App\Enums\ResponseEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ImportRequest;
 use App\Http\Requests\Question\IndexRequest;
-use App\Http\Requests\Question\StoreRequest;
-use App\Http\Requests\Question\UpdateRequest;
+use App\Http\Requests\Question\SaveRequest;
 use App\Http\Resources\QuestionResource;
 use App\Imports\QuestionImport;
 use App\Models\Question;
@@ -44,11 +43,11 @@ class QuestionController extends Controller
     /**
      * 問題を追加する。
      *
-     * @param StoreRequest $request
+     * @param SaveRequest $request
      *
      * @return JsonResponse
      */
-    public function store(StoreRequest $request): JsonResponse
+    public function store(SaveRequest $request): JsonResponse
     {
         $data = $request->all();
         DB::transaction(function () use ($data) {
@@ -75,11 +74,11 @@ class QuestionController extends Controller
     /**
      * 問題を更新する。
      *
-     * @param UpdateRequest  $request
+     * @param SaveRequest  $request
      * @param  Question  $question
      * @return JsonResponse
      */
-    public function update(UpdateRequest $request, Question $question): JsonResponse
+    public function update(SaveRequest $request, Question $question): JsonResponse
     {
         $data = $request->all();
         DB::transaction(function () use ($data, $question) {

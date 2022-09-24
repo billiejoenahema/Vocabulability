@@ -25,6 +25,7 @@ class IndexRequest extends FormRequest
     {
         return [
             'keyword' => 'nullable|string',
+            'filter' => 'nullable|string|regex:/[a-z]/', // 小文字アルファベット1文字
         ];
     }
 }
