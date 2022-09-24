@@ -25,7 +25,7 @@ class IndexRequest extends FormRequest
     {
         return [
             'keyword' => 'nullable|string',
-            'filter' => 'nullable|string|size:1',
+            'filter' => 'nullable|string|regex:/[ぁ-ん]/', // ひらがな1文字
         ];
     }
 }
