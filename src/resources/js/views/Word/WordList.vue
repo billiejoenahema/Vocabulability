@@ -51,9 +51,7 @@ const updateQuestion = async (question, index) => {
   setIsLoading(true);
   await store.dispatch('question/update', question);
   setIsLoading(false);
-  if (hasErrors.value) {
-    return;
-  }
+  if (hasErrors.value) return;
   editable.value[index] = false;
   fetchData(currentAlphabet.value);
 };
@@ -84,6 +82,7 @@ const cancel = () => {
           v-model="keyword"
           @input="debounceSearch()"
           placeholder="キーワード検索"
+          maxlength="50"
         />
       </div>
     </div>
@@ -130,11 +129,20 @@ const cancel = () => {
         <div v-else @click="onEdit(index)" class="list-item">
           {{ question.correct_answer }}
         </div>
-        <button v-if="editable[index]" @click="updateQuestion(question, index)">
+        <button
+          v-if="editable[index]"
+          @click="updateQuestion(question, index)"
+          title="更新"
+        >
           <font-awesome-icon class="check-icon" icon="check" />
         </button>
         <div v-else @click="onEdit(index)"></div>
-        <button v-if="editable[index]" class="cancel" @click="cancel()">
+        <button
+          v-if="editable[index]"
+          class="cancel"
+          @click="cancel()"
+          title="キャンセル"
+        >
           <font-awesome-icon class="xmark-icon" icon="xmark" />
         </button>
         <div v-else @click="onEdit(index)"></div>
@@ -142,6 +150,7 @@ const cancel = () => {
           v-if="editable[index]"
           class="delete"
           @click="deleteQuestion(question.id)"
+          title="削除"
         >
           <font-awesome-icon class="minus-icon" icon="minus" />
         </button>

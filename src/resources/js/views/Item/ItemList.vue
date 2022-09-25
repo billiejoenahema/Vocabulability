@@ -109,6 +109,7 @@ const cancel = () => {
           v-model="keyword"
           @input="debounceSearch()"
           placeholder="キーワード検索"
+          maxlength="50"
         />
       </div>
     </div>
@@ -157,13 +158,13 @@ const cancel = () => {
                   :key="precedent.id"
                   v-model="item.precedents[_index].name"
                   class="precedent-input"
-                  :class="isInvalid('precedents' + _index + '.name')"
+                  :class="isInvalid('precedents.' + _index + '.name')"
                   maxlength="255"
                 />
                 <div
                   class="precedent-input-xmark"
                   @click="removePrecedent(index, _index, precedent.id)"
-                  title="カラム名を削除する"
+                  title="カラム名を削除"
                 >
                   <font-awesome-icon class="xmark-icon" icon="xmark" />
                 </div>
@@ -180,7 +181,7 @@ const cancel = () => {
             v-if="editable[index]"
             class="precedent-input-plus"
             @click="addPrecedent(index)"
-            title="カラム名を追加する"
+            title="カラム名を追加"
           >
             <font-awesome-icon class="plus-icon" icon="plus" />
           </div>

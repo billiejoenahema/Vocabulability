@@ -8,6 +8,9 @@ const getters = {
   data(state) {
     return state.data ?? [];
   },
+  alphabets(state) {
+    return state.data?.ALPHABETS;
+  },
   japaneseSyllabary(state) {
     return state.data?.JAPANESE_SYLLABARY;
   },
