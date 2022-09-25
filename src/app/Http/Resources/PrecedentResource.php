@@ -14,6 +14,7 @@ class PrecedentResource extends JsonResource
      */
     public function toArray($request)
     {
+        /** @var \App\Models\Precedent $this */
         return [
             'id' => $this->id,
             'name' => $this->name,
