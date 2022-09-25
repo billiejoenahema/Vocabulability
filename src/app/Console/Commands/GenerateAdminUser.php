@@ -25,7 +25,7 @@ class GenerateAdminUser extends Command
     /**
      * Execute the console command.
      *
-     * @return int
+     * @return mixed
      */
     public function handle()
     {
