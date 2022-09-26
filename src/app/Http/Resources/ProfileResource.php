@@ -14,6 +14,7 @@ class ProfileResource extends JsonResource
      */
     public function toArray($request)
     {
+        /** @var \App\Models\User $this */
         return [
             'id' => $this->id,
         ];

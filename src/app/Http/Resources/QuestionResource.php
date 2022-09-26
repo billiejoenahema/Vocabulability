@@ -14,6 +14,7 @@ class QuestionResource extends JsonResource
      */
     public function toArray($request)
     {
+        /** @var \App\Models\Question $this */
         return [
             'id' => $this->id,
             'word' => $this->word,
