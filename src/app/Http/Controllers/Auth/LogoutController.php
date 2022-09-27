@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\ResponseEnum;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\JsonResponse;
@@ -27,7 +28,7 @@ final class LogoutController extends Controller
     {
         if ($this->auth->guard()->guest()) {
             return new JsonResponse([
-                'message' => 'Already Unauthenticated.',
+                'message' => ResponseEnum::ALREADY_LOGGED_OUT->value,
             ]);
         }
 
@@ -36,7 +37,7 @@ final class LogoutController extends Controller
         $request->session()->regenerateToken();
 
         return new JsonResponse([
-            'message' => 'Unauthenticated.',
+            'message' => ResponseEnum::LOGGED_OUT->value,
         ]);
     }
 }

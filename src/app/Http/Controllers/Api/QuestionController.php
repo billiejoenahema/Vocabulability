@@ -54,7 +54,7 @@ class QuestionController extends Controller
             Question::create($data);
         });
 
-        return response()->json(['message' => ResponseEnum::QUESTION_CREATED->value], Response::HTTP_CREATED);
+        return response()->json(['message' => ResponseEnum::CREATED->value], Response::HTTP_CREATED);
     }
 
     /**
@@ -68,7 +68,7 @@ class QuestionController extends Controller
     {
         Excel::import(new QuestionImport, $request->file('file'));
 
-        return response()->json(['message' => ResponseEnum::QUESTION_CREATED->value], Response::HTTP_CREATED);
+        return response()->json(['message' => ResponseEnum::CREATED->value], Response::HTTP_CREATED);
     }
 
     /**
@@ -85,7 +85,7 @@ class QuestionController extends Controller
             $question->fill($data)->save();
         });
 
-        return response()->json(['message' => ResponseEnum::QUESTION_UPDATED->value], Response::HTTP_OK);
+        return response()->json(['message' => ResponseEnum::UPDATED->value], Response::HTTP_OK);
     }
 
     /**
@@ -98,6 +98,6 @@ class QuestionController extends Controller
     {
         $question->delete();
 
-        return response()->json(['message' => ResponseEnum::QUESTION_DELETED->value], Response::HTTP_OK);
+        return response()->json(['message' => ResponseEnum::DELETED->value], Response::HTTP_OK);
     }
 }

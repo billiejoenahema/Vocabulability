@@ -10,7 +10,6 @@ use App\Http\Requests\Item\SaveRequest;
 use App\Http\Resources\ItemResource;
 use App\Imports\ItemImport;
 use App\Models\Item;
-use App\Models\Precedent;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -54,7 +53,7 @@ class ItemController extends Controller
             $item->precedents()->createMany($data['precedents']);
         });
 
-        return response()->json(['message' => ResponseEnum::ITEM_CREATED->value], Response::HTTP_CREATED);
+        return response()->json(['message' => ResponseEnum::CREATED->value], Response::HTTP_CREATED);
     }
 
     /**
@@ -68,7 +67,7 @@ class ItemController extends Controller
     {
         Excel::import(new ItemImport, $request->file('file'));
 
-        return response()->json(['message' => ResponseEnum::ITEM_CREATED->value], Response::HTTP_CREATED);
+        return response()->json(['message' => ResponseEnum::CREATED->value], Response::HTTP_CREATED);
     }
 
 
@@ -88,7 +87,7 @@ class ItemController extends Controller
             $item->precedents()->upsert($data['precedents'], ['id']);
         });
 
-        return response()->json(['message' => ResponseEnum::ITEM_UPDATED->value], Response::HTTP_OK);
+        return response()->json(['message' => ResponseEnum::UPDATED->value], Response::HTTP_OK);
     }
 
     /**
@@ -101,6 +100,6 @@ class ItemController extends Controller
     {
         $item->delete();
 
-        return response()->json(['message' => ResponseEnum::ITEM_DELETED->value], Response::HTTP_OK);
+        return response()->json(['message' => ResponseEnum::DELETED->value], Response::HTTP_OK);
     }
 }
