@@ -10,7 +10,7 @@ const isLogin = computed(() => store.getters['profile/isLogin']);
 const logout = async () => {
   if (confirm('ログアウトしますか？')) {
     await store.dispatch('auth/logout');
-    store.commit('profile/resetData');
+    await store.commit('profile/setData', {});
     router.push('/login');
   }
 };
