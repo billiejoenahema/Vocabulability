@@ -58,15 +58,21 @@ const actions = {
               'toast/setData',
               {
                 status: err.response.status,
-                content: 'ログインに失敗しました。',
+                content: err.response.data.errors,
               },
               { root: true }
             );
           });
       });
   },
-  async logout() {
-    await axios.post('/logout');
+  async logout({ commit }) {
+    await axios.post('/logout').then((res) => {
+      commit(
+        'toast/setData',
+        { status: res.status, content: res.data.message },
+        { root: true }
+      );
+    });
   },
 };
 
