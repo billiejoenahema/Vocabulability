@@ -20,6 +20,6 @@ class PrecedentController extends Controller
     {
         $precedent->delete();
 
-        return response()->json(['message' => ResponseEnum::PRECEDENT_DELETED->value], Response::HTTP_OK);
+        return response()->json(['message' => ResponseEnum::DELETED->value], Response::HTTP_OK);
     }
 }
