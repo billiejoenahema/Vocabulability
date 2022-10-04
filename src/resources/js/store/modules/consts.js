@@ -27,6 +27,10 @@ const actions = {
         console.log(err);
       });
   },
+  async getIfNeeded({ dispatch, getters }) {
+    if (Object.keys(getters.data).length) return;
+    await dispatch('get');
+  },
 };
 
 const mutations = {
