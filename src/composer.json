@@ -16,7 +16,7 @@
         "barryvdh/laravel-ide-helper": "^2.12",
         "fakerphp/faker": "^1.9.1",
         "laravel-lang/lang": "^10.9",
-        "laravel/sail": "^1.0.1",
+        "laravel/sail": "1.16.2",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
         "nunomaduro/larastan": "^2.2",
