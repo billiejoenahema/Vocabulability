@@ -24,7 +24,9 @@ class IndexRequest extends FormRequest
     public function rules()
     {
         return [
-            'keyword' => 'nullable|string',
+            'column' => 'nullable',
+            'is_asc' => 'nullable',
+            'keyword' => 'nullable',
             'filter' => 'nullable|string|regex:/[ぁ-ん]/', // ひらがな1文字
         ];
     }

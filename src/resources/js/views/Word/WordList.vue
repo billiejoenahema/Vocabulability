@@ -83,6 +83,7 @@ const cancel = () => {
           @input="debounceSearch()"
           placeholder="キーワード検索"
           maxlength="50"
+          type="search"
         />
       </div>
     </div>
@@ -116,6 +117,7 @@ const cancel = () => {
           v-model="question.word"
           :class="isInvalid('word')"
           maxlength="255"
+          type="text"
         />
         <div v-else @click="onEdit(index)" class="list-item">
           {{ question.word }}
@@ -125,6 +127,7 @@ const cancel = () => {
           v-model="question.correct_answer"
           :class="isInvalid('correct_answer')"
           maxlength="255"
+          type="text"
         />
         <div v-else @click="onEdit(index)" class="list-item">
           {{ question.correct_answer }}

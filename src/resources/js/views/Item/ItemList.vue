@@ -1,9 +1,10 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import { useStore } from 'vuex';
 import InvalidFeedback from '../../components/InvalidFeedback';
 import LoadingOverlay from '../../components/LoadingOverlay';
 import Navigation from '../../components/Navigation';
+import SortIcon from '../../components/SortIcon';
 import Toast from '../../components/Toast';
 import { useDebounce } from '../../functions/useDebounce';
 
@@ -25,7 +26,6 @@ const hasErrors = computed(() => store.getters['item/hasErrors']);
 const hasErrorsPrecedent = computed(() => store.getters['precedent/hasErrors']);
 const isInvalid = computed(() => store.getters['item/isInvalid']);
 const editable = ref([]);
-const keyword = ref('');
 const currentCharacter = ref('');
 const isLoading = computed(() => store.getters['loading/isLoading']);
 const setIsLoading = (bool) => store.commit('loading/setIsLoading', bool);
@@ -34,24 +34,45 @@ const defaultPrecedent = {
   item_id: null,
   name: null,
 };
-
-const debounceSearch = useDebounce(() => {
-  currentCharacter.value = '';
-  store.dispatch('item/get', { keyword: keyword.value });
-});
-const fetchData = (character = '') => {
-  store.dispatch('item/get', { filter: character });
+const defaultParams = {
+  column: '',
+  is_asc: true,
+  keyword: '',
+  filter: '',
 };
-const filter = (character) => {
-  keyword.value = '';
+const params = reactive({ ...defaultParams });
+
+const setFilter = (character) => {
+  params.keyword = '';
   editable.value = [];
-  currentCharacter.value = character;
-  fetchData(character);
+  params.filter = character;
+  fetchData();
+};
+const resetParams = () => {
+  Object.assign(params, { ...defaultParams });
+
+  fetchData();
+};
+const onChangeSort = (label) => {
+  if (params.column === label) {
+    params.is_asc = !params.is_asc;
+  } else {
+    params.column = label;
+    params.is_asc = true;
+  }
+  fetchData();
 };
 const onEdit = (index) => {
   editable.value = [];
   editable.value[index] = true;
   store.commit('item/setErrors', {});
+};
+const debounceSearch = useDebounce(() => {
+  params.filter = '';
+  fetchData();
+});
+const fetchData = () => {
+  store.dispatch('item/get', params);
 };
 const removePrecedent = async (index, _index, id = null) => {
   if (!id) {
@@ -63,7 +84,7 @@ const removePrecedent = async (index, _index, id = null) => {
   if (hasErrorsPrecedent.value) return;
   setTimeout(() => {
     editable.value = [];
-    fetchData(currentCharacter.value);
+    fetchData();
   }, 2000);
 };
 const addPrecedent = (index) => {
@@ -76,7 +97,7 @@ const updateItem = async (item, index) => {
   if (hasErrors.value) return;
   setTimeout(() => {
     editable.value[index] = false;
-    fetchData(currentCharacter.value);
+    fetchData();
   }, 2000);
 };
 const deleteItem = async (id) => {
@@ -87,13 +108,13 @@ const deleteItem = async (id) => {
     if (hasErrors.value) return;
     setTimeout(() => {
       editable.value = [];
-      fetchData(currentCharacter.value);
+      fetchData();
     }, 2000);
   }
 };
 const cancel = () => {
   editable.value = [];
-  fetchData(currentCharacter.value);
+  fetchData();
 };
 </script>
 
@@ -106,12 +127,14 @@ const cancel = () => {
       <div class="title">登録済みカラム名リスト</div>
       <div class="search-input-wrapper">
         <input
-          v-model="keyword"
+          v-model="params.keyword"
           @input="debounceSearch()"
           placeholder="キーワード検索"
           maxlength="50"
+          type="search"
         />
       </div>
+      <button @click="resetParams()">リセット</button>
     </div>
     <div class="wrap">
       <div
@@ -122,17 +145,29 @@ const cancel = () => {
         <div
           class="index-item jp-character"
           :class="character === currentCharacter && 'current-character'"
-          @click="filter(character)"
+          @click="setFilter(character)"
         >
           {{ character }}
         </div>
         <span>/</span>
       </div>
-      <div class="index-item jp-character" @click="filter('')">すべて</div>
+      <div class="index-item jp-character" @click="setFilter('')">すべて</div>
     </div>
     <div class="row list-header">
-      <div class="list-column-title">項目</div>
-      <div class="list-column-title">カラム名</div>
+      <div class="row" @click="onChangeSort('name')">
+        <div class="list-column-title">項目</div>
+        <SortIcon
+          :is-asc="params?.is_asc"
+          :active="params?.column === 'name'"
+        />
+      </div>
+      <div class="row" @click="onChangeSort('precedent')">
+        <div class="list-column-title">カラム名</div>
+        <SortIcon
+          :is-asc="params?.is_asc"
+          :active="params?.column === 'precedent'"
+        />
+      </div>
     </div>
     <div v-if="!isLoading && !items.length">
       検索に一致する項目はありませんでした。
