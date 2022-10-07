@@ -26,15 +26,17 @@ class ItemController extends Controller
      */
     public function index(IndexRequest $request): AnonymousResourceCollection
     {
-        $keyword = $request['keyword'] ?? null;
-        $filter = $request['filter'] ?? null;
+        $item = new Item();
+        $data = $request->all();
+        $query = Item::query()->with('precedents');
+        $item->searchCondition($query, $data);
 
-        $query = Item::when($keyword, function ($query, $keyword) {
-            return $query->where('name', 'like', "%{$keyword}%");
-        })->when($filter, function ($query, $filter) {
-            return $query->where('name_kana', 'like', "{$filter}%");
-        });
-        $items = $query->orderBy('name_kana', 'asc')->get();
+        if (isset($data['column'])) {
+            $query->sortByNameKanaAsc();
+        } else {
+            $query->sortByIdDesc();
+        }
+        $items = $query->get();
 
         return ItemResource::collection($items);
     }

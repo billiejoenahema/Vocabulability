@@ -13,6 +13,12 @@ const getters = {
   hasErrors(state) {
     return Object.keys(state.errors).length > 0;
   },
+  invalidFeedback: (state) => (props) => {
+    return state.errors[props] ?? [];
+  },
+  isInvalid: (state) => (key) => {
+    return state.errors?.[key] ? 'invalid' : '';
+  },
 };
 
 const actions = {
