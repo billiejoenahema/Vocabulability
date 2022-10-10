@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -58,8 +59,11 @@ class Item extends Model
 
     /**
      * 所有する事例を取得する。
+     *
+     * @return HasMany
+     *
      */
-    public function precedents()
+    public function precedents(): HasMany
     {
         return $this->hasMany(Precedent::class);
     }
