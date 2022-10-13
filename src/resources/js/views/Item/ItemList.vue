@@ -54,6 +54,7 @@ const resetParams = () => {
   fetchData();
 };
 const onChangeSort = (label) => {
+  editable.value = false;
   if (params.column === label) {
     params.is_asc = !params.is_asc;
   } else {
@@ -161,12 +162,8 @@ const cancel = () => {
           :active="params?.column === 'name'"
         />
       </div>
-      <div class="row" @click="onChangeSort('precedent')">
+      <div class="row">
         <div class="list-column-title">カラム名</div>
-        <SortIcon
-          :is-asc="params?.is_asc"
-          :active="params?.column === 'precedent'"
-        />
       </div>
     </div>
     <div v-if="!isLoading && !items.length">

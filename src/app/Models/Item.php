@@ -88,15 +88,21 @@ class Item extends Model
     }
 
     /**
-     * ふりがなの昇順でソートするスコープ
+     * 指定のカラムでソートするスコープ
      *
      * @param Builder|Item $query
+     * @param string $column
+     * @param string $order
      * @return Builder|Item
      */
-    public function scopeSortByNameKanaAsc($query): Builder|Item
+    public function scopeSortByColumn($query, $column, $order): Builder|Item
     {
-        $query->orderBy('name_kana', 'asc');
-
+        $itemColumns = [
+            'name',
+        ];
+        if (in_array($column, $itemColumns, false)) {
+            $query->orderBy($column, $order);
+        }
         return $query;
     }
 
