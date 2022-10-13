@@ -24,10 +24,24 @@ class IndexRequest extends FormRequest
     public function rules()
     {
         return [
-            'column' => 'nullable',
-            'is_asc' => 'nullable',
-            'keyword' => 'nullable',
+            'column' => 'nullable|string',
+            'is_asc' => 'nullable|string',
+            'keyword' => 'nullable|string',
             'filter' => 'nullable|string|regex:/[ぁ-ん]/', // ひらがな1文字
         ];
+    }
+
+    /**
+     * ソートの方向を返す。
+     *
+     * @return string
+     */
+    public function sortDirection(): string
+    {
+        if ($this->is_asc === 'true') {
+            return 'asc';
+        } else {
+            return 'desc';
+        }
     }
 }

@@ -30,9 +30,10 @@ class ItemController extends Controller
         $data = $request->all();
         $query = Item::query()->with('precedents');
         $item->searchCondition($query, $data);
+        $order = $request->sortDirection();
 
         if (isset($data['column'])) {
-            $query->sortByNameKanaAsc();
+            $query->sortByColumn($data['column'], $order);
         } else {
             $query->sortByIdDesc();
         }
