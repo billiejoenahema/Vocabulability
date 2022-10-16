@@ -63,4 +63,20 @@ class SaveRequest extends FormRequest
             'name_kana.regex' => 'ふりがなには、ひらがなを指定してください。',
         ];
     }
+
+
+    /**
+     * 少なくともひとつはnullでない属性が存在するかどうか
+     *
+     * @param array $array
+     * @return bool
+     */
+    public function isInputted($array): bool
+    {
+        $filtered = collect($array)->filter(function ($key, $value) {
+            return filled($value);
+        });
+
+        return $filtered->count() > 0;
+    }
 }
