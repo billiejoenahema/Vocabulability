@@ -18,9 +18,9 @@
         "vue-loader": "^16.8.3"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-svg-core": "^6.2.0",
-        "@fortawesome/free-solid-svg-icons": "^6.2.0",
-        "@fortawesome/vue-fontawesome": "^3.0.1",
+        "@fortawesome/fontawesome-svg-core": "6.2.0",
+        "@fortawesome/free-solid-svg-icons": "6.2.0",
+        "@fortawesome/vue-fontawesome": "3.0.1",
         "n": "^9.0.0",
         "simpledotcss": "^2.1.1",
         "vue-router": "^4.1.5",
