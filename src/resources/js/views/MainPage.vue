@@ -1,5 +1,12 @@
 <script setup>
+import { useStore } from 'vuex';
 import Navigation from '../components/Navigation.vue';
+
+const store = useStore();
+
+const sendMail = () => {
+  store.dispatch('test_mail/send');
+};
 </script>
 
 <template>
@@ -12,5 +19,8 @@ import Navigation from '../components/Navigation.vue';
       <li><router-link to="/item_list">項目リスト</router-link></li>
       <li><router-link to="/item_create">項目登録</router-link></li>
     </ul>
+  </div>
+  <div>
+    <button @click="sendMail()">メール送信</button>
   </div>
 </template>

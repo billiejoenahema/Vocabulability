@@ -6,6 +6,7 @@ import loading from './modules/loading';
 import precedent from './modules/precedent';
 import profile from './modules/profile';
 import question from './modules/question';
+import test_mail from './modules/test_mail';
 import toast from './modules/toast';
 
 export const store = createStore({
@@ -17,6 +18,7 @@ export const store = createStore({
     precedent,
     profile,
     question,
+    test_mail,
     toast,
   },
 });
