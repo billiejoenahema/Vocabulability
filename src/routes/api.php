@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ItemController;
+use App\Http\Controllers\Api\MailTestController;
 use App\Http\Controllers\Api\PrecedentController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\QuestionController;
@@ -22,6 +23,9 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['auth:sanctum']], function () {
     // ログインユーザー情報
     Route::get('/profile', ProfileController::class);
+
+    // メール送信
+    Route::get('/test-mail', MailTestController::class);
 
     // 定数
     Route::get('/const', fn () => config('const'));
