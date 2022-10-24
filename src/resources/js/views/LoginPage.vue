@@ -36,7 +36,7 @@ const guestLogin = async () => {
   }
 };
 const forgotPassword = async () => {
-  await store.dispatch('auth/forgotPassword', user.email);
+  await store.dispatch('auth/forgotPassword', { email: user.email });
 };
 </script>
 
