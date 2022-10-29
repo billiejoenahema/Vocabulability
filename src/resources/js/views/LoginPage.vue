@@ -90,6 +90,5 @@ const forgotPassword = async () => {
         </div>
       </template>
     </form>
-    <div></div>
   </div>
 </template>
