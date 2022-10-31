@@ -7,6 +7,7 @@ import WordCreate from '../views/Word/WordCreate';
 import WordList from '../views/Word/WordList';
 import ItemCreate from '../views/Item/ItemCreate';
 import ItemList from '../views/Item/ItemList';
+import PasswordReset from '../views/PasswordReset';
 import { store } from '../store/index';
 
 const routes = [
@@ -44,6 +45,10 @@ const routes = [
     path: '/login',
     component: LoginPage,
     meta: { isPublic: true },
+  },
+  {
+    path: '/password-reset',
+    component: PasswordReset,
   },
 ];
 

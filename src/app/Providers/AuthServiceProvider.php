@@ -31,7 +31,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         ResetPassword::createUrlUsing(function ($user, string $token) {
-            return env('HOME_URL') . '/reset-password?email=' . $user->email . '&token=' . $token;
+            return env('HOME_URL') . '/password-reset?email=' . $user->email . '&token=' . $token;
         });
     }
 }

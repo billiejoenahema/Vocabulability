@@ -10,7 +10,7 @@ class ResetPasswordNotification extends Notification
 {
     use Queueable;
 
-    private const PASSWORD_RESET_ENDPOINT = 'http://localhost/reset-password';
+    private const PASSWORD_RESET_ENDPOINT = 'http://localhost:8080/password-reset';
 
     /**
      * Create a new notification instance.
@@ -65,9 +65,10 @@ class ResetPasswordNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('以下のボタンをクリックするとパスワードの再設定を行えます。')
-            ->action('パスワード再設定', $this->resetUrl($notifiable))
-            ->line('パスワードの再設定を行わない場合はお手数ですが当メールは破棄して下さい。');
+            ->line('アカウントのパスワードリセットリクエストを受けつけました。')
+            ->action('パスワードリセット', $this->resetUrl($notifiable))
+            ->line('このパスワードリセットリンクの使用期限は60分です。')
+            ->line('このメールに身に覚えがない場合は無視してください。');
     }
 
     /**
