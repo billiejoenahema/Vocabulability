@@ -1,9 +1,8 @@
 <script setup>
-import { computed, onMounted, reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import InvalidFeedback from '../components/InvalidFeedback.vue';
-import Toast from '../components/Toast.vue';
 
 const router = useRouter();
 const store = useStore();
@@ -12,17 +11,11 @@ const user = reactive({
   email: '',
   password: '',
 });
-const isLogin = computed(() => store.getters['profile/isLogin']);
 const invalidFeedback = computed(() => store.getters['auth/invalidFeedback']);
 const hasErrors = computed(() => store.getters['auth/hasErrors']);
 const isInvalid = computed(() => store.getters['auth/isInvalid']);
 const isForgotPassword = ref(false);
-onMounted(async () => {
-  await store.dispatch('profile/getIfNeeded');
-  if (isLogin.value) {
-    router.push('/');
-  }
-});
+
 const login = async () => {
   await store.dispatch('auth/login', user);
   if (!hasErrors.value) {
@@ -41,7 +34,6 @@ const forgotPassword = async () => {
 </script>
 
 <template>
-  <Toast />
   <div class="login-form">
     <form class="column">
       <p class="column">

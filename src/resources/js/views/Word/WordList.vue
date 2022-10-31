@@ -3,8 +3,6 @@ import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import InvalidFeedback from '../../components/InvalidFeedback';
 import LoadingOverlay from '../../components/LoadingOverlay';
-import Navigation from '../../components/Navigation';
-import Toast from '../../components/Toast';
 import { useDebounce } from '../../functions/useDebounce';
 
 const store = useStore();
@@ -15,7 +13,6 @@ onMounted(async () => {
   setIsLoading(false);
 });
 
-store.dispatch('question/get');
 const questions = computed(() => store.getters['question/data']);
 const alphabets = computed(() => store.getters['consts/alphabets']);
 const invalidFeedback = computed(
@@ -72,8 +69,6 @@ const cancel = () => {
 
 <template>
   <LoadingOverlay :isLoading="isLoading" />
-  <Toast />
-  <Navigation />
   <div class="word-list">
     <div class="row header">
       <div class="title">登録済み単語リスト</div>

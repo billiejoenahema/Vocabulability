@@ -3,9 +3,7 @@ import { computed, onMounted, reactive, ref } from 'vue';
 import { useStore } from 'vuex';
 import InvalidFeedback from '../../components/InvalidFeedback';
 import LoadingOverlay from '../../components/LoadingOverlay';
-import Navigation from '../../components/Navigation';
 import SortIcon from '../../components/SortIcon';
-import Toast from '../../components/Toast';
 import { useDebounce } from '../../functions/useDebounce';
 
 const store = useStore();
@@ -16,7 +14,6 @@ onMounted(async () => {
   setIsLoading(false);
 });
 
-store.dispatch('item/get');
 const items = computed(() => store.getters['item/data']);
 const japaneseSyllabary = computed(
   () => store.getters['consts/japaneseSyllabary']
@@ -121,8 +118,6 @@ const cancel = () => {
 
 <template>
   <LoadingOverlay :isLoading="isLoading" />
-  <Toast />
-  <Navigation />
   <div class="word-list">
     <div class="row header">
       <div class="title">登録済みカラム名リスト</div>
