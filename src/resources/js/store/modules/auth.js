@@ -92,6 +92,24 @@ const actions = {
         );
       });
   },
+  async resetPassword({ commit }, data) {
+    await axios
+      .post('/api/reset-password', data)
+      .then((res) => {
+        commit('setErrors', {});
+        commit(
+          'toast/setData',
+          { status: res.status, content: res.data.message },
+          { root: true }
+        );
+      })
+      .catch((err) => {
+        commit(
+          'setErrors',
+          err.response.data.errors ?? err.response.data.message
+        );
+      });
+  },
 };
 
 const mutations = {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\ForgotPasswordController;
+use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\ItemController;
 use App\Http\Controllers\Api\MailTestController;
 use App\Http\Controllers\Api\PrecedentController;
@@ -23,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 
 // パスワードリセット
 Route::post('/forgot-password', ForgotPasswordController::class);
-
+Route::post('/reset-password', ResetPasswordController::class);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
