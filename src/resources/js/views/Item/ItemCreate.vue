@@ -2,8 +2,6 @@
 import { computed, onUnmounted, reactive, ref } from 'vue';
 import { useStore } from 'vuex';
 import InvalidFeedback from '../../components/InvalidFeedback';
-import Navigation from '../../components/Navigation';
-import Toast from '../../components/Toast';
 
 const store = useStore();
 
@@ -50,8 +48,6 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <Toast />
-  <Navigation />
   <div class="word-create">
     <div>
       <div class="row header">

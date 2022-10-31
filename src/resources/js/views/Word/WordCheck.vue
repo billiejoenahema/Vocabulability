@@ -1,7 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
-import Navigation from '../../components/Navigation';
 
 const store = useStore();
 store.dispatch('question/get');
@@ -25,7 +24,6 @@ const toNextQuestion = async () => {
 </script>
 
 <template>
-  <Navigation />
   <div class="main-page">
     <div class="row header">
       <div class="title">エンジニア英単語チェック</div>

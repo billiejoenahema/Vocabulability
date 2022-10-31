@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import LoginPage from '../views/LoginPage';
-import MainPage from '../views/MainPage';
+import Login from '../views/Login';
+import Main from '../views/Main';
 import WordCheck from '../views/Word/WordCheck';
 import WordCreate from '../views/Word/WordCreate';
 import WordList from '../views/Word/WordList';
@@ -12,7 +12,7 @@ import { store } from '../store/index';
 const routes = [
   {
     path: '/',
-    component: MainPage,
+    component: Main,
     meta: { isPublic: false },
   },
   {
@@ -42,7 +42,7 @@ const routes = [
   },
   {
     path: '/login',
-    component: LoginPage,
+    component: Login,
     meta: { isPublic: true },
   },
   {
@@ -63,7 +63,7 @@ router.beforeEach(async (to, _from, next) => {
   await store.dispatch('profile/getIfNeeded');
 
   const isLogin = store.getters['profile/isLogin'];
-  if (isLogin && to.name === 'LoginPage') {
+  if (isLogin && to.path === '/login') {
     // ログイン中にログインページにアクセスしたらトップページにリダイレクトさせる
     next('/');
   } else if (!to.meta.isPublic && !isLogin) {
