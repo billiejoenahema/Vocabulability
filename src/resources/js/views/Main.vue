@@ -1,6 +1,5 @@
 <script setup>
 import { useStore } from 'vuex';
-import Navigation from '../components/Navigation.vue';
 
 const store = useStore();
 
@@ -10,7 +9,6 @@ const sendMail = () => {
 </script>
 
 <template>
-  <Navigation />
   <div class="main-page">
     <ul>
       <li><router-link to="/word_check">単語チェック</router-link></li>

@@ -3,7 +3,6 @@ import { computed, onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import InvalidFeedback from '../components/InvalidFeedback';
-import Toast from '../components/Toast';
 
 const store = useStore();
 const router = useRouter();
@@ -36,7 +35,6 @@ const resetPassword = async () => {
 </script>
 
 <template>
-  <Toast />
   <div class="login-form">
     <form class="column">
       <p class="column">

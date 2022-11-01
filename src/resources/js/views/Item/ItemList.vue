@@ -1,23 +1,21 @@
 <script setup>
-import { computed, onMounted, reactive, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import InvalidFeedback from '../../components/InvalidFeedback';
 import LoadingOverlay from '../../components/LoadingOverlay';
-import Navigation from '../../components/Navigation';
 import SortIcon from '../../components/SortIcon';
-import Toast from '../../components/Toast';
 import { useDebounce } from '../../functions/useDebounce';
 
 const store = useStore();
 
 onMounted(async () => {
   setIsLoading(true);
-  await store.dispatch('item/get');
+  await store.dispatch('item/get', params.value);
   setIsLoading(false);
 });
 
-store.dispatch('item/get');
 const items = computed(() => store.getters['item/data']);
+const params = computed(() => store.getters['item/params']);
 const japaneseSyllabary = computed(
   () => store.getters['consts/japaneseSyllabary']
 );
@@ -40,17 +38,16 @@ const defaultParams = {
   keyword: '',
   filter: '',
 };
-const params = reactive({ ...defaultParams });
 
 const setFilter = (character) => {
   params.keyword = '';
   editable.value = [];
   params.filter = character;
+
   fetchData();
 };
 const resetParams = () => {
-  Object.assign(params, { ...defaultParams });
-
+  Object.assign(params.value, { ...defaultParams });
   fetchData();
 };
 const onChangeSort = (label) => {
@@ -73,7 +70,7 @@ const debounceSearch = useDebounce(() => {
   fetchData();
 });
 const fetchData = () => {
-  store.dispatch('item/get', params);
+  store.dispatch('item/get', params.value);
 };
 const removePrecedent = async (index, _index, id = null) => {
   if (!id) {
@@ -121,8 +118,6 @@ const cancel = () => {
 
 <template>
   <LoadingOverlay :isLoading="isLoading" />
-  <Toast />
-  <Navigation />
   <div class="word-list">
     <div class="row header">
       <div class="title">登録済みカラム名リスト</div>
