@@ -3,12 +3,16 @@ import axios from 'axios';
 
 const state = {
   data: [],
+  params: {},
   errors: {},
 };
 
 const getters = {
   data(state) {
     return state.data ?? [];
+  },
+  params(state) {
+    return state.params ?? {};
   },
   hasErrors(state) {
     return Object.keys(state.errors).length > 0;
