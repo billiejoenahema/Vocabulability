@@ -32,31 +32,28 @@ const defaultPrecedent = {
   item_id: null,
   name: null,
 };
-const defaultParams = {
-  column: '',
-  is_asc: true,
-  keyword: '',
-  filter: '',
-};
 
 const setFilter = (character) => {
-  params.keyword = '';
+  params.value.keyword = '';
   editable.value = [];
-  params.filter = character;
+  params.value.filter = character;
 
   fetchData();
 };
 const resetParams = () => {
-  Object.assign(params.value, { ...defaultParams });
+  store.commit('item/resetParams');
   fetchData();
+};
+const fetchData = () => {
+  store.dispatch('item/get', params.value);
 };
 const onChangeSort = (label) => {
   editable.value = false;
-  if (params.column === label) {
-    params.is_asc = !params.is_asc;
+  if (params.value.column === label) {
+    params.value.is_asc = !params.value.is_asc;
   } else {
-    params.column = label;
-    params.is_asc = true;
+    params.value.column = label;
+    params.value.is_asc = true;
   }
   fetchData();
 };
@@ -66,12 +63,9 @@ const onEdit = (index) => {
   store.commit('item/setErrors', {});
 };
 const debounceSearch = useDebounce(() => {
-  params.filter = '';
+  params.value.filter = '';
   fetchData();
 });
-const fetchData = () => {
-  store.dispatch('item/get', params.value);
-};
 const removePrecedent = async (index, _index, id = null) => {
   if (!id) {
     items.value[index].precedents.splice(_index, 1);
