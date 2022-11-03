@@ -1,8 +1,17 @@
 import axios from 'axios';
 
+const defaultParams = {
+  column: '',
+  is_asc: true,
+  keyword: '',
+  filter: '',
+};
+
 const state = {
   data: [],
-  params: {},
+  params: {
+    ...defaultParams,
+  },
   errors: {},
 };
 
@@ -132,6 +141,10 @@ const mutations = {
   setErrors(state, data) {
     state.errors = {};
     state.errors = data;
+  },
+  resetParams(state) {
+    state.errors = {};
+    state.params = defaultParams;
   },
 };
 
