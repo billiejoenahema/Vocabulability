@@ -49,7 +49,7 @@ const importCSV = async () => {
           :class="isInvalid('word')"
           maxlength="255"
         />
-        <invalid-feedback :errors="invalidFeedback('word')" />
+        <InvalidFeedback :errors="invalidFeedback('word')" />
       </div>
       <div class="column">
         <label>正解</label>

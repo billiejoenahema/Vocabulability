@@ -1,4 +1,3 @@
-import { shuffle } from '../../functions/shuffle';
 import axios from 'axios';
 
 const state = {
