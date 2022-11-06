@@ -35,7 +35,14 @@ class QuestionController extends Controller
             $query->where('word', 'like', "{$request['filter']}%");
         }
 
-        $questions = $query->orderBy('word', 'asc')->get();
+        $order = $request->getSortDirection();
+        $column = $request->getSortColumn();
+        if ($column) {
+            $query->sortByColumn($column, $order);
+        } else {
+            $query->sortByWordAsc();
+        }
+        $questions = $query->get();
 
         return QuestionResource::collection($questions);
     }

@@ -1,14 +1,27 @@
 import { shuffle } from '../../functions/shuffle';
 import axios from 'axios';
 
+const defaultParams = {
+  column: '',
+  is_asc: true,
+  keyword: '',
+  filter: '',
+};
+
 const state = {
   data: [],
+  params: {
+    ...defaultParams,
+  },
   errors: {},
 };
 
 const getters = {
   data(state) {
     return state.data ?? [];
+  },
+  params(state) {
+    return state.params ?? {};
   },
   randomData(state) {
     return shuffle(state.data);
@@ -132,6 +145,10 @@ const mutations = {
   setErrors(state, data) {
     state.errors = {};
     state.errors = data;
+  },
+  resetParams(state) {
+    state.errors = {};
+    state.params = defaultParams;
   },
 };
 

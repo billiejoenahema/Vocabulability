@@ -28,7 +28,7 @@ class ItemController extends Controller
     {
         $query = Item::query()->with('precedents');
         $query->searchCondition($request);
-        $order = $request->sortDirection();
+        $order = $request->getSortDirection();
         $column = $request['column'] ?? null;
 
         if ($column) {

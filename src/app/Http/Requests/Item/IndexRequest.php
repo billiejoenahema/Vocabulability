@@ -36,7 +36,7 @@ class IndexRequest extends FormRequest
      *
      * @return string
      */
-    public function sortDirection(): string
+    public function getSortDirection(): string
     {
         if ($this->is_asc === 'true') {
             return 'asc';
