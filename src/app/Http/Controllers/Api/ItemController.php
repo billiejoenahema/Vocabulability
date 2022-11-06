@@ -26,14 +26,13 @@ class ItemController extends Controller
      */
     public function index(IndexRequest $request): AnonymousResourceCollection
     {
-        $item = new Item();
-        $data = $request->all();
         $query = Item::query()->with('precedents');
-        $item->searchCondition($query, $data);
+        $query->searchCondition($request);
         $order = $request->sortDirection();
+        $column = $request['column'] ?? null;
 
-        if (isset($data['column'])) {
-            $query->sortByColumn($data['column'], $order);
+        if ($column) {
+            $query->sortByColumn($column, $order);
         } else {
             $query->sortByIdDesc();
         }
