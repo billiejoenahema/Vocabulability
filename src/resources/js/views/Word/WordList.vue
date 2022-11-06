@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import InvalidFeedback from '../../components/InvalidFeedback';
 import LoadingOverlay from '../../components/LoadingOverlay';
+import SortIcon from '../../components/SortIcon';
 import { useDebounce } from '../../functions/useDebounce';
 
 const store = useStore();
@@ -10,10 +11,12 @@ const store = useStore();
 onMounted(async () => {
   setIsLoading(true);
   await store.dispatch('question/get');
+  await store.dispatch('consts/get');
   setIsLoading(false);
 });
 
 const questions = computed(() => store.getters['question/data']);
+const params = computed(() => store.getters['question/params']);
 const alphabets = computed(() => store.getters['consts/alphabets']);
 const invalidFeedback = computed(
   () => store.getters['question/invalidFeedback']
@@ -21,23 +24,34 @@ const invalidFeedback = computed(
 const hasErrors = computed(() => store.getters['question/hasErrors']);
 const isInvalid = computed(() => store.getters['question/isInvalid']);
 const editable = ref([]);
-const keyword = ref('');
-const currentAlphabet = ref('');
 const isLoading = computed(() => store.getters['loading/isLoading']);
 const setIsLoading = (bool) => store.commit('loading/setIsLoading', bool);
-
-const debounceSearch = useDebounce(() => {
-  currentAlphabet.value = '';
-  store.dispatch('question/get', { keyword: keyword.value });
-});
-const fetchData = (alphabet) => {
-  store.dispatch('question/get', { filter: alphabet });
+const fetchData = () => {
+  store.dispatch('question/get', params.value);
 };
-const filter = (alphabet) => {
-  keyword.value = '';
+const debounceSearch = useDebounce(() => {
+  params.value.filter = '';
+  fetchData();
+});
+const setFilter = (alphabet) => {
+  params.value.keyword = '';
   editable.value = [];
-  currentAlphabet.value = alphabet;
-  fetchData(alphabet);
+  params.value.filter = alphabet;
+  fetchData();
+};
+const resetParams = () => {
+  store.commit('question/resetParams');
+  fetchData();
+};
+const onChangeSort = (label) => {
+  editable.value = false;
+  if (params.value.column === label) {
+    params.value.is_asc = !params.value.is_asc;
+  } else {
+    params.value.column = label;
+    params.value.is_asc = true;
+  }
+  fetchData();
 };
 const onEdit = (index) => {
   editable.value = [];
@@ -50,7 +64,7 @@ const updateQuestion = async (question, index) => {
   setIsLoading(false);
   if (hasErrors.value) return;
   editable.value[index] = false;
-  fetchData(currentAlphabet.value);
+  fetchData(params.value.filter);
 };
 const deleteQuestion = async (id) => {
   if (confirm('削除しますか？')) {
@@ -74,29 +88,42 @@ const cancel = () => {
       <div class="title">登録済み単語リスト</div>
       <div class="search-input-wrapper">
         <input
-          v-model="keyword"
+          v-model="params.keyword"
           @input="debounceSearch()"
           placeholder="キーワード検索"
           maxlength="50"
           type="search"
         />
       </div>
+      <button @click="resetParams()">リセット</button>
     </div>
     <div class="wrap">
       <div class="row" v-for="(alphabet, index) in alphabets" :key="index">
         <span v-if="index">/</span>
         <div
           class="index-item"
-          :class="alphabet === currentAlphabet && 'current-alphabet'"
-          @click="filter(alphabet)"
+          :class="alphabet === params.filter && 'current-alphabet'"
+          @click="setFilter(alphabet)"
         >
           {{ alphabet }}
         </div>
       </div>
     </div>
     <div class="row list-header">
-      <div class="list-column-title">単語</div>
-      <div class="list-column-title">正解</div>
+      <div class="row" @click="onChangeSort('word')">
+        <div class="list-column-title">単語</div>
+        <SortIcon
+          :is-asc="params?.is_asc"
+          :active="params?.column === 'word'"
+        />
+      </div>
+      <div class="row" @click="onChangeSort('correct_answer')">
+        <div class="list-column-title">正解</div>
+        <SortIcon
+          :is-asc="params?.is_asc"
+          :active="params?.column === 'correct_answer'"
+        />
+      </div>
     </div>
     <div v-if="!isLoading && !questions.length">
       検索に一致する単語はありませんでした。

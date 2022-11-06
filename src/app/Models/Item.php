@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Requests\Item\IndexRequest;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -40,6 +41,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Item whereNameKana($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Item sortByIdDesc()
  * @method static \Illuminate\Database\Eloquent\Builder|Item sortByNameKanaAsc()
+ * @method static \Illuminate\Database\Eloquent\Builder|Item sortByColumn($column, $order)
+ * @method static \Illuminate\Database\Eloquent\Builder|Item searchCondition($request)
  */
 class Item extends Model
 {
@@ -72,16 +75,16 @@ class Item extends Model
      * 検索条件
      *
      * @param Builder|Item $query
-     * @param array $data
+     * @param IndexRequest $request
      * @return Builder|Item
      */
-    public function searchCondition($query, $data): Builder|Item
+    public function scopeSearchCondition($query, $request): Builder|Item
     {
-        if (isset($data['keyword'])) {
-            $query->where('name', 'like', "%{$data['keyword']}%");
+        if (isset($request['keyword'])) {
+            $query->where('name', 'like', "%{$request['keyword']}%");
         }
-        if (isset($data['filter'])) {
-            $query->where('name_kana', 'like', "{$data['filter']}%");
+        if (isset($request['filter'])) {
+            $query->where('name_kana', 'like', "{$request['filter']}%");
         }
 
         return $query;

@@ -24,7 +24,6 @@ const hasErrors = computed(() => store.getters['item/hasErrors']);
 const hasErrorsPrecedent = computed(() => store.getters['precedent/hasErrors']);
 const isInvalid = computed(() => store.getters['item/isInvalid']);
 const editable = ref([]);
-const currentCharacter = ref('');
 const isLoading = computed(() => store.getters['loading/isLoading']);
 const setIsLoading = (bool) => store.commit('loading/setIsLoading', bool);
 const defaultPrecedent = {
@@ -134,7 +133,7 @@ const cancel = () => {
       >
         <div
           class="index-item jp-character"
-          :class="character === currentCharacter && 'current-character'"
+          :class="character === params.filter && 'current-character'"
           @click="setFilter(character)"
         >
           {{ character }}

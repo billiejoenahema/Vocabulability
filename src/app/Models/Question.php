@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,6 +28,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereWord($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|Question sortByColumn($column, $order)
+ * @method static \Illuminate\Database\Eloquent\Builder|Question sortByWordAsc()
  */
 class Question extends Model
 {
@@ -43,4 +46,37 @@ class Question extends Model
         'correct_answer' => 'string',
         'example' => 'string',
     ];
+
+    /**
+     * 指定のカラムでソートするスコープ
+     *
+     * @param Builder|Question $query
+     * @param string $column
+     * @param string $order
+     * @return Builder|Question
+     */
+    public function scopeSortByColumn($query, $column, $order): Builder|Question
+    {
+        $columns = [
+            'word',
+            'correct_answer',
+        ];
+        if (in_array($column, $columns, false)) {
+            $query->orderBy($column, $order);
+        }
+        return $query;
+    }
+
+    /**
+     * 単語の昇順でソートするスコープ
+     *
+     * @param Builder|Question $query
+     * @return Builder|Question
+     */
+    public function scopeSortByWordAsc($query): Builder|Question
+    {
+        $query->orderBy('word', 'asc');
+
+        return $query;
+    }
 }
