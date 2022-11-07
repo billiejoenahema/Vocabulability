@@ -116,6 +116,13 @@ const cancel = () => {
       <div class="title">登録済みカラム名リスト</div>
       <div class="search-input-wrapper">
         <input
+          v-model="params.created_at_from"
+          @input="debounceSearch()"
+          type="datetime-local"
+        />
+      </div>
+      <div class="search-input-wrapper">
+        <input
           v-model="params.keyword"
           @input="debounceSearch()"
           placeholder="キーワード検索"
