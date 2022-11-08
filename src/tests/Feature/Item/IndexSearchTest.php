@@ -33,6 +33,7 @@ class IndexSearchTest extends TestCase
         }
         $this->created_at_from = Carbon::parse(now())->subDay()->format('Y-m-d H:i:s');
         $this->created_at = Carbon::parse($items[9]->created_at)->format('Y-m-d H:i:s');
+        $this->name = $items[0]->name;
     }
 
     /**
@@ -46,5 +47,18 @@ class IndexSearchTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonPath('data.0.created_at', $this->created_at);
+    }
+
+    /**
+     * 項目名で一覧を検索できるか確認するテスト
+     *
+     * @return void
+     */
+    public function test_searchIndexByName()
+    {
+        $response = $this->actingAs($this->user)->getJson('/api/items?keyword=' . $this->name);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('data.0.name', $this->name);
     }
 }
