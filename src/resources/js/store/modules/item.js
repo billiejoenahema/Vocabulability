@@ -5,6 +5,7 @@ const defaultParams = {
   is_asc: true,
   keyword: '',
   filter: '',
+  created_at_from: null,
 };
 
 const state = {

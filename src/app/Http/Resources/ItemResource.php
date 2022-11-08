@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 
 class ItemResource extends JsonResource
 {
@@ -21,6 +22,7 @@ class ItemResource extends JsonResource
             'name_kana' => $this->name_kana,
             'category' => $this->category,
             'precedents' => PrecedentResource::collection($this->precedents),
+            'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
         ];
     }
 }
