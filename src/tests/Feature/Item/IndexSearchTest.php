@@ -40,7 +40,7 @@ class IndexSearchTest extends TestCase
      *
      * @return void
      */
-    public function test_sortIndexByCreated_at()
+    public function test_searchIndexByCreated_at()
     {
         $response = $this->actingAs($this->user)->getJson('/api/items?created_at_from=' . $this->created_at_from);
 
