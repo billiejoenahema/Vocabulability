@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Item
@@ -87,7 +88,7 @@ class Item extends Model
             $query->where('name_kana', 'like', "{$request['filter']}%");
         }
         if (isset($request['created_at_from'])) {
-            $query->where('created_at', '>=', $request['created_at_from']);
+            $query->whereDate('created_at', '>=', $request['created_at_from']);
         }
 
         return $query;
@@ -123,5 +124,10 @@ class Item extends Model
         $query->orderBy('id', 'desc');
 
         return $query;
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d H:i:s');
     }
 }
