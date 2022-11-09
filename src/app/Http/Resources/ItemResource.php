@@ -22,7 +22,7 @@ class ItemResource extends JsonResource
             'name_kana' => $this->name_kana,
             'category' => $this->category,
             'precedents' => PrecedentResource::collection($this->precedents),
-            'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
+            'created_at' => $this->created_at,
         ];
     }
 }
