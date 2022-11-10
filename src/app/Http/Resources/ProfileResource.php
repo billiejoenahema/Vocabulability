@@ -17,6 +17,7 @@ class ProfileResource extends JsonResource
         /** @var \App\Models\User $this */
         return [
             'id' => $this->id,
+            'pref' => $this->pref,
         ];
     }
 }
