@@ -8,12 +8,15 @@ body {
 main {
   max-width: 880px;
   margin: 0 auto;
+  padding-top: 0;
 }
 nav {
   display: flex;
   justify-content: space-evenly;
   background-color: #333333;
   padding: 8px;
+  position: sticky;
+  top: 0;
 }
 button {
   font-size: 0.5rem;
@@ -65,7 +68,7 @@ select {
   column-gap: 8px;
   padding: 8px 0;
   position: sticky;
-  top: 0;
+  top: 35px;
   background: rgb(66, 66, 66);
 }
 .list-column-title {
