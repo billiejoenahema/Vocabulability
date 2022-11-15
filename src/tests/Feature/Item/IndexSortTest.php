@@ -30,10 +30,24 @@ class IndexSortTest extends TestCase
                 'item_id' => $item->id,
             ]);
         }
-        $itemsAsc = collect($items)->sortBy('name')->values()->all();
-        $this->nameAsc = $itemsAsc[0]->name;
-        $itemsDesc = collect($items)->sortByDesc('name')->values()->all();
-        $this->nameDesc = $itemsDesc[0]->name;
+    }
+
+
+    /**
+     * 項目名で一覧を降順ソートできるか確認するテスト
+     *
+     * @return void
+     */
+    public function test_sortIndexByNameDesc()
+    {
+        $response = $this->actingAs($this->user)->getJson('/api/items?column=name&is_asc=false');
+
+        $response->assertStatus(200);
+        $actual = collect($response->json('data'));
+        $this->assertEquals(
+            $actual->sortByDesc('word')->pluck('word'),
+            $actual->pluck('word')
+        );
     }
 
     /**
@@ -45,20 +59,11 @@ class IndexSortTest extends TestCase
     {
         $response = $this->actingAs($this->user)->getJson('/api/items?column=name&is_asc=true');
 
-        $response->assertStatus(200)
-            ->assertJsonPath('data.0.name', $this->nameAsc);
-    }
-
-    /**
-     * 項目名で一覧を降順ソートできるか確認するテスト
-     *
-     * @return void
-     */
-    public function test_sortIndexByNameDesc()
-    {
-        $response = $this->actingAs($this->user)->getJson('/api/items?column=name&is_asc=false');
-
-        $response->assertStatus(200)
-            ->assertJsonPath('data.0.name', $this->nameDesc);
+        $response->assertStatus(200);
+        $actual = collect($response->json('data'));
+        $this->assertEquals(
+            $actual->sortBy('name')->pluck('name'),
+            $actual->pluck('name')
+        );
     }
 }
