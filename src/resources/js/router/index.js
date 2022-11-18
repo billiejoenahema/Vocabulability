@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Login from '../views/Login';
 import Main from '../views/Main';
+import NotFound from '../views/NotFound';
+import PasswordReset from '../views/PasswordReset';
 import WordCheck from '../views/Word/WordCheck';
 import WordCreate from '../views/Word/WordCreate';
 import WordList from '../views/Word/WordList';
 import ItemCreate from '../views/Item/ItemCreate';
 import ItemList from '../views/Item/ItemList';
-import PasswordReset from '../views/PasswordReset';
 import { store } from '../store/index';
 
 const routes = [
@@ -48,6 +49,10 @@ const routes = [
   {
     path: '/password-reset',
     component: PasswordReset,
+  },
+  {
+    path: '/:catchAll(.*)',
+    component: NotFound,
   },
 ];
 
