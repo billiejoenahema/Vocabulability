@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import InvalidFeedback from '../../components/InvalidFeedback';
 import LoadingOverlay from '../../components/LoadingOverlay';
@@ -79,6 +79,9 @@ const deleteQuestion = async (id) => {
 const cancel = () => {
   editable.value = [];
 };
+onUnmounted(() => {
+  store.commit('word/setErrors', {});
+});
 </script>
 
 <template>
