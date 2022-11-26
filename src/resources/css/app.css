@@ -195,3 +195,6 @@ select {
 .d-flex {
   display: flex;
 }
+.input-text {
+  padding: 8px;
+}
