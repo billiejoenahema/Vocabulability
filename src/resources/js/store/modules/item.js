@@ -145,7 +145,7 @@ const mutations = {
   },
   resetParams(state) {
     state.errors = {};
-    state.params = Object.assign({}, defaultParams);
+    state.params = { ...defaultParams };
   },
 };
 
