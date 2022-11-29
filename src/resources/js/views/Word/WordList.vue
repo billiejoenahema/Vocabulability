@@ -80,7 +80,7 @@ const cancel = () => {
   editable.value = [];
 };
 onUnmounted(() => {
-  store.commit('word/setErrors', {});
+  store.commit('question/setErrors', {});
 });
 </script>
 

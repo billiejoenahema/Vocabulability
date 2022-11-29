@@ -34,7 +34,7 @@ const importCSV = async () => {
   await store.dispatch('question/importCSV', formData);
 };
 onUnmounted(() => {
-  store.commit('word/setErrors', {});
+  store.commit('question/setErrors', {});
 });
 </script>
 
