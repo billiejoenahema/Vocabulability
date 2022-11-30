@@ -87,7 +87,7 @@ class Item extends Model
         if (isset($request['filter'])) {
             $query->where('name_kana', 'like', "{$request['filter']}%");
         }
-        if (isset($request['created_at_from'])) {
+        if ($request['created_at_from']) {
             $query->whereDate('created_at', '>=', $request['created_at_from']);
         }
 
