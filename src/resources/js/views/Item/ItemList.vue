@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watchEffect } from 'vue';
 import { useStore } from 'vuex';
 import InvalidFeedback from '../../components/InvalidFeedback';
 import LoadingOverlay from '../../components/LoadingOverlay';
@@ -62,6 +62,7 @@ const onEdit = (index) => {
   store.commit('item/setErrors', {});
 };
 const debounceSearch = useDebounce(() => {
+  if (params.value.created_at_from === '') return;
   params.value.filter = '';
   fetchData();
 });
@@ -107,6 +108,16 @@ const cancel = () => {
   editable.value = [];
   fetchData();
 };
+watchEffect(() => {
+  // <input type="date" />に無効な日付を入力させないようにする
+  if (params.value.created_at_from === '') {
+    store.commit('item/setErrors', {
+      datetime: ['有効な日付を指定してください。'],
+    });
+    // 更新ボタンを不活性化する
+    // :disabled="params.created_at_from === ''"
+  }
+});
 onUnmounted(() => {
   store.commit('item/setErrors', {});
 });
@@ -123,6 +134,7 @@ onUnmounted(() => {
           @input="debounceSearch()"
           type="datetime-local"
         />
+        <InvalidFeedback :errors="invalidFeedback('datetime')" />
       </div>
       <div class="search-input-wrapper">
         <input
