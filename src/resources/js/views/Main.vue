@@ -1,7 +1,7 @@
 <script setup>
 import { reactive } from 'vue';
 import { useStore } from 'vuex';
-import InputText from '../components/InputText.vue';
+import Input from '../components/Input.vue';
 
 const store = useStore();
 
@@ -31,19 +31,31 @@ const state = reactive({
     <button @click="sendMail()">メール送信</button>
   </div>
   <div class="input-text">
-    <InputText :type="'text'" :for-id-value="'text'" v-model="state.text" />
+    <label>TEL</label>
+    <Input
+      v-model="state.text"
+      :autocomplete="'tel'"
+      :for-id-value="'text'"
+      :type="'tel'"
+    />
   </div>
   <div class="input-text">
-    <InputText :type="'month'" :for-id-value="'month'" v-model="state.month" />
+    <Input :type="'month'" :for-id-value="'month'" v-model="state.month" />
   </div>
   <div class="input-text">
-    <InputText :type="'date'" :for-id-value="'date'" v-model="state.date" />
+    <label>BirthDay</label>
+    <Input
+      v-model="state.date"
+      :autocomplete="'bday'"
+      :for-id-value="'date'"
+      :type="'date'"
+    />
   </div>
   <div class="input-text">
-    <InputText :type="'time'" :for-id-value="'time'" v-model="state.time" />
+    <Input :type="'time'" :for-id-value="'time'" v-model="state.time" />
   </div>
   <div class="input-text">
-    <InputText
+    <Input
       :type="'datetime-local'"
       :for-id-value="'datetime'"
       v-model="state.datetime"

@@ -35,6 +35,11 @@ defineProps({
     required: false,
     type: [String, Number],
   },
+  autocomplete: {
+    default: '',
+    required: false,
+    type: String,
+  },
   type: {
     default: 'text',
     required: false,
@@ -64,6 +69,7 @@ const updateModelValue = (event) => {
     :value="modelValue"
     :class="classValue"
     :type="type"
+    :autocomplete="autocomplete"
     :disabled="disabled"
     :aria-describedby="`${forIdValue}HelpBlock`"
     :maxlength="maxlength"
