@@ -9,7 +9,8 @@ const sendMail = () => {
   store.dispatch('test_mail/send');
 };
 const state = reactive({
-  text: '',
+  tel: '',
+  email: '',
   month: '',
   date: '',
   time: '',
@@ -29,6 +30,24 @@ const state = reactive({
   </div>
   <div>
     <button @click="sendMail()">メール送信</button>
+  </div>
+  <div class="input-text">
+    <label>TEL</label>
+    <Input
+      v-model="state.tel"
+      :autocomplete="'tel'"
+      :for-id-value="'tel'"
+      :type="'tel'"
+    />
+  </div>
+  <div class="input-text">
+    <label>Email</label>
+    <Input
+      v-model="state.email"
+      :autocomplete="'email'"
+      :for-id-value="'email'"
+      :type="'email'"
+    />
   </div>
   <div class="input-text">
     <label>TEL</label>
