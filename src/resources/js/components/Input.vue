@@ -46,6 +46,7 @@ defineProps({
     validator(value) {
       return (
         value === 'text' ||
+        value === 'tel' ||
         value === 'email' ||
         value === 'password' ||
         value === 'month' ||
