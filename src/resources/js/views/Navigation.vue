@@ -15,7 +15,7 @@ const logout = async () => {
 </script>
 
 <template>
-  <nav>
+  <nav class="header-nav">
     <router-link to="/">Home</router-link>
     <router-link to="/word_check">WordCheck</router-link>
     <router-link to="/word_list">WordList</router-link>
