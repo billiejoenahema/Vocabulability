@@ -172,8 +172,12 @@ onUnmounted(() => {
           :active="params?.column === 'name'"
         />
       </div>
-      <div class="row">
+      <div class="row" @click="onChangeSort('precedent')">
         <div class="list-column-title">カラム名</div>
+        <SortIcon
+          :is-asc="params?.is_asc"
+          :active="params?.column === 'precedent'"
+        />
       </div>
     </div>
     <div v-if="!isLoading && !items.length">

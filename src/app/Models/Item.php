@@ -87,9 +87,9 @@ class Item extends Model
         if (isset($request['filter'])) {
             $query->where('name_kana', 'like', "{$request['filter']}%");
         }
-        if ($request['created_at_from']) {
-            $query->whereDate('created_at', '>=', $request['created_at_from']);
-        }
+        // if ($request['created_at_from']) {
+        //     $query->whereDate('created_at', '>=', $request['created_at_from']);
+        // }
 
         return $query;
     }
@@ -110,6 +110,7 @@ class Item extends Model
         if (in_array($column, $itemColumns, false)) {
             $query->orderBy($column, $order);
         }
+
         return $query;
     }
 
