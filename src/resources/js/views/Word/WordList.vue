@@ -3,6 +3,7 @@ import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import InvalidFeedback from '../../components/InvalidFeedback';
 import LoadingOverlay from '../../components/LoadingOverlay';
+import Pagination from '../../components/Pagination';
 import SortIcon from '../../components/SortIcon';
 import { useDebounce } from '../../functions/useDebounce';
 
@@ -23,6 +24,7 @@ const invalidFeedback = computed(
 );
 const hasErrors = computed(() => store.getters['question/hasErrors']);
 const isInvalid = computed(() => store.getters['question/isInvalid']);
+const links = computed(() => store.getters['question/links']);
 const editable = ref([]);
 const isLoading = computed(() => store.getters['loading/isLoading']);
 const setIsLoading = (bool) => store.commit('loading/setIsLoading', bool);
@@ -64,7 +66,7 @@ const updateQuestion = async (question, index) => {
   setIsLoading(false);
   if (hasErrors.value) return;
   editable.value[index] = false;
-  fetchData(params.value.filter);
+  fetchData();
 };
 const deleteQuestion = async (id) => {
   if (confirm('削除しますか？')) {
@@ -78,6 +80,12 @@ const deleteQuestion = async (id) => {
 };
 const cancel = () => {
   editable.value = [];
+};
+const changePage = (page = null) => {
+  if (page) {
+    params.value.page = page;
+    fetchData();
+  }
 };
 onUnmounted(() => {
   store.commit('question/setErrors', {});
@@ -194,4 +202,5 @@ onUnmounted(() => {
       </div>
     </div>
   </div>
+  <Pagination :links="links" @change="changePage" />
 </template>

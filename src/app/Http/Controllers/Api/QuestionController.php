@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class QuestionController extends Controller
 {
+    private const PER_PAGE = 15;
+
     /**
      * 問題一覧を取得する。
      *
@@ -42,7 +44,7 @@ class QuestionController extends Controller
         } else {
             $query->sortByWordAsc();
         }
-        $questions = $query->get();
+        $questions = $query->paginate(self::PER_PAGE);
 
         return QuestionResource::collection($questions);
     }
