@@ -39,19 +39,19 @@ class ItemController extends Controller
         }
         $items = $query->get();
 
-        if ($column === 'precedent' && $request['created_at_from']) {
-            $createdDate = Carbon::parse($request['created_at_from'])->format('Y-m-d');
+        // precedents.nameのでソート
+        if ($column === 'precedent') {
             if ($order === 'asc') {
-                $items = collect($items)->sortBy(function ($item) use ($createdDate) {
-                    return  $item['precedents']->where('created_at', '<=', $createdDate)[0]['name'];
+                $items = collect($items)->sortBy(function ($item) {
+                    return implode(' ', $item->precedents->pluck('name')->toArray());
                 })->values();
             } else {
-                $items = collect($items)->sortByDesc(function ($item) use ($createdDate) {
-                    return  $item['precedents']->where('created_at', '<=', $createdDate)[0]['name'];
+                $items = collect($items)->sortByDesc(function ($item) {
+                    return implode(' ', $item->precedents->pluck('name')->toArray());
                 })->values();
             }
         }
-
+        $items = collect($items)->paginate(10);
 
         return ItemResource::collection($items);
     }
