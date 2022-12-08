@@ -11,6 +11,7 @@ use App\Http\Resources\ItemResource;
 use App\Imports\ItemImport;
 use App\Models\Item;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,12 +32,26 @@ class ItemController extends Controller
         $order = $request->getSortDirection();
         $column = $request['column'] ?? null;
 
-        if ($column) {
+        if ($column && $column !== 'precedent') {
             $query->sortByColumn($column, $order);
         } else {
             $query->sortByIdDesc();
         }
         $items = $query->get();
+
+        // precedents.nameのでソート
+        if ($column === 'precedent') {
+            if ($order === 'asc') {
+                $items = collect($items)->sortBy(function ($item) {
+                    return implode(' ', $item->precedents->pluck('name')->toArray());
+                })->values();
+            } else {
+                $items = collect($items)->sortByDesc(function ($item) {
+                    return implode(' ', $item->precedents->pluck('name')->toArray());
+                })->values();
+            }
+        }
+        $items = collect($items)->paginate(10);
 
         return ItemResource::collection($items);
     }
