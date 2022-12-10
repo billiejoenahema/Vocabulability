@@ -3,6 +3,7 @@ import { computed, onMounted, onUnmounted, ref, watchEffect } from 'vue';
 import { useStore } from 'vuex';
 import InvalidFeedback from '../../components/InvalidFeedback';
 import LoadingOverlay from '../../components/LoadingOverlay';
+import Pagination from '../../components/Pagination';
 import SortIcon from '../../components/SortIcon';
 import { useDebounce } from '../../functions/useDebounce';
 
@@ -23,6 +24,7 @@ const invalidFeedback = computed(() => store.getters['item/invalidFeedback']);
 const hasErrors = computed(() => store.getters['item/hasErrors']);
 const hasErrorsPrecedent = computed(() => store.getters['precedent/hasErrors']);
 const isInvalid = computed(() => store.getters['item/isInvalid']);
+const links = computed(() => store.getters['item/links']);
 const editable = ref([]);
 const isLoading = computed(() => store.getters['loading/isLoading']);
 const setIsLoading = (bool) => store.commit('loading/setIsLoading', bool);
@@ -54,6 +56,8 @@ const onChangeSort = (label) => {
     params.value.column = label;
     params.value.is_asc = true;
   }
+  // ソートするときにページを1に戻す
+  params.value.page = 1;
   fetchData();
 };
 const onEdit = (index) => {
@@ -108,6 +112,13 @@ const cancel = () => {
   editable.value = [];
   fetchData();
 };
+const changePage = (page = null) => {
+  if (page) {
+    params.value.page = page;
+    fetchData();
+  }
+};
+// TODO watchEffectをやめて検索リクエスト送信時にvalidityをチェックするようにする
 watchEffect(() => {
   // <input type="date" />に無効な日付を入力させないようにする
   if (params.value.created_at_from === '') {
@@ -125,7 +136,7 @@ onUnmounted(() => {
 
 <template>
   <LoadingOverlay :isLoading="isLoading" />
-  <div class="word-list">
+  <div class="item-list">
     <div class="row header">
       <div class="title">登録済みカラム名リスト</div>
       <div class="search-input-wrapper">
@@ -261,4 +272,5 @@ onUnmounted(() => {
       </div>
     </div>
   </div>
+  <Pagination :links="links" @change="changePage" />
 </template>

@@ -79,6 +79,7 @@ select {
 }
 .main-page,
 .word-create,
+.item-list,
 .word-list {
   margin: 40px auto 0;
 }
@@ -115,6 +116,12 @@ select {
   position: sticky;
   top: 35px;
   background: rgb(66, 66, 66);
+}
+.word-list > .list-body {
+  min-height: 528px;
+}
+.item-list > .list-body {
+  min-height: 352px;
 }
 .list-column-title {
   font-weight: 800;
