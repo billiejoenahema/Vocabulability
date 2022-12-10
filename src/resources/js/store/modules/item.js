@@ -18,7 +18,7 @@ const state = {
 
 const getters = {
   data(state) {
-    return state.data ?? [];
+    return state.data?.data ?? [];
   },
   params(state) {
     return state.params ?? {};
@@ -32,6 +32,9 @@ const getters = {
   isInvalid: (state) => (key) => {
     return state.errors?.[key] ? 'invalid' : '';
   },
+  links(state) {
+    return state.data?.meta?.links ?? [];
+  },
 };
 
 const actions = {
@@ -40,7 +43,7 @@ const actions = {
       .get('/api/items', { params })
       .then((res) => {
         commit('setErrors', {});
-        commit('setData', res.data);
+        commit('setData', res);
       })
       .catch((err) => {
         commit('setErrors', err.response.data.errors);
