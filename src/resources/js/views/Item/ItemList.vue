@@ -89,9 +89,9 @@ const addPrecedent = (index) => {
 const updateItem = async (item, index) => {
   setIsLoading(true);
   await store.dispatch('item/update', item);
-  setIsLoading(false);
   if (hasErrors.value) return;
   setTimeout(() => {
+    setIsLoading(false);
     editable.value[index] = false;
     fetchData();
   }, 2000);
@@ -190,6 +190,13 @@ onUnmounted(() => {
           :active="params?.column === 'precedent'"
         />
       </div>
+      <div class="row" @click="onChangeSort('description')">
+        <div class="list-column-title">説明</div>
+        <SortIcon
+          :is-asc="params?.is_asc"
+          :active="params?.column === 'description'"
+        />
+      </div>
     </div>
     <div v-if="!isLoading && !items.length">
       検索に一致する項目はありませんでした。
@@ -200,7 +207,7 @@ onUnmounted(() => {
           <input
             v-model="item.name"
             :class="isInvalid('name')"
-            maxlength="255"
+            maxlength="50"
           />
           <InvalidFeedback :errors="invalidFeedback('name')" />
         </div>
@@ -216,7 +223,7 @@ onUnmounted(() => {
                   v-model="item.precedents[_index].name"
                   class="precedent-input"
                   :class="isInvalid('precedents.' + _index + '.name')"
-                  maxlength="255"
+                  maxlength="50"
                 />
                 <div
                   class="precedent-input-xmark"
@@ -242,6 +249,17 @@ onUnmounted(() => {
           >
             <font-awesome-icon class="plus-icon" icon="plus" />
           </div>
+        </div>
+        <div v-if="editable[index]" class="column">
+          <input
+            v-model="item.description"
+            :class="isInvalid('description')"
+            maxlength="50"
+          />
+          <InvalidFeedback :errors="invalidFeedback('description')" />
+        </div>
+        <div v-else @click="onEdit(index)" class="list-item">
+          {{ item.description }}
         </div>
         <button
           v-if="editable[index]"

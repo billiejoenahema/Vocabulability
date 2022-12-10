@@ -112,6 +112,8 @@ const actions = {
             { status: err.response.status, content: err.response.data.message },
             { root: true }
           );
+        } else {
+          commit('loading/setIsLoading', false, { root: true });
         }
       });
   },

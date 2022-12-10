@@ -34,6 +34,7 @@ class SaveRequest extends FormRequest
             'category' => ['required', 'string', Rule::in(CategoryEnum::values())],
             'precedents' => 'required|array',
             'precedents.*.name' => ['required', 'string', 'max:50', new EnglishWord],
+            'description' => 'nullable|string|max:200'
         ];
     }
 

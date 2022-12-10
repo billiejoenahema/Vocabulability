@@ -59,6 +59,7 @@ class Item extends Model
         'name',
         'name_kana',
         'category',
+        'description',
     ];
 
     /**
@@ -81,15 +82,15 @@ class Item extends Model
      */
     public function scopeSearchCondition($query, $request): Builder|Item
     {
-        if (isset($request['keyword'])) {
+        if ($request['keyword']) {
             $query->where('name', 'like', "%{$request['keyword']}%");
+        }
+        if ($request['keyword']) {
+            $query->where('description', 'like', "{$request['keyword']}%");
         }
         if (isset($request['filter'])) {
             $query->where('name_kana', 'like', "{$request['filter']}%");
         }
-        // if ($request['created_at_from']) {
-        //     $query->whereDate('created_at', '>=', $request['created_at_from']);
-        // }
 
         return $query;
     }
@@ -106,6 +107,7 @@ class Item extends Model
     {
         $itemColumns = [
             'name',
+            'description',
         ];
         if (in_array($column, $itemColumns, false)) {
             $query->orderBy($column, $order);
