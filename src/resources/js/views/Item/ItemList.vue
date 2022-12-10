@@ -56,6 +56,8 @@ const onChangeSort = (label) => {
     params.value.column = label;
     params.value.is_asc = true;
   }
+  // ソートするときにページを1に戻す
+  params.value.page = 1;
   fetchData();
 };
 const onEdit = (index) => {
