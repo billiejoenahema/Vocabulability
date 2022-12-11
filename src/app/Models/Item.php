@@ -110,7 +110,7 @@ class Item extends Model
             'description',
         ];
         if (in_array($column, $itemColumns, false)) {
-            $query->orderBy($column, $order);
+            $query->orderByRaw("{$column} is null asc")->orderBy($column, $order);
         }
 
         return $query;
