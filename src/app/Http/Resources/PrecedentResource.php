@@ -17,6 +17,7 @@ class PrecedentResource extends JsonResource
         /** @var \App\Models\Precedent $this */
         return [
             'id' => $this->id,
+            'item_id' => $this->item_id,
             'name' => $this->name,
         ];
     }

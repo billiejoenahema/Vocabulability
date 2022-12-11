@@ -87,11 +87,14 @@ const addPrecedent = (index) => {
   items.value[index].precedents.push({ ...defaultPrecedent });
 };
 const updateItem = async (item, index) => {
+  item.precedents.forEach((v) => {
+    v.item_id = item.id;
+  });
   setIsLoading(true);
   await store.dispatch('item/update', item);
+  setIsLoading(false);
   if (hasErrors.value) return;
   setTimeout(() => {
-    setIsLoading(false);
     editable.value[index] = false;
     fetchData();
   }, 2000);
