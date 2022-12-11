@@ -65,7 +65,6 @@ class SaveRequest extends FormRequest
         ];
     }
 
-
     /**
      * 少なくともひとつはnullでない属性が存在するかどうか
      *
