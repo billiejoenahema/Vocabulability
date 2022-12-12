@@ -7,9 +7,10 @@ const props = defineProps({
   },
 });
 const emit = defineEmits(['change']);
-const changePage = (url = null) => {
-  if (!url) return;
-  const page = url.substring(url.indexOf('=') + 1);
+const changePage = (link) => {
+  // リンク先のURLが存在しない、または現在表示しているページを押下しても何もしない
+  if (!link.url || link.active) return;
+  const page = link.url.substring(link.url.indexOf('=') + 1);
   emit('change', page);
 };
 const linkLabel = (label) => {
@@ -28,7 +29,7 @@ const linkLabel = (label) => {
           active: link.active,
         }"
         :tabindex="link.url === null ? '-1' : ''"
-        @click.prevent="changePage(link.url)"
+        @click.prevent="changePage(link)"
       >
         <a href="#" class="page-link">
           {{ linkLabel(link.label) }}
