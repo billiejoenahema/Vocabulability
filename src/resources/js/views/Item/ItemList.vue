@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref, watchEffect } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import InvalidFeedback from '../../components/InvalidFeedback';
 import LoadingOverlay from '../../components/LoadingOverlay';
@@ -12,6 +12,7 @@ const store = useStore();
 onMounted(async () => {
   setIsLoading(true);
   await store.dispatch('item/get', params.value);
+  await store.dispatch('consts/get');
   setIsLoading(false);
 });
 
@@ -26,6 +27,7 @@ const hasErrorsPrecedent = computed(() => store.getters['precedent/hasErrors']);
 const isInvalid = computed(() => store.getters['item/isInvalid']);
 const links = computed(() => store.getters['item/links']);
 const editable = ref([]);
+const inputDateRef = ref(null);
 const isLoading = computed(() => store.getters['loading/isLoading']);
 const setIsLoading = (bool) => store.commit('loading/setIsLoading', bool);
 const defaultPrecedent = {
@@ -66,7 +68,13 @@ const onEdit = (index) => {
   store.commit('item/setErrors', {});
 };
 const debounceSearch = useDebounce(() => {
-  if (params.value.created_at_from === '') return;
+  // <input type="date" />に無効な日付が入力されていたら検索を実行しない
+  if (inputDateRef.value.validity.badInput) {
+    store.commit('item/setErrors', {
+      datetime: ['有効な日付を指定してください。'],
+    });
+    return;
+  }
   params.value.filter = '';
   fetchData();
 });
@@ -121,17 +129,6 @@ const changePage = (page = null) => {
     fetchData();
   }
 };
-// TODO watchEffectをやめて検索リクエスト送信時にvalidityをチェックするようにする
-watchEffect(() => {
-  // <input type="date" />に無効な日付を入力させないようにする
-  if (params.value.created_at_from === '') {
-    store.commit('item/setErrors', {
-      datetime: ['有効な日付を指定してください。'],
-    });
-    // 更新ボタンを不活性化する
-    // :disabled="params.created_at_from === ''"
-  }
-});
 onUnmounted(() => {
   store.commit('item/setErrors', {});
 });
@@ -145,8 +142,9 @@ onUnmounted(() => {
       <div class="search-input-wrapper">
         <input
           v-model="params.created_at_from"
-          @input="debounceSearch()"
           type="datetime-local"
+          ref="inputDateRef"
+          @input="debounceSearch()"
         />
         <InvalidFeedback :errors="invalidFeedback('datetime')" />
       </div>
