@@ -33,24 +33,13 @@ class ItemController extends Controller
 
         if ($column && $column !== 'precedent') {
             $query->sortByColumn($column, $order);
+        } else if ($column === 'precedent') {
+            // precedents.nameでソート
+            $query = $query->sortByPrecedentsColumn($order);
         } else {
             $query->sortByIdDesc();
         }
-        $items = $query->get();
-
-        // precedents.nameのでソート
-        if ($column === 'precedent') {
-            if ($order === 'asc') {
-                $items = collect($items)->sortBy(function ($item) {
-                    return implode(' ', $item->precedents->pluck('name')->toArray());
-                })->values();
-            } else {
-                $items = collect($items)->sortByDesc(function ($item) {
-                    return implode(' ', $item->precedents->pluck('name')->toArray());
-                })->values();
-            }
-        }
-        $items = collect($items)->paginate(10);
+        $items = $query->paginate(10);
 
         return ItemResource::collection($items);
     }

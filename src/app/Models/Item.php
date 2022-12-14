@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 
 /**
  * App\Models\Item
@@ -83,10 +84,8 @@ class Item extends Model
     public function scopeSearchCondition($query, $request): Builder|Item
     {
         if ($request['keyword']) {
-            $query->where('name', 'like', "%{$request['keyword']}%");
-        }
-        if ($request['keyword']) {
-            $query->where('description', 'like', "{$request['keyword']}%");
+            $query->where('name', 'like', "%{$request['keyword']}%")
+                ->orWhere('description', 'like', "{$request['keyword']}%");
         }
         if (isset($request['filter'])) {
             $query->where('name_kana', 'like', "{$request['filter']}%");
@@ -114,6 +113,30 @@ class Item extends Model
         }
 
         return $query;
+    }
+
+    /**
+     * hasManyで紐づくモデルの属性でソートするスコープ
+     *
+     * @param Builder|Item $query
+     * @param string $column
+     * @param string $order
+     * @return Collection
+     */
+    public function scopeSortByPrecedentsColumn($query, $order): Collection
+    {
+        $items = $query->get();
+        if ($order === 'asc') {
+            $items = collect($items)->sortBy(function ($item) {
+                return implode(' ', $item->precedents->pluck('name')->toArray());
+            })->values();
+        } else {
+            $items = collect($items)->sortByDesc(function ($item) {
+                return implode(' ', $item->precedents->pluck('name')->toArray());
+            })->values();
+        }
+
+        return $items;
     }
 
     /**
