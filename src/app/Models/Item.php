@@ -105,7 +105,7 @@ class Item extends Model
     public function scopeSortByColumn($query, $column, $order): Builder|Item
     {
         $itemColumns = [
-            'name',
+            'name_kana',
             'description',
         ];
         if (in_array($column, $itemColumns, false)) {
