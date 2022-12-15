@@ -57,12 +57,12 @@ class IndexSortTest extends TestCase
      */
     public function test_sortIndexByNameAsc()
     {
-        $response = $this->actingAs($this->user)->getJson('/api/items?column=name&is_asc=true');
+        $response = $this->actingAs($this->user)->getJson('/api/items?column=name_kana&is_asc=true');
 
         $response->assertStatus(200);
         $actual = collect($response->json('data'));
         $this->assertEquals(
-            $actual->sortBy('name')->pluck('name'),
+            $actual->sortBy('name_kana')->pluck('name'),
             $actual->pluck('name')
         );
     }

@@ -177,11 +177,11 @@ onUnmounted(() => {
       <div class="index-item jp-character" @click="setFilter('')">すべて</div>
     </div>
     <div class="row list-header">
-      <div class="row" @click="onChangeSort('name')">
+      <div class="row" @click="onChangeSort('name_kana')">
         <div class="list-column-title">項目</div>
         <SortIcon
           :is-asc="params?.is_asc"
-          :active="params?.column === 'name'"
+          :active="params?.column === 'name_kana'"
         />
       </div>
       <div class="row" @click="onChangeSort('precedent')">
