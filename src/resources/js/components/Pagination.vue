@@ -43,4 +43,8 @@ const linkLabel = (label) => {
 .page-link {
   user-select: none;
 }
+.page-item:last-child .page-link {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
 </style>
