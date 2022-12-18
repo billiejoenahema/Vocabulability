@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class QuestionController extends Controller
 {
-    private const PER_PAGE = 15;
+    private const PER_PAGE = 10;
 
     /**
      * 問題一覧を取得する。

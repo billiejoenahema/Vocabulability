@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ItemController extends Controller
 {
+    private const PER_PAGE = 10;
+
     /**
      * 項目一覧を取得する。
      *
@@ -39,7 +41,7 @@ class ItemController extends Controller
         } else {
             $query->sortByIdDesc();
         }
-        $items = $query->paginate(10);
+        $items = $query->paginate(self::PER_PAGE);
 
         return ItemResource::collection($items);
     }

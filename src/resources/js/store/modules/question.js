@@ -36,8 +36,15 @@ const getters = {
   isInvalid: (state) => (key) => {
     return state.errors?.[key] ? 'invalid' : '';
   },
-  links(state) {
-    return state.data?.meta?.links ?? [];
+  meta(state) {
+    return {
+      current_page: state.data?.meta?.current_page ?? 0,
+      from: state.data?.meta?.from ?? 0,
+      last_page: state.data?.meta?.last_page ?? 0,
+      links: state.data?.meta?.links ?? [],
+      to: state.data?.meta?.to ?? 0,
+      total: state.data?.meta?.total ?? 0,
+    };
   },
 };
 

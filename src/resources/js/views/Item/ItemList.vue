@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useStore } from 'vuex';
+import DataCount from '../../components/DataCount';
 import InvalidFeedback from '../../components/InvalidFeedback';
 import LoadingOverlay from '../../components/LoadingOverlay';
 import Pagination from '../../components/Pagination';
@@ -25,7 +26,7 @@ const invalidFeedback = computed(() => store.getters['item/invalidFeedback']);
 const hasErrors = computed(() => store.getters['item/hasErrors']);
 const hasErrorsPrecedent = computed(() => store.getters['precedent/hasErrors']);
 const isInvalid = computed(() => store.getters['item/isInvalid']);
-const links = computed(() => store.getters['item/links']);
+const meta = computed(() => store.getters['item/meta']);
 const editable = ref([]);
 const inputDateRef = ref(null);
 const isLoading = computed(() => store.getters['loading/isLoading']);
@@ -176,6 +177,7 @@ onUnmounted(() => {
       </div>
       <div class="index-item jp-character" @click="setFilter('')">すべて</div>
     </div>
+    <DataCount v-if="meta" :meta="meta" />
     <div class="row list-header">
       <div class="row" @click="onChangeSort('name_kana')">
         <div class="list-column-title">項目</div>
@@ -291,5 +293,5 @@ onUnmounted(() => {
       </div>
     </div>
   </div>
-  <Pagination :links="links" @change="changePage" />
+  <Pagination :links="meta.links" @change="changePage" />
 </template>
