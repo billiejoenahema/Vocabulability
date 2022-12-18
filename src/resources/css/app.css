@@ -117,9 +117,7 @@ select {
   top: 35px;
   background: rgb(66, 66, 66);
 }
-.word-list > .list-body {
-  min-height: 528px;
-}
+.word-list > .list-body,
 .item-list > .list-body {
   min-height: 352px;
 }
