@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ProfileResource;
+use Illuminate\Http\JsonResponse;
 
 class ProfileController extends Controller
 {
     /**
      * Handle the incoming request.
      *
-     * @return ProfileResource
+     * @return JsonResponse
      */
-    public function __invoke(): ProfileResource
+    public function __invoke(): JsonResponse
     {
-        return new ProfileResource(auth()->user());
+        return response()->json(auth()->user());
     }
 }

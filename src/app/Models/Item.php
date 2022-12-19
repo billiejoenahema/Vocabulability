@@ -45,6 +45,9 @@ use Illuminate\Support\Collection;
  * @method static \Illuminate\Database\Eloquent\Builder|Item sortByNameKanaAsc()
  * @method static \Illuminate\Database\Eloquent\Builder|Item sortByColumn($column, $order)
  * @method static \Illuminate\Database\Eloquent\Builder|Item searchCondition($request)
+ * @property string|null $description 説明
+ * @method static \Illuminate\Database\Eloquent\Builder|Item sortByPrecedentsColumn($order)
+ * @method static \Illuminate\Database\Eloquent\Builder|Item whereDescription($value)
  */
 class Item extends Model
 {
