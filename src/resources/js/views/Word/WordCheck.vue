@@ -24,7 +24,7 @@ const toNextQuestion = async () => {
 </script>
 
 <template>
-  <div class="main-page">
+  <div class="container">
     <div class="row header">
       <div class="title">エンジニア英単語チェック</div>
     </div>

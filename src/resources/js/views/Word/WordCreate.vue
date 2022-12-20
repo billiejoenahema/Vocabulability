@@ -39,7 +39,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="word-create">
+  <div class="container">
     <div>
       <div class="row header">
         <div class="title">新規登録</div>
