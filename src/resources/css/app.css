@@ -23,6 +23,7 @@ select {
 .header-nav {
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
   background-color: #333333;
   padding: 8px;
   position: sticky;

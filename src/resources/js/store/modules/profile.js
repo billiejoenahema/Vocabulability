@@ -6,6 +6,9 @@ const state = {
 };
 
 const getters = {
+  data(state) {
+    return state.data;
+  },
   profile(state) {
     return Object.entries(state.data).length > 0;
   },
@@ -26,7 +29,7 @@ const actions = {
       .get('/api/profile')
       .then((res) => {
         commit('setErrors', {});
-        commit('setData', res.data.data);
+        commit('setData', res.data);
       })
       .catch((err) => {
         commit('setErrors', err.message);

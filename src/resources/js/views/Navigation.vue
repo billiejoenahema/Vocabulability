@@ -1,9 +1,12 @@
 <script setup>
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import Avatar from '../components/Avatar.vue';
 
 const store = useStore();
 const router = useRouter();
+const user = computed(() => store.getters['profile/data']);
 
 const logout = async () => {
   if (confirm('ログアウトしますか？')) {
@@ -23,5 +26,8 @@ const logout = async () => {
     <router-link to="/item_list">ItemList</router-link>
     <router-link to="/item_create">ItemCreate</router-link>
     <a class="logout" @click.prevent.stop="logout()">Logout</a>
+    <a class="avatar" href="/profile">
+      <Avatar :avatar="user.avatar" />
+    </a>
   </nav>
 </template>
