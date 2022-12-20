@@ -26,8 +26,8 @@ const logout = async () => {
     <router-link to="/item_list">ItemList</router-link>
     <router-link to="/item_create">ItemCreate</router-link>
     <a class="logout" @click.prevent.stop="logout()">Logout</a>
-    <a class="avatar" href="/profile">
+    <router-link to="/profile">
       <Avatar :avatar="user.avatar" />
-    </a>
+    </router-link>
   </nav>
 </template>
