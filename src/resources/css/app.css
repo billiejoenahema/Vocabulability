@@ -179,6 +179,10 @@ select {
 }
 .logout {
   cursor: pointer;
+  color: rgb(131, 131, 131);
+}
+.logout:hover {
+  color: rgb(212, 212, 212);
 }
 .invalid {
   border: solid 1px red;

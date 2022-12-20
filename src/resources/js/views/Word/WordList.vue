@@ -97,7 +97,7 @@ onUnmounted(() => {
 
 <template>
   <LoadingOverlay :isLoading="isLoading" />
-  <div class="word-list">
+  <div class="container">
     <div class="row header">
       <div class="title">登録済み単語リスト</div>
       <div class="search-input-wrapper">

@@ -49,91 +49,89 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="word-create">
-    <div>
-      <div class="row header">
-        <div class="title">新規登録</div>
-      </div>
-      <div class="column">
-        <label>カテゴリ</label>
-        <select
-          v-model="newItem.category"
-          :class="isInvalid('category')"
+  <div class="container">
+    <div class="row header">
+      <div class="title">新規登録</div>
+    </div>
+    <div class="column">
+      <label>カテゴリ</label>
+      <select
+        v-model="newItem.category"
+        :class="isInvalid('category')"
+        maxlength="50"
+      >
+        <option value="01">01</option>
+      </select>
+      <InvalidFeedback :errors="invalidFeedback('category')" />
+    </div>
+    <div class="column">
+      <label>項目名</label>
+      <input
+        type="text"
+        v-model="newItem.name"
+        :class="isInvalid('name')"
+        maxlength="50"
+      />
+      <InvalidFeedback :errors="invalidFeedback('name')" />
+    </div>
+    <div class="column">
+      <label>項目名ふりがな</label>
+      <input
+        type="text"
+        v-model="newItem.name_kana"
+        :class="isInvalid('name_kana')"
+        maxlength="50"
+      />
+      <InvalidFeedback :errors="invalidFeedback('name_kana')" />
+    </div>
+    <div v-for="(precedent, index) in newItem.precedents" class="column">
+      <label>カラム名{{ index + 1 }}</label>
+      <div class="row">
+        <input
+          type="text"
+          v-model="precedent.name"
+          :class="isInvalid('precedents.' + index + '.name')"
           maxlength="50"
+        />
+        <button
+          v-if="index > 0"
+          class="item-remove-button"
+          @click="remove(index)"
         >
-          <option value="01">01</option>
-        </select>
-        <InvalidFeedback :errors="invalidFeedback('category')" />
+          削除
+        </button>
       </div>
-      <div class="column">
-        <label>項目名</label>
+      <InvalidFeedback
+        :errors="invalidFeedback('precedents.' + index + '.name')"
+      />
+    </div>
+    <div class="column">
+      <label>説明</label>
+      <input
+        type="text"
+        v-model="newItem.description"
+        :class="isInvalid('description')"
+        maxlength="200"
+      />
+      <InvalidFeedback :errors="invalidFeedback('description')" />
+    </div>
+    <button class="item-add-button" @click="add()">入力欄を追加</button>
+    <div class="button-area">
+      <button @click.prevent="create()">登録</button>
+    </div>
+    <hr />
+    <div class="csv-import">
+      <div class="csv-import-input-area">
+        <label>CSVインポート</label>
         <input
-          type="text"
-          v-model="newItem.name"
-          :class="isInvalid('name')"
-          maxlength="50"
+          type="file"
+          accept=".csv"
+          ref="csvRef"
+          :class="isInvalid('file')"
         />
-        <InvalidFeedback :errors="invalidFeedback('name')" />
+        <invalid-feedback :errors="invalidFeedback('file')" />
       </div>
-      <div class="column">
-        <label>項目名ふりがな</label>
-        <input
-          type="text"
-          v-model="newItem.name_kana"
-          :class="isInvalid('name_kana')"
-          maxlength="50"
-        />
-        <InvalidFeedback :errors="invalidFeedback('name_kana')" />
-      </div>
-      <div v-for="(precedent, index) in newItem.precedents" class="column">
-        <label>カラム名{{ index + 1 }}</label>
-        <div class="row">
-          <input
-            type="text"
-            v-model="precedent.name"
-            :class="isInvalid('precedents.' + index + '.name')"
-            maxlength="50"
-          />
-          <button
-            v-if="index > 0"
-            class="item-remove-button"
-            @click="remove(index)"
-          >
-            削除
-          </button>
-        </div>
-        <InvalidFeedback
-          :errors="invalidFeedback('precedents.' + index + '.name')"
-        />
-      </div>
-      <div class="column">
-        <label>説明</label>
-        <input
-          type="text"
-          v-model="newItem.description"
-          :class="isInvalid('description')"
-          maxlength="200"
-        />
-        <InvalidFeedback :errors="invalidFeedback('description')" />
-      </div>
-      <button class="item-add-button" @click="add()">入力欄を追加</button>
-      <div class="button-area">
-        <button @click.prevent="create()">登録</button>
-      </div>
-      <hr />
-      <div class="csv-import">
-        <div class="csv-import-input-area">
-          <label>CSVインポート</label>
-          <input
-            type="file"
-            accept=".csv"
-            ref="csvRef"
-            :class="isInvalid('file')"
-          />
-          <invalid-feedback :errors="invalidFeedback('file')" />
-        </div>
-        <button @click="importCSV()">CSVファイルをインポート</button>
-      </div>
+      <button @click="importCSV()">CSVファイルをインポート</button>
     </div>
   </div>
 </template>

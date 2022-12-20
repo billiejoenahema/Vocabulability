@@ -19,7 +19,10 @@ const state = reactive({
 </script>
 
 <template>
-  <div class="main-page">
+  <div class="container">
+    <div class="row header">
+      <div class="title">ページリスト</div>
+    </div>
     <ul>
       <li><router-link to="/word_check">単語チェック</router-link></li>
       <li><router-link to="/word_list">単語リスト</router-link></li>

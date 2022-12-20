@@ -137,7 +137,7 @@ onUnmounted(() => {
 
 <template>
   <LoadingOverlay :isLoading="isLoading" />
-  <div class="item-list">
+  <div class="container">
     <div class="row header">
       <div class="title">登録済みカラム名リスト</div>
       <div class="search-input-wrapper">
