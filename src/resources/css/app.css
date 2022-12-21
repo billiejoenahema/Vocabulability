@@ -20,6 +20,9 @@ select {
   width: 100%;
   margin: 0;
 }
+tr {
+  background: #2b2b2b;
+}
 .header-nav {
   display: flex;
   justify-content: space-evenly;
