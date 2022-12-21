@@ -8,12 +8,18 @@ import WordCreate from '../views/Word/WordCreate';
 import WordList from '../views/Word/WordList';
 import ItemCreate from '../views/Item/ItemCreate';
 import ItemList from '../views/Item/ItemList';
+import ProfileDetail from '../views/Profile/Detail';
 import { store } from '../store/index';
 
 const routes = [
   {
     path: '/',
     component: Main,
+    meta: { isPublic: false },
+  },
+  {
+    path: '/profile',
+    component: ProfileDetail,
     meta: { isPublic: false },
   },
   {

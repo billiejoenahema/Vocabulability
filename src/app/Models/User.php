@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\AuthorityEnum;
 use App\Notifications\Api\Auth\ResetPasswordNotification;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -95,11 +97,30 @@ class User extends Authenticatable
     ];
 
     /**
+     * モデルの配列フォームに追加するアクセサ
+     *
+     * @var array
+     */
+    protected $appends = ['authority'];
+
+    /**
      * @param  string  $token
      * @return void
      */
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    /**
+     * 権限レベルの取得
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function authority(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => AuthorityEnum::tryFrom($this->is_admin)->text(),
+        );
     }
 }
