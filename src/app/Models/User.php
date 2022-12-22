@@ -94,6 +94,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'updated_at' => 'datetime:Y年m月d日',
+        'created_at' => 'datetime:Y年m月d日',
     ];
 
     /**
@@ -101,7 +103,10 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $appends = ['authority'];
+    protected $appends = [
+        'authority',
+        'full_address',
+    ];
 
     /**
      * @param  string  $token
@@ -121,6 +126,18 @@ class User extends Authenticatable
     {
         return Attribute::make(
             get: fn () => AuthorityEnum::tryFrom($this->is_admin)->text(),
+        );
+    }
+
+    /**
+     * 権限レベルの取得
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function fullAddress(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->postcode . ' ' . $this->address,
         );
     }
 }

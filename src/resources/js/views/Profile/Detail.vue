@@ -40,18 +40,18 @@ const user = computed(() => store.getters['profile/data']);
         </tr>
         <tr>
           <td>住所</td>
-          <td>{{ user.postcode + ' ' + user.address }}</td>
+          <td>{{ user.full_address }}</td>
         </tr>
         <tr>
           <td>権限</td>
-          <td>{{ user.autdority }}</td>
+          <td>{{ user.authority }}</td>
         </tr>
         <tr>
-          <td>更新日時</td>
+          <td>更新日</td>
           <td>{{ user.updated_at }}</td>
         </tr>
         <tr>
-          <td>登録日時</td>
+          <td>登録日</td>
           <td>{{ user.created_at }}</td>
         </tr>
       </tbody>
