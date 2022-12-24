@@ -32,6 +32,9 @@ tr {
   position: sticky;
   top: 0;
 }
+.header-nav > a {
+  display: flex;
+}
 .pagination-nav {
   display: flex;
   justify-content: center;
@@ -255,4 +258,10 @@ tr {
 }
 .input-text {
   padding: 8px;
+}
+.mb-1 {
+  margin-bottom: 8px;
+}
+.mb-2 {
+  margin-bottom: 16px;
 }
