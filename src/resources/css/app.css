@@ -265,3 +265,10 @@ tr {
 .mb-2 {
   margin-bottom: 16px;
 }
+.between {
+  display: flex;
+  justify-content: space-between;
+}
+.mw-400 {
+  max-width: 400px;
+}
