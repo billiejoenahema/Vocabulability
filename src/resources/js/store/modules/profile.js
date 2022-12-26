@@ -40,6 +40,28 @@ const actions = {
     if (getters.isLogin) return;
     await dispatch('get');
   },
+  async post({ commit }, data) {
+    await axios
+      .post('/api/profile', data)
+      .then((res) => {
+        commit('setErrors', {});
+        commit(
+          'toast/setData',
+          { status: res.status, content: res.data.message },
+          { root: true }
+        );
+      })
+      .catch((err) => {
+        commit('setErrors', err.response.data.errors);
+        if (err.response.status === 403) {
+          commit(
+            'toast/setData',
+            { status: err.response.status, content: err.response.data.message },
+            { root: true }
+          );
+        }
+      });
+  },
 };
 
 const mutations = {

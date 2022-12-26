@@ -1,10 +1,15 @@
 <script setup>
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
+const router = useRouter();
 const store = useStore();
 
 const user = computed(() => store.getters['profile/data']);
+const edit = () => {
+  router.push('/profile/edit');
+};
 </script>
 
 <template>
@@ -56,6 +61,8 @@ const user = computed(() => store.getters['profile/data']);
         </tr>
       </tbody>
     </table>
-    <ul></ul>
+    <div>
+      <button type="button" @click="edit">プロフィールを編集する</button>
+    </div>
   </div>
 </template>

@@ -9,6 +9,7 @@ import WordList from '../views/Word/WordList';
 import ItemCreate from '../views/Item/ItemCreate';
 import ItemList from '../views/Item/ItemList';
 import ProfileDetail from '../views/Profile/Detail';
+import ProfileEdit from '../views/Profile/Edit';
 import { store } from '../store/index';
 
 const routes = [
@@ -20,6 +21,11 @@ const routes = [
   {
     path: '/profile',
     component: ProfileDetail,
+    meta: { isPublic: false },
+  },
+  {
+    path: '/profile/edit',
+    component: ProfileEdit,
     meta: { isPublic: false },
   },
   {
