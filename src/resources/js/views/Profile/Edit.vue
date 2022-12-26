@@ -1,5 +1,6 @@
 <script setup>
-import { onMounted, reactive } from 'vue';
+import { computed, onMounted, reactive } from 'vue';
+import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
 const router = useRouter();
@@ -18,14 +19,20 @@ onMounted(() => {
   Object.assign(user, store.getters['profile/data']);
 });
 
+const hasErrors = computed(() => store.getters['profile/hasErrors']);
+
 const onChangeBirthDate = (e) => {
   console.log(e.target.value);
 };
 const cancel = () => {
   router.push('/profile');
 };
-const submit = () => {
-  store.dispatch('profile/post', user);
+const submit = async () => {
+  await store.dispatch('profile/post', user);
+  if (hasErrors.value) return;
+  setTimeout(() => {
+    router.push('/profile');
+  }, 2000);
 };
 </script>
 

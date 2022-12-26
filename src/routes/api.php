@@ -29,7 +29,8 @@ Route::post('/reset-password', ResetPasswordController::class);
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // ログインユーザー情報
-    Route::get('/profile', ProfileController::class);
+    Route::get('/profile', [ProfileController::class, 'index']);
+    Route::post('/profile', [ProfileController::class, 'update']);
 
     // メール送信
     Route::get('/test-mail', MailTestController::class);
