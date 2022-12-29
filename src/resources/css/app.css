@@ -265,10 +265,17 @@ tr {
 .mb-2 {
   margin-bottom: 16px;
 }
+.mr-2 {
+  margin-right: 16px;
+}
 .between {
   display: flex;
   justify-content: space-between;
 }
 .mw-400 {
   max-width: 400px;
+}
+.invalid-feedback {
+  color: red;
+  font-size: 0.6rem;
 }
