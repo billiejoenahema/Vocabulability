@@ -1,7 +1,7 @@
 <script setup>
 import { reactive } from 'vue';
 import { useStore } from 'vuex';
-import Input from '../components/Input.vue';
+import BaseInput from '../components/BaseInput.vue';
 
 const store = useStore();
 
@@ -36,7 +36,7 @@ const state = reactive({
   </div>
   <div class="input-text">
     <label>TEL</label>
-    <Input
+    <BaseInput
       v-model="state.tel"
       :autocomplete="'tel'"
       :for-id-value="'tel'"

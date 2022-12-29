@@ -2,6 +2,7 @@
 import { computed, onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import BaseInput from '../../components/BaseInput.vue';
 
 const router = useRouter();
 const store = useStore();
@@ -20,6 +21,9 @@ onMounted(() => {
 });
 
 const hasErrors = computed(() => store.getters['profile/hasErrors']);
+const invalidFeedback = computed(
+  () => store.getters['profile/invalidFeedback']
+);
 
 const onChangeBirthDate = (e) => {
   console.log(e.target.value);
@@ -48,6 +52,14 @@ const submit = async () => {
       </div>
       <div class="mb-2">
         <label for="kana_name" class="mb-1">フリガナ</label>
+        <BaseInput
+          :type="'text'"
+          :class-value="'form-control'"
+          :id="'kana_name'"
+          :invalid-feedback="invalidFeedback('kana_name')"
+          :model-value="user.kana_name"
+          @update:model-value="user.kana_name"
+        />
         <input
           type="text"
           class="form-control"
