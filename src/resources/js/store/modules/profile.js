@@ -21,6 +21,12 @@ const getters = {
   errors(state) {
     return state.errors ?? {};
   },
+  invalidFeedback: (state) => (props) => {
+    return state.errors[props] ?? [];
+  },
+  isInvalid: (state) => (key) => {
+    return state.errors?.[key] ? 'is-invalid' : '';
+  },
 };
 
 const actions = {

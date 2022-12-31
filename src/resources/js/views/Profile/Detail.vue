@@ -6,7 +6,9 @@ import { useStore } from 'vuex';
 const router = useRouter();
 const store = useStore();
 
+store.dispatch('profile/get');
 const user = computed(() => store.getters['profile/data']);
+const genderTextValue = computed(() => store.getters['consts/genderTextValue']);
 const edit = () => {
   router.push('/profile/edit');
 };
@@ -33,7 +35,7 @@ const edit = () => {
         </tr>
         <tr>
           <td>性別</td>
-          <td>{{ user.gender }}</td>
+          <td>{{ genderTextValue(user.gender) }}</td>
         </tr>
         <tr>
           <td>メールアドレス</td>

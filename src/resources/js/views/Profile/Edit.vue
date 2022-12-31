@@ -2,6 +2,7 @@
 import { computed, onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import BaseInput from '../../components/BaseInput.vue';
 
 const router = useRouter();
 const store = useStore();
@@ -20,6 +21,10 @@ onMounted(() => {
 });
 
 const hasErrors = computed(() => store.getters['profile/hasErrors']);
+const invalidFeedback = computed(
+  () => store.getters['profile/invalidFeedback']
+);
+const isInvalid = computed(() => store.getters['profile/isInvalid']);
 
 const onChangeBirthDate = (e) => {
   console.log(e.target.value);
@@ -44,66 +49,100 @@ const submit = async () => {
     <form class="mw-400">
       <div class="mb-2">
         <label for="name" class="mb-1">名前</label>
-        <input type="text" class="form-control" id="name" v-model="user.name" />
+        <BaseInput
+          :type="'text'"
+          :class-value="'form-control' + isInvalid('name')"
+          :id="'name'"
+          :invalid-feedback="invalidFeedback('name')"
+          v-model="user.name"
+        />
       </div>
       <div class="mb-2">
         <label for="kana_name" class="mb-1">フリガナ</label>
-        <input
-          type="text"
-          class="form-control"
-          id="kana_name"
+        <BaseInput
+          :type="'text'"
+          :class-value="'form-control' + isInvalid('kana_name')"
+          :id="'kana_name'"
+          :invalid-feedback="invalidFeedback('kana_name')"
           v-model="user.kana_name"
         />
       </div>
       <div class="mb-2">
         <label for="birth_date" class="mb-1">生年月日</label>
-        <input
-          type="text"
-          class="form-control"
-          id="birth_date"
-          placeholder="1990/01/01"
-          @change="onChangeBirthDate()"
+        <BaseInput
+          :type="'text'"
+          :class-value="'form-control' + isInvalid('birth_date')"
+          :id="'birth_date'"
+          :invalid-feedback="invalidFeedback('birth_date')"
+          v-model="user.birth_date"
         />
       </div>
-      <div class="mb-2">
-        <label for="birth_date" class="mb-1">性別</label>
-        <select v-model="user.gender">
-          <option></option>
-          <option value="01">男性</option>
-          <option value="02">女性</option>
-          <option value="03">無回答</option>
-        </select>
-      </div>
+      <fieldset class="mb-2 row">
+        <legend>性別</legend>
+        <div class="mr-2">
+          <input
+            type="radio"
+            id="male"
+            name="gender"
+            value="01"
+            v-model="user.gender"
+          />
+          <label for="male">男性</label>
+        </div>
+        <div class="mr-2">
+          <input
+            type="radio"
+            id="female"
+            name="gender"
+            value="02"
+            v-model="user.gender"
+          />
+          <label for="female">女性</label>
+        </div>
+        <div class="mr-2">
+          <input
+            type="radio"
+            id="others"
+            name="gender"
+            value="00"
+            v-model="user.gender"
+          />
+          <label for="others">無回答</label>
+        </div>
+      </fieldset>
       <div class="mb-2">
         <label for="phone" class="mb-1">電話番号</label>
-        <input
-          type="text"
-          class="form-control"
-          id="phone"
+        <BaseInput
+          :type="'text'"
+          :class-value="'form-control' + isInvalid('phone')"
+          :id="'phone'"
+          :invalid-feedback="invalidFeedback('phone')"
           v-model="user.phone"
         />
       </div>
       <div class="mb-2">
         <label for="postcode" class="mb-1">郵便番号</label>
-        <input
-          type="text"
-          class="form-control"
-          id="postcode"
+        <BaseInput
+          :type="'text'"
+          :class-value="'form-control' + isInvalid('postcode')"
+          :id="'postcode'"
+          :invalid-feedback="invalidFeedback('postcode')"
           v-model="user.postcode"
         />
       </div>
       <div class="mb-2">
         <label for="address" class="mb-1">住所</label>
-        <input
-          type="text"
-          class="form-control"
-          id="address"
+        <BaseInput
+          :type="'text'"
+          :class-value="'form-control' + isInvalid('address')"
+          :id="'address'"
+          :invalid-feedback="invalidFeedback('address')"
           v-model="user.address"
         />
       </div>
       <div class="between">
         <button type="button" @click="cancel" class="cancel">キャンセル</button>
-        <button type="button" @click="submit">保存</button>
+        <button type="button" @click="submit" class="submit">保存</button>
       </div>
     </form>
   </div>

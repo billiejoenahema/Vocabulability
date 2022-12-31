@@ -11,6 +11,12 @@ const getters = {
   alphabets(state) {
     return state.data?.ALPHABETS;
   },
+  genderTextValue: (state) => (id) => {
+    const item = state.data.GENDER?.find((v) => {
+      return v.id == id;
+    });
+    return item?.name ?? '';
+  },
   japaneseSyllabary(state) {
     return state.data?.JAPANESE_SYLLABARY;
   },

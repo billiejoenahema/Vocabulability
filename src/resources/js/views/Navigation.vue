@@ -7,6 +7,7 @@ import Avatar from '../components/Avatar.vue';
 const store = useStore();
 const router = useRouter();
 const user = computed(() => store.getters['profile/data']);
+store.dispatch('consts/getIfNeeded');
 
 const logout = async () => {
   if (confirm('ログアウトしますか？')) {
