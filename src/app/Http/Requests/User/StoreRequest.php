@@ -24,7 +24,13 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string|max:50',
+            'kana_name' => 'nullable|string|max:50',
+            'birth_date' => 'nullable|date:Y-m-d',
+            'gender' => 'nullable',
+            'phone' => 'nullable|string|max:14',
+            'postcode' => 'nullable|string|max:7',
+            'address' => 'nullable|string|max:50',
         ];
     }
 }

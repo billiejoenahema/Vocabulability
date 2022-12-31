@@ -142,7 +142,7 @@ const submit = async () => {
       </div>
       <div class="between">
         <button type="button" @click="cancel" class="cancel">キャンセル</button>
-        <button type="button" @click="submit">保存</button>
+        <button type="button" @click="submit" class="submit">保存</button>
       </div>
     </form>
   </div>
