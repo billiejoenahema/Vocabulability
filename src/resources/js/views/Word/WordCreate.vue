@@ -66,7 +66,7 @@ onUnmounted(() => {
       </div>
       <div class="column"></div>
       <div class="button-area">
-        <button @click.prevent="addWord()">追加</button>
+        <button @click.prevent="addWord()" class="register">追加</button>
       </div>
       <hr />
       <div class="csv-import">

@@ -93,11 +93,10 @@ onUnmounted(() => {
           :class="isInvalid('precedents.' + index + '.name')"
           maxlength="50"
         />
-        <button
-          v-if="index > 0"
-          class="item-remove-button"
-          @click="remove(index)"
-        >
+        <button v-if="index === 0" class="item-add-button" @click="add()">
+          <font-awesome-icon class="icon" icon="plus" />入力欄を追加
+        </button>
+        <button v-else class="item-remove-button" @click="remove(index)">
           削除
         </button>
       </div>
@@ -115,9 +114,8 @@ onUnmounted(() => {
       />
       <InvalidFeedback :errors="invalidFeedback('description')" />
     </div>
-    <button class="item-add-button" @click="add()">入力欄を追加</button>
     <div class="button-area">
-      <button @click.prevent="create()">登録</button>
+      <button @click.prevent="create()" class="register">登録</button>
     </div>
     <hr />
     <div class="csv-import">
