@@ -20,15 +20,17 @@ const logout = async () => {
 
 <template>
   <nav class="header-nav">
-    <router-link to="/">Home</router-link>
-    <router-link to="/word_check">WordCheck</router-link>
-    <router-link to="/word_list">WordList</router-link>
-    <router-link to="/word_create">WordCreate</router-link>
-    <router-link to="/item_list">ItemList</router-link>
-    <router-link to="/item_create">ItemCreate</router-link>
-    <a class="logout" @click.prevent.stop="logout()">Logout</a>
-    <router-link to="/profile">
-      <Avatar :avatar="user.avatar" />
-    </router-link>
+    <router-link to="/" class="brand-logo">Vocabulability</router-link>
+    <router-link to="/word_check" class="nav-item">WordCheck</router-link>
+    <router-link to="/word_list" class="nav-item">WordList</router-link>
+    <router-link to="/word_create" class="nav-item">WordCreate</router-link>
+    <router-link to="/item_list" class="nav-item">ItemList</router-link>
+    <router-link to="/item_create" class="nav-item">ItemCreate</router-link>
+    <div class="row nav-icon-group">
+      <a class="logout" @click.prevent.stop="logout()">Logout</a>
+      <router-link to="/profile" class="nav-item">
+        <Avatar :avatar="user.avatar" />
+      </router-link>
+    </div>
   </nav>
 </template>
