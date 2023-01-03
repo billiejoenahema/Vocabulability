@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import Avatar from '../components/Avatar.vue';
@@ -8,6 +8,8 @@ const store = useStore();
 const router = useRouter();
 const user = computed(() => store.getters['profile/data']);
 store.dispatch('consts/getIfNeeded');
+
+const showMenu = ref(false);
 
 const logout = async () => {
   if (confirm('ログアウトしますか？')) {
@@ -28,9 +30,22 @@ const logout = async () => {
     <router-link to="/item_create" class="nav-item">ItemCreate</router-link>
     <div class="row nav-icon-group">
       <a class="logout" @click.prevent.stop="logout()">Logout</a>
-      <router-link to="/profile" class="nav-item">
+      <div class="nav-item" @click="showMenu = !showMenu">
         <Avatar :avatar="user.avatar" />
-      </router-link>
+      </div>
     </div>
   </nav>
+  <teleport to="body">
+    <div class="backdrop" v-if="showMenu" @click.self="showMenu = false">
+      <ul class="dropdown-menu user-menu">
+        <li><a class="dropdown-item" href="/">Home</a></li>
+        <li><a class="dropdown-item" href="word_check">WordCheck</a></li>
+        <li><a class="dropdown-item" href="word_list">WordList</a></li>
+        <li><a class="dropdown-item" href="word_create">WordCreate</a></li>
+        <li><a class="dropdown-item" href="item_list">ItemList</a></li>
+        <li><a class="dropdown-item" href="item_create">ItemCreate</a></li>
+        <li><a class="dropdown-item" href="profile">Profile</a></li>
+      </ul>
+    </div>
+  </teleport>
 </template>
