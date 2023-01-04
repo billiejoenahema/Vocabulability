@@ -2,7 +2,7 @@
 import { computed, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-import InvalidFeedback from '../components/InvalidFeedback.vue';
+import BaseInput from '../components/BaseInput.vue';
 
 const router = useRouter();
 const store = useStore();
@@ -38,33 +38,31 @@ const forgotPassword = async () => {
     <form class="column">
       <p class="column">
         <label for="login-email">Email</label>
-        <input
-          :class="isInvalid('email')"
+        <BaseInput
+          :class-value="isInvalid('email')"
           v-model="user.email"
           id="login-email"
           name="email"
           type="email"
           maxlength="255"
-        />
-        <InvalidFeedback
-          v-if="invalidFeedback('email')"
-          :errors="invalidFeedback('email')"
+          autocomplete="on"
+          inputmode="email"
+          :invalid-feedback="invalidFeedback('email')"
         />
       </p>
       <template v-if="!isForgotPassword">
         <p class="column">
           <label for="login-password">Password</label>
-          <input
-            :class="isInvalid('password')"
+          <BaseInput
+            :class-value="isInvalid('password')"
             v-model="user.password"
             id="login-password"
             name="password"
             type="password"
             maxlength="128"
-          />
-          <InvalidFeedback
-            v-if="invalidFeedback('password')"
-            :errors="invalidFeedback('password')"
+            autocomplete="on"
+            inputmode="text"
+            :invalid-feedback="invalidFeedback('password')"
           />
           <button class="sign-in" @click.prevent.stop="login()">Sign in</button>
         </p>
