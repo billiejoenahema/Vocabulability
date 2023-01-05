@@ -32,6 +32,29 @@ class IndexRequest extends FormRequest
     }
 
     /**
+     * ソート対象のカラムを返す。nullならデフォルト値の'id'を返す。
+     *
+     * @return string
+     */
+    public function getSortColumn(): string
+    {
+        $columns = [
+            'id',
+            'name_kana',
+            'description',
+            'precedent',
+        ];
+
+        $key = array_search($this->column, $columns);
+
+        if (!$key) {
+            return 'id';
+        }
+
+        return $columns[$key];
+    }
+
+    /**
      * ソートの方向を返す。
      *
      * @return string

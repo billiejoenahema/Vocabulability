@@ -29,18 +29,19 @@ class ItemController extends Controller
     public function index(IndexRequest $request): AnonymousResourceCollection
     {
         $query = Item::query()->with('precedents');
-        $query->searchCondition($request);
-        $order = $request->getSortDirection();
-        $column = $request['column'] ?? null;
 
-        if ($column && $column !== 'precedent') {
-            $query->sortByColumn($column, $order);
-        } else if ($column === 'precedent') {
-            // precedents.nameでソート
-            $query = $query->sortByPrecedentsColumn($order);
-        } else {
-            $query->sortByIdDesc();
+        // 検索
+        $query->searchCondition($request);
+
+        $direction = $request->getSortDirection();
+        $column = $request->getSortColumn();
+
+        // ソート
+        $query->sortByColumn($column, $direction);
+        if ($column === 'precedent') {
+            $query = $query->sortByPrecedentsColumn($direction);
         }
+
         $items = $query->paginate(self::PER_PAGE);
 
         return ItemResource::collection($items);
