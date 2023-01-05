@@ -108,6 +108,7 @@ class Item extends Model
     public function scopeSortByColumn($query, $column, $order): Builder|Item
     {
         $itemColumns = [
+            'id',
             'name_kana',
             'description',
         ];
@@ -123,13 +124,13 @@ class Item extends Model
      *
      * @param Builder|Item $query
      * @param string $column
-     * @param string $order
+     * @param string $direction
      * @return Collection
      */
-    public function scopeSortByPrecedentsColumn($query, $order): Collection
+    public function scopeSortByPrecedentsColumn($query, $direction): Collection
     {
         $items = $query->get();
-        if ($order === 'asc') {
+        if ($direction === 'asc') {
             $items = collect($items)->sortBy(function ($item) {
                 return implode(' ', $item->precedents->pluck('name')->toArray());
             })->values();
