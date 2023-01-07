@@ -152,9 +152,9 @@ const toggleHintTextShow = () => {
         {{ item }}
       </option>
     </datalist>
-    <div class="hint-area" v-if="exampleText">
+    <div class="hint-area" v-if="exampleValue">
       <small class="input-example" @click="toggleHintTextShow()">{{
-        exampleText
+        exampleValue
       }}</small>
       <div
         class="hint-text"
