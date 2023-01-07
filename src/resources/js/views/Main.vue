@@ -40,23 +40,28 @@ const state = reactive({
   </div>
   <div class="input-text">
     <label>Email</label>
-    <Input v-model="state.email" autocomplete="on" id="email" type="email" />
+    <BaseInput
+      v-model="state.email"
+      autocomplete="on"
+      id="email"
+      type="email"
+    />
   </div>
   <div class="input-text">
     <label>TEL</label>
-    <Input v-model="state.text" autocomplete="on" id="text" type="tel" />
+    <BaseInput v-model="state.text" autocomplete="on" id="text" type="tel" />
   </div>
   <div class="input-text">
-    <Input type="month" id="month" v-model="state.month" />
+    <BaseInput type="month" id="month" v-model="state.month" />
   </div>
   <div class="input-text">
     <label>BirthDay</label>
-    <Input v-model="state.date" autocomplete="on" id="date" type="date" />
+    <BaseInput v-model="state.date" autocomplete="on" id="date" type="date" />
   </div>
   <div class="input-text">
-    <Input type="time" id="time" v-model="state.time" />
+    <BaseInput type="time" id="time" v-model="state.time" />
   </div>
   <div class="input-text">
-    <Input type="datetime-local" id="datetime" v-model="state.datetime" />
+    <BaseInput type="datetime-local" id="datetime" v-model="state.datetime" />
   </div>
 </template>

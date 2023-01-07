@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        JsonResource::withoutWrapping();
+
         /**
          * Collectionに対して paginate できるようにするマクロ
          *
@@ -37,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
          * @return array
          */
         Collection::macro('paginate', function ($perPage, $total = null, $page = null, $pageName = 'page') {
+            /** @var \Illuminate\Support\Collection $this */
             $page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);
             return new LengthAwarePaginator(
                 $this->forPage($page, $perPage),
