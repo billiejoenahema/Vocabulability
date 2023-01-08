@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from 'vue';
+import { onUnmounted, reactive, ref } from 'vue';
 import { useStore } from 'vuex';
 import BaseInput from '../components/BaseInput.vue';
 
@@ -16,6 +16,19 @@ const state = reactive({
   time: '',
   datetime: '',
 });
+const file = ref(null);
+const fileUrl = ref(null);
+const changeFile = (e) => {
+  file.value = e.target.files[0];
+  const objUrl = URL.createObjectURL(file.value);
+  fileUrl.value = objUrl;
+};
+const uploadFile = () => {
+  const formData = new FormData();
+  formData.append('file', file.value);
+  store.dispatch('upload_file/post', formData);
+};
+onUnmounted(() => URL.revokeObjectURL(fileUrl));
 </script>
 
 <template>
@@ -30,6 +43,11 @@ const state = reactive({
       <li><router-link to="/item_list">項目リスト</router-link></li>
       <li><router-link to="/item_create">項目登録</router-link></li>
     </ul>
+  </div>
+  <div class="input-text">
+    <input type="file" @change="(e) => changeFile(e)" />
+    <iframe :src="fileUrl" height="160" width="120"></iframe>
+    <button type="button" @click="uploadFile">アップロード</button>
   </div>
   <div>
     <button @click="sendMail()">メール送信</button>

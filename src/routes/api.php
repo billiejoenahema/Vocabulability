@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\MailTestController;
 use App\Http\Controllers\Api\PrecedentController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\QuestionController;
+use App\Http\Controllers\Api\UploadFileController;
 use App\Models\Item;
 use App\Models\Question;
 use Illuminate\Support\Facades\Route;
@@ -53,4 +54,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/items/{item}', [ItemController::class, 'destroy'])->can('delete', Item::class);
     // 事例
     Route::delete('/precedents/{precedent}', [PrecedentController::class, 'destroy'])->can('delete', Item::class);
+    // アップロードファイル
+    Route::post('/upload-file', [UploadFileController::class, 'store'])->can('create', Item::class);
 });
