@@ -9,7 +9,7 @@ defineProps({
 </script>
 
 <template>
-  <img :src="avatar ?? '/no_image.jpg'" class="avatar" />
+  <img :src="avatar ?? '/default_icon.svg'" class="avatar" />
 </template>
 
 <style>

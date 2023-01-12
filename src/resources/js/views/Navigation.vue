@@ -44,7 +44,11 @@ const logout = async () => {
         <li><a class="dropdown-item" href="word_create">WordCreate</a></li>
         <li><a class="dropdown-item" href="item_list">ItemList</a></li>
         <li><a class="dropdown-item" href="item_create">ItemCreate</a></li>
-        <li><a class="dropdown-item" href="profile">Profile</a></li>
+        <li>
+          <a class="dropdown-item text-decoration-none" href="profile"
+            >Profile</a
+          >
+        </li>
       </ul>
     </div>
   </teleport>

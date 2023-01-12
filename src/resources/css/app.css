@@ -332,6 +332,9 @@ li {
   right: 10%;
   background: rgb(66, 66, 66);
 }
+.text-decoration-none {
+  text-decoration: none;
+}
 
 @media screen and (max-width: 600px) {
   /* スクリーンサイズが600px以下の場合に適用 */

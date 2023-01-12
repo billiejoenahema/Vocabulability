@@ -70,7 +70,13 @@ const date = computed(() => {
     day: splittedDate[2] ?? null,
   };
 });
-const onInput = () => {
+const onInput = (e) => {
+  if (e.target === yearRef.value && yearRef.value?.value.length === 4) {
+    monthRef.value.focus();
+  }
+  if (e.target === monthRef.value && monthRef.value?.value.length === 2) {
+    dayRef.value.focus();
+  }
   const updatedDate = `${yearRef.value.value}-${monthRef.value.value}-${dayRef.value.value}`;
   emit('update:modelValue', updatedDate);
 };
@@ -91,7 +97,7 @@ const onInput = () => {
       :list="id"
       :title="title"
       ref="yearRef"
-      @input="onInput()"
+      @input="onInput"
     />
     <span>年</span>
     <input
@@ -107,7 +113,7 @@ const onInput = () => {
       :list="id"
       :title="title"
       ref="monthRef"
-      @input="onInput()"
+      @input="onInput"
     />
     <span>月</span>
     <input
@@ -123,7 +129,7 @@ const onInput = () => {
       :list="id"
       :title="title"
       ref="dayRef"
-      @input="onInput()"
+      @input="onInput"
     />
     <span>日</span>
     <datalist :id="'data_list_' + id">
@@ -158,12 +164,14 @@ const onInput = () => {
 .input-year {
   width: 4rem;
   margin-right: 8px;
+  margin-bottom: 8px;
   text-align: right;
 }
 .input-month-day {
   width: 3rem;
   margin-right: 8px;
   margin-left: 16px;
+  margin-bottom: 8px;
   text-align: right;
 }
 .base-input {
