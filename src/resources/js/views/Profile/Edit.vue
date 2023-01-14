@@ -3,6 +3,7 @@ import { computed, onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import BaseInput from '../../components/BaseInput.vue';
+import InputDateSplit from '../../components/InputDateSplit.vue';
 
 const router = useRouter();
 const store = useStore();
@@ -25,10 +26,6 @@ const invalidFeedback = computed(
   () => store.getters['profile/invalidFeedback']
 );
 const isInvalid = computed(() => store.getters['profile/isInvalid']);
-
-const onChangeBirthDate = (e) => {
-  console.log(e.target.value);
-};
 const cancel = () => {
   router.push('/profile');
 };
@@ -50,29 +47,30 @@ const submit = async () => {
       <div class="mb-2">
         <label for="name" class="mb-1">名前</label>
         <BaseInput
-          :type="'text'"
+          type="text"
           :class-value="'form-control' + isInvalid('name')"
-          :id="'name'"
+          id="name"
           :invalid-feedback="invalidFeedback('name')"
+          maxlength="50"
           v-model="user.name"
         />
       </div>
       <div class="mb-2">
         <label for="kana_name" class="mb-1">フリガナ</label>
         <BaseInput
-          :type="'text'"
+          type="text"
           :class-value="'form-control' + isInvalid('kana_name')"
-          :id="'kana_name'"
+          id="kana_name"
           :invalid-feedback="invalidFeedback('kana_name')"
+          maxlength="50"
           v-model="user.kana_name"
         />
       </div>
       <div class="mb-2">
         <label for="birth_date" class="mb-1">生年月日</label>
-        <BaseInput
-          :type="'text'"
+        <InputDateSplit
+          id="birth_date"
           :class-value="'form-control' + isInvalid('birth_date')"
-          :id="'birth_date'"
           :invalid-feedback="invalidFeedback('birth_date')"
           v-model="user.birth_date"
         />
@@ -113,10 +111,11 @@ const submit = async () => {
       <div class="mb-2">
         <label for="phone" class="mb-1">電話番号</label>
         <BaseInput
-          :type="'text'"
+          type="text"
           :class-value="'form-control' + isInvalid('phone')"
-          :id="'phone'"
+          id="phone"
           :invalid-feedback="invalidFeedback('phone')"
+          maxlength="14"
           v-model="user.phone"
         />
       </div>
@@ -127,6 +126,7 @@ const submit = async () => {
           :class-value="'form-control' + isInvalid('postcode')"
           :id="'postcode'"
           :invalid-feedback="invalidFeedback('postcode')"
+          maxlength="8"
           v-model="user.postcode"
         />
       </div>
