@@ -1,5 +1,5 @@
 <script setup>
-import { cdate } from 'cdate';
+import dayjs from 'dayjs';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
@@ -12,9 +12,9 @@ const user = computed(() => store.getters['profile/data']);
 const genderTextValue = computed(() => store.getters['consts/genderTextValue']);
 // 日付フォーマット
 const formatDate = (value) => {
-  const date = cdate(value);
-  return date.format('YYYY年MM月DD日');
+  return dayjs(value).format('YYYY年MM月DD日');
 };
+
 const edit = () => {
   router.push('/profile/edit');
 };
