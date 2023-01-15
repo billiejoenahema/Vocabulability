@@ -1,4 +1,5 @@
 <script setup>
+import { cdate } from 'cdate';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
@@ -9,6 +10,11 @@ const store = useStore();
 store.dispatch('profile/get');
 const user = computed(() => store.getters['profile/data']);
 const genderTextValue = computed(() => store.getters['consts/genderTextValue']);
+// 日付フォーマット
+const formatDate = (value) => {
+  const date = cdate(value);
+  return date.format('YYYY年MM月DD日');
+};
 const edit = () => {
   router.push('/profile/edit');
 };
@@ -31,7 +37,7 @@ const edit = () => {
         </tr>
         <tr>
           <td>生年月日</td>
-          <td>{{ user.birth_date }}</td>
+          <td>{{ formatDate(user.birth_date) }}</td>
         </tr>
         <tr>
           <td>性別</td>
