@@ -14,7 +14,12 @@ const genderTextValue = computed(() => store.getters['consts/genderTextValue']);
 const formatDate = (value) => {
   return dayjs(value).format('YYYY年MM月DD日');
 };
-
+// 郵便番号フォーマット
+const formatPostcode = (value) => {
+  const code1 = value.slice(0, 3);
+  const code2 = value.slice(3);
+  return `${code1}-${code2}`;
+};
 const edit = () => {
   router.push('/profile/edit');
 };
@@ -53,7 +58,7 @@ const edit = () => {
         </tr>
         <tr>
           <td>住所</td>
-          <td>{{ user.full_address }}</td>
+          <td>{{ formatPostcode(user.postcode) }}&nbsp;{{ user.address }}</td>
         </tr>
         <tr>
           <td>権限</td>
