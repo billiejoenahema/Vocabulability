@@ -61,27 +61,8 @@ class SaveRequest extends FormRequest
     {
         // 郵便番号、電話番号のハイフンを取り除く
         $this->merge([
-            'postcode' => $this->toNumberOnly($this->postcode),
-            'phone' => $this->toNumberOnly($this->phone),
+            'postcode' => toNumberOnly($this->postcode),
+            'phone' => toNumberOnly($this->phone),
         ]);
-    }
-
-    /**
-     * 文字列中の数字のみを返します
-     *
-     * @param string|null $value
-     * @return ?string
-     */
-    protected function toNumberOnly($value): ?string
-    {
-        if (is_null($value)) {
-            return null;
-        }
-        // 数字を半角に変換する
-        $value = mb_convert_kana($value, "n");
-        // 数字以外を取り除く
-        $value = preg_replace('/[^0-9]/', '', $value);
-
-        return $value;
     }
 }
