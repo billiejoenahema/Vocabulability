@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-if (!function_exists('hello')) {
+if (!function_exists('toNumberOnly')) {
     /**
      * 文字列中の数字のみを返します
      *

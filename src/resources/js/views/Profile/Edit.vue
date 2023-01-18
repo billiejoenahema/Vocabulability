@@ -126,6 +126,7 @@ const submit = async () => {
           :class-value="'form-control' + isInvalid('postcode')"
           :id="'postcode'"
           :invalid-feedback="invalidFeedback('postcode')"
+          autocorrect="postal-code"
           maxlength="8"
           v-model="user.postcode"
         />

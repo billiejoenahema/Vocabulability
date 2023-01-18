@@ -1,8 +1,8 @@
 <script setup>
-import dayjs from 'dayjs';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import { formatDate, formatPostcode } from '../../functions/format.js';
 
 const router = useRouter();
 const store = useStore();
@@ -10,16 +10,7 @@ const store = useStore();
 store.dispatch('profile/get');
 const user = computed(() => store.getters['profile/data']);
 const genderTextValue = computed(() => store.getters['consts/genderTextValue']);
-// 日付フォーマット
-const formatDate = (value) => {
-  return dayjs(value).format('YYYY年MM月DD日');
-};
-// 郵便番号フォーマット
-const formatPostcode = (value) => {
-  const code1 = value.slice(0, 3);
-  const code2 = value.slice(3);
-  return `${code1}-${code2}`;
-};
+
 const edit = () => {
   router.push('/profile/edit');
 };
@@ -42,7 +33,7 @@ const edit = () => {
         </tr>
         <tr>
           <td>生年月日</td>
-          <td>{{ formatDate(user.birth_date) }}</td>
+          <td>{{ formatDate(user.birth_date, 'YYYY年MM月DD日') }}</td>
         </tr>
         <tr>
           <td>性別</td>
