@@ -33,7 +33,7 @@ const edit = () => {
         </tr>
         <tr>
           <td>生年月日</td>
-          <td>{{ formatDate(user.birth_date) }}</td>
+          <td>{{ formatDate(user.birth_date, 'YYYY年MM月DD日') }}</td>
         </tr>
         <tr>
           <td>性別</td>

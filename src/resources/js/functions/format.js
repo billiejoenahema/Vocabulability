@@ -8,6 +8,6 @@ export const formatPostcode = (value) => {
 };
 
 // 日付フォーマット
-export const formatDate = (value) => {
-  return dayjs(value).format('YYYY年MM月DD日');
+export const formatDate = (value, format) => {
+  return dayjs(value).format(format);
 };
