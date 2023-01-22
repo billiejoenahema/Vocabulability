@@ -1,5 +1,6 @@
 <script setup>
 import { onUnmounted, reactive, ref } from 'vue';
+import 'vue-select/dist/vue-select.css';
 import { useStore } from 'vuex';
 import BaseInput from '../components/BaseInput.vue';
 
@@ -28,6 +29,7 @@ const uploadFile = () => {
   formData.append('file', file.value);
   store.dispatch('upload_file/post', formData);
 };
+const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 onUnmounted(() => URL.revokeObjectURL(fileUrl));
 </script>
 
@@ -51,6 +53,10 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
   </div>
   <div>
     <button @click="sendMail()">メール送信</button>
+  </div>
+  <div class="input-text">
+    <label>No.</label>
+    <vSelect :options="options"></vSelect>
   </div>
   <div class="input-text">
     <label>TEL</label>

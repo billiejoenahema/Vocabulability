@@ -31,6 +31,17 @@ li {
   list-style: none;
   padding: 8px;
 }
+.v-select {
+  max-width: 400px;
+  width: 100%;
+  margin: 0;
+}
+.vs__dropdown-toggle {
+  border: 1px solid #666 !important;
+}
+.vs__open-indicator {
+  fill: rgb(212, 212, 212) !important;
+}
 .header-nav {
   display: flex;
   justify-content: space-between;
