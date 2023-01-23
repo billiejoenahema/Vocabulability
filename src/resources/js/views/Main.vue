@@ -56,7 +56,7 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
   </div>
   <div class="input-text">
     <label>No.</label>
-    <vSelect :options="options"></vSelect>
+    <VueSelect :options="options"></VueSelect>
   </div>
   <div class="input-text">
     <label>TEL</label>
