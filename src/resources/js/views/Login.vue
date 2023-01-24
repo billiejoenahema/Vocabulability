@@ -11,7 +11,6 @@ const user = reactive({
   email: '',
   password: '',
 });
-const invalidFeedback = computed(() => store.getters['auth/invalidFeedback']);
 const hasErrors = computed(() => store.getters['auth/hasErrors']);
 const isInvalid = computed(() => store.getters['auth/isInvalid']);
 const isForgotPassword = ref(false);
@@ -36,10 +35,12 @@ const forgotPassword = async () => {
 <template>
   <div class="login-form">
     <form class="column">
+      <div class="invalid-feedback" v-if="hasErrors">
+        メールアドレスまたはパスワードに誤りがあります。
+      </div>
       <p class="column">
         <label for="login-email">Email</label>
         <BaseInput
-          :class-value="isInvalid('email')"
           v-model="user.email"
           id="login-email"
           name="email"
@@ -47,14 +48,12 @@ const forgotPassword = async () => {
           maxlength="255"
           autocomplete="on"
           inputmode="email"
-          :invalid-feedback="invalidFeedback('email')"
         />
       </p>
       <template v-if="!isForgotPassword">
         <p class="column">
           <label for="login-password">Password</label>
           <BaseInput
-            :class-value="isInvalid('password')"
             v-model="user.password"
             id="login-password"
             name="password"
@@ -62,7 +61,6 @@ const forgotPassword = async () => {
             maxlength="128"
             autocomplete="on"
             inputmode="text"
-            :invalid-feedback="invalidFeedback('password')"
           />
           <button class="sign-in" @click.prevent.stop="login()">Sign in</button>
         </p>
