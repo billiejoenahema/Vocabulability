@@ -2,7 +2,7 @@
 import { onUnmounted, reactive, ref } from 'vue';
 import 'vue-select/dist/vue-select.css';
 import { useStore } from 'vuex';
-import BaseInput from '../components/BaseInput.vue';
+import BaseInput from '../components/InputText.vue';
 
 const store = useStore();
 
