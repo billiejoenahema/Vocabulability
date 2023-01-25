@@ -26,6 +26,9 @@ const invalidFeedback = computed(
   () => store.getters['profile/invalidFeedback']
 );
 const isInvalid = computed(() => store.getters['profile/isInvalid']);
+const genderFormOptions = computed(
+  () => store.getters['consts/genderFormOptions']
+);
 const cancel = () => {
   router.push('/profile');
 };
@@ -77,35 +80,15 @@ const submit = async () => {
       </div>
       <fieldset class="mb-2 row">
         <legend>性別</legend>
-        <div class="mr-2">
+        <div v-for="option in genderFormOptions" :key="option.id" class="mr-2">
           <input
             type="radio"
             id="male"
             name="gender"
-            value="01"
+            :value="option.id"
             v-model="user.gender"
           />
-          <label for="male">男性</label>
-        </div>
-        <div class="mr-2">
-          <input
-            type="radio"
-            id="female"
-            name="gender"
-            value="02"
-            v-model="user.gender"
-          />
-          <label for="female">女性</label>
-        </div>
-        <div class="mr-2">
-          <input
-            type="radio"
-            id="others"
-            name="gender"
-            value="00"
-            v-model="user.gender"
-          />
-          <label for="others">無回答</label>
+          <label for="male">{{ option.name }}</label>
         </div>
       </fieldset>
       <div class="mb-2">
