@@ -2,8 +2,9 @@
 import { computed, onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-import BaseInput from '../../components/BaseInput.vue';
+import InputCheckbox from '../../components/InputCheckbox.vue';
 import InputDateSplit from '../../components/InputDateSplit.vue';
+import BaseInput from '../../components/InputText.vue';
 
 const router = useRouter();
 const store = useStore();
@@ -78,19 +79,14 @@ const submit = async () => {
           v-model="user.birth_date"
         />
       </div>
-      <fieldset class="mb-2 row">
-        <legend>性別</legend>
-        <div v-for="option in genderFormOptions" :key="option.id" class="mr-2">
-          <input
-            type="radio"
-            id="male"
-            name="gender"
-            :value="option.id"
-            v-model="user.gender"
-          />
-          <label for="male">{{ option.name }}</label>
-        </div>
-      </fieldset>
+      <InputCheckbox
+        id="gender"
+        :class-value="'form-control' + isInvalid('gender')"
+        :invalid-feedback="invalidFeedback('gender')"
+        :options="genderFormOptions"
+        legend="性別"
+        v-model="user.gender"
+      />
       <div class="mb-2">
         <label for="phone" class="mb-1">電話番号</label>
         <BaseInput
