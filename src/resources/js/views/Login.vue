@@ -2,7 +2,7 @@
 import { computed, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-import BaseInput from '../components/BaseInput.vue';
+import BaseInput from '../components/InputText.vue';
 
 const router = useRouter();
 const store = useStore();

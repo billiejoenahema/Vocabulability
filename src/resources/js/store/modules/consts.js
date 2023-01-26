@@ -17,6 +17,9 @@ const getters = {
     });
     return item?.name ?? '';
   },
+  genderFormOptions(state) {
+    return state.data?.GENDER;
+  },
   japaneseSyllabary(state) {
     return state.data?.JAPANESE_SYLLABARY;
   },
