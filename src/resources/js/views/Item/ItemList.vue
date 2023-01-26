@@ -13,7 +13,6 @@ const store = useStore();
 onMounted(async () => {
   setIsLoading(true);
   await store.dispatch('item/get', params.value);
-  await store.dispatch('consts/get');
   setIsLoading(false);
 });
 

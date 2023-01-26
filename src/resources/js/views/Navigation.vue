@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import Avatar from '../components/Avatar.vue';
@@ -7,7 +7,12 @@ import Avatar from '../components/Avatar.vue';
 const store = useStore();
 const router = useRouter();
 const user = computed(() => store.getters['profile/data']);
-store.dispatch('consts/getIfNeeded');
+const isLogin = computed(() => store.getters['profile/isLogin']);
+
+onMounted(() => {
+  // ログイン中のときのみ定数を取得する
+  isLogin.value && store.dispatch('consts/getIfNeeded');
+});
 
 const showMenu = ref(false);
 

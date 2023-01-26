@@ -45,7 +45,7 @@ const actions = {
       .then(async (res) => {
         await axios
           .post('/login', data)
-          .then((res) => {
+          .then(() => {
             commit('setErrors', {});
           })
           .catch((err) => {
