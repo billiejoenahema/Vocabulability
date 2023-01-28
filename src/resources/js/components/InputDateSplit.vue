@@ -43,7 +43,7 @@ const props = defineProps({
     type: String,
   },
   placeholder: {
-    default: '',
+    default: '1970-01-23',
     required: false,
     type: String,
   },
@@ -58,27 +58,41 @@ const hintTextShow = ref(false);
 const toggleHintTextShow = () => {
   hintTextShow.value = !hintTextShow.value;
 };
+const [placeholderYear, placeholderMonth, placeholderDay] =
+  props.placeholder.split('-');
 const yearRef = ref(null);
 const monthRef = ref(null);
 const dayRef = ref(null);
 
 const date = computed(() => {
-  const splittedDate = props.modelValue?.split('-') ?? [];
+  const [year, month, day] = props.modelValue
+    ? props.modelValue.split('-')
+    : ['', '', ''];
   return {
-    year: splittedDate[0] ?? null,
-    month: splittedDate[1] ?? null,
-    day: splittedDate[2] ?? null,
+    year: year,
+    month: month,
+    day: day,
   };
 });
 const onInput = (e) => {
+  // 「年」が4桁入力されたら「月」にフォーカスを移動する
   if (e.target === yearRef.value && yearRef.value?.value.length === 4) {
     monthRef.value.focus();
   }
+  // 「月」が2桁入力されたら「日」にフォーカスを移動する
   if (e.target === monthRef.value && monthRef.value?.value.length === 2) {
     dayRef.value.focus();
   }
   const updatedDate = `${yearRef.value.value}-${monthRef.value.value}-${dayRef.value.value}`;
   emit('update:modelValue', updatedDate);
+};
+// Enterキー押下で次の入力欄へフォーカスをを移動する
+const onKeyDownEnter = (e) => {
+  // 文字変換中なら何もしない
+  if (e.isComposing || e.keyCode === 229) return;
+  // 文字変換中でなければEnter押下で次の入力欄へフォーカスを移動する
+  if (e.target === yearRef.value) monthRef.value.focus();
+  if (e.target === monthRef.value) dayRef.value.focus();
 };
 </script>
 
@@ -91,13 +105,14 @@ const onInput = (e) => {
       :disabled="disabled"
       :id="id"
       maxlength="4"
-      :placeholder="placeholder"
+      :placeholder="placeholderYear"
       type="text"
       :value="date.year"
       :list="id"
       :title="title"
       ref="yearRef"
       @input="onInput"
+      @keydown.enter="onKeyDownEnter"
     />
     <span>年</span>
     <input
@@ -107,13 +122,14 @@ const onInput = (e) => {
       :disabled="disabled"
       :id="id"
       maxlength="2"
-      :placeholder="placeholder"
+      :placeholder="placeholderMonth"
       type="text"
       :value="date.month"
       :list="id"
       :title="title"
       ref="monthRef"
       @input="onInput"
+      @keydown.enter="onKeyDownEnter"
     />
     <span>月</span>
     <input
@@ -123,7 +139,7 @@ const onInput = (e) => {
       :disabled="disabled"
       :id="id"
       maxlength="2"
-      :placeholder="placeholder"
+      :placeholder="placeholderDay"
       type="text"
       :value="date.day"
       :list="id"
