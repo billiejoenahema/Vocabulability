@@ -314,6 +314,9 @@ li {
   color: red;
   font-size: 0.6rem;
 }
+.is-invalid {
+  border-color: red;
+}
 .submit {
   width: 160px;
 }
