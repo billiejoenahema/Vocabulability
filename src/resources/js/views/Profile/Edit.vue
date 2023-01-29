@@ -74,8 +74,9 @@ const submit = async () => {
         <label for="birth_date" class="mb-1">生年月日</label>
         <InputDateSplit
           id="birth_date"
-          :class-value="'form-control' + isInvalid('birth_date')"
+          :class-value="isInvalid('birth_date')"
           :invalid-feedback="invalidFeedback('birth_date')"
+          :help-text="'半角数字で入力してください。'"
           v-model="user.birth_date"
         />
       </div>
