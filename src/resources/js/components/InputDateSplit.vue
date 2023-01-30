@@ -123,11 +123,13 @@ const onKeyDownEnter = (e) => {
   // 文字変換中でなければEnter押下で次の入力欄へ移動し入力値を選択した状態にする
   if (e.target === yearRef.value) monthRef.value.select();
   if (e.target === monthRef.value) dayRef.value.select();
+  if (e.target === dayRef.value) dayRef.value.blur();
 };
 </script>
 
 <template>
   <div class="base-input">
+    <!-- 年 -->
     <input
       :aria-describedby="`${id}HelpBlock`"
       :class="'form-control border-dark input-year ' + className.year"
@@ -142,6 +144,7 @@ const onKeyDownEnter = (e) => {
       @keydown.enter="onKeyDownEnter"
     />
     <span>年</span>
+    <!-- 月 -->
     <input
       :aria-describedby="`${id}HelpBlock`"
       :class="'form-control border-dark input-month-day ' + className.month"
@@ -156,6 +159,7 @@ const onKeyDownEnter = (e) => {
       @keydown.enter="onKeyDownEnter"
     />
     <span>月</span>
+    <!-- 日 -->
     <input
       :aria-describedby="`${id}HelpBlock`"
       :class="'form-control border-dark input-month-day ' + className.day"
@@ -167,6 +171,7 @@ const onKeyDownEnter = (e) => {
       :value="date.day"
       ref="dayRef"
       @input="onInput"
+      @keydown.enter="onKeyDownEnter"
     />
     <span>日</span>
     <div class="invalid-feedback">
