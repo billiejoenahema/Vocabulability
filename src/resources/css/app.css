@@ -349,6 +349,9 @@ li {
 .text-decoration-none {
   text-decoration: none;
 }
+.text-muted {
+  color: #6c757d;
+}
 
 @media screen and (max-width: 600px) {
   /* スクリーンサイズが600px以下の場合に適用 */

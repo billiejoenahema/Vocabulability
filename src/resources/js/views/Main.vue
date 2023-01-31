@@ -17,6 +17,7 @@ const state = reactive({
   time: '',
   datetime: '',
 });
+const remarks = ref('');
 const file = ref(null);
 const fileUrl = ref(null);
 const changeFile = (e) => {
@@ -54,38 +55,52 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
   <div>
     <button @click="sendMail()">メール送信</button>
   </div>
-  <div class="input-text">
-    <label>No.</label>
-    <VueSelect :options="options"></VueSelect>
-  </div>
-  <div class="input-text">
-    <label>TEL</label>
-    <BaseInput v-model="state.tel" autocomplete="on" id="tel" type="tel" />
-  </div>
-  <div class="input-text">
-    <label>Email</label>
-    <BaseInput
-      v-model="state.email"
-      autocomplete="on"
-      id="email"
-      type="email"
-    />
-  </div>
-  <div class="input-text">
-    <label>TEL</label>
-    <BaseInput v-model="state.text" autocomplete="on" id="text" type="tel" />
-  </div>
-  <div class="input-text">
-    <BaseInput type="month" id="month" v-model="state.month" />
-  </div>
-  <div class="input-text">
-    <label>BirthDay</label>
-    <BaseInput v-model="state.date" autocomplete="on" id="date" type="date" />
-  </div>
-  <div class="input-text">
-    <BaseInput type="time" id="time" v-model="state.time" />
-  </div>
-  <div class="input-text">
-    <BaseInput type="datetime-local" id="datetime" v-model="state.datetime" />
+  <div class="mw-400">
+    <div class="input-text">
+      <label>No.</label>
+      <VueSelect :options="options"></VueSelect>
+    </div>
+    <div class="input-text">
+      <label>Remarks</label>
+      <BaseInput
+        v-model="remarks"
+        autocomplete="on"
+        id="remarks"
+        type="text"
+        help-text="200文字以内"
+        :maxlength="200"
+        :character-count="true"
+      />
+    </div>
+    <div class="input-text">
+      <label>TEL</label>
+      <BaseInput v-model="state.tel" autocomplete="on" id="tel" type="tel" />
+    </div>
+    <div class="input-text">
+      <label>Email</label>
+      <BaseInput
+        v-model="state.email"
+        autocomplete="on"
+        id="email"
+        type="email"
+      />
+    </div>
+    <div class="input-text">
+      <label>TEL</label>
+      <BaseInput v-model="state.text" autocomplete="on" id="text" type="tel" />
+    </div>
+    <div class="input-text">
+      <BaseInput type="month" id="month" v-model="state.month" />
+    </div>
+    <div class="input-text">
+      <label>BirthDay</label>
+      <BaseInput v-model="state.date" autocomplete="on" id="date" type="date" />
+    </div>
+    <div class="input-text">
+      <BaseInput type="time" id="time" v-model="state.time" />
+    </div>
+    <div class="input-text">
+      <BaseInput type="datetime-local" id="datetime" v-model="state.datetime" />
+    </div>
   </div>
 </template>

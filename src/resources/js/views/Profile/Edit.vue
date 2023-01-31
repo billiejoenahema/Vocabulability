@@ -20,6 +20,7 @@ const user = reactive({
 
 onMounted(() => {
   Object.assign(user, store.getters['profile/data']);
+  store.dispatch('consts/getIfNeeded');
 });
 
 const hasErrors = computed(() => store.getters['profile/hasErrors']);
@@ -85,6 +86,7 @@ const submit = async () => {
         :class-value="'form-control' + isInvalid('gender')"
         :invalid-feedback="invalidFeedback('gender')"
         :options="genderFormOptions"
+        help-text="ヘルプテキスト"
         legend="性別"
         v-model="user.gender"
       />
