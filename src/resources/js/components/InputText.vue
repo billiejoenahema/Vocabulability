@@ -1,35 +1,30 @@
 <script setup>
-import { ref } from 'vue';
-defineProps({
+import { computed } from 'vue';
+const props = defineProps({
   autocomplete: {
-    default: 'off',
+    default: 'on',
     required: false,
     type: [String],
     validator(value) {
       return ['on', 'off'].includes(value);
     },
   },
+  characterCount: {
+    default: false,
+    required: false,
+    type: Boolean,
+  },
   classValue: {
     default: '',
     required: false,
     type: String,
-  },
-  dataList: {
-    default: () => [],
-    required: false,
-    type: Array,
   },
   disabled: {
     default: false,
     required: false,
     type: Boolean,
   },
-  exampleValue: {
-    default: '',
-    required: false,
-    type: String,
-  },
-  hintText: {
+  helpText: {
     default: '',
     required: false,
     type: String,
@@ -123,10 +118,11 @@ const emit = defineEmits(['update:modelValue']);
 const updateModelValue = (event) => {
   emit('update:modelValue', event.target.value);
 };
-const hintTextShow = ref(false);
-const toggleHintTextShow = () => {
-  hintTextShow.value = !hintTextShow.value;
-};
+const characterCountClassName = computed(() => {
+  if (props.modelValue.length === 0) {
+    return 'text-muted';
+  }
+});
 </script>
 
 <template>
@@ -147,24 +143,16 @@ const toggleHintTextShow = () => {
       :title="title"
       @input="updateModelValue"
     />
-    <datalist :id="'data_list_' + id">
-      <option v-for="item in dataList" :key="item">
-        {{ item }}
-      </option>
-    </datalist>
-    <div class="hint-area" v-if="exampleValue">
-      <small class="input-example" @click="toggleHintTextShow()">{{
-        exampleValue
-      }}</small>
-      <div
-        class="hint-text"
-        v-if="hintText && hintTextShow"
-        @click="toggleHintTextShow()"
-      >
-        {{ hintText }}
-        <teleport to="body">
-          <div class="backdrop" @click="toggleHintTextShow()"></div>
-        </teleport>
+    <div class="option-area">
+      <div>
+        <small>{{ helpText }}</small>
+      </div>
+      <div class="character-length">
+        <small
+          v-if="characterCount && maxlength"
+          :class="characterCountClassName"
+          >{{ modelValue.length ?? 0 }}/{{ maxlength }}</small
+        >
       </div>
     </div>
     <div class="invalid-feedback">
@@ -179,24 +167,11 @@ const toggleHintTextShow = () => {
 .base-input {
   margin-bottom: 1rem;
 }
-.input-example {
-  color: rgb(141, 141, 141);
-  padding: 0 1rem;
+.option-area {
+  display: flex;
+  justify-content: space-between;
 }
-.hint-area {
-  position: relative;
-}
-.hint-text {
-  position: absolute;
-  top: 0;
-  padding: 16px;
-  background: rgb(222, 222, 222);
-}
-.backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+.character-length {
+  font-size: 0.6rem;
 }
 </style>
