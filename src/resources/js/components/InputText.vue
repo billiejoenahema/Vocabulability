@@ -24,7 +24,7 @@ const props = defineProps({
     required: false,
     type: Boolean,
   },
-  helpText: {
+  helperText: {
     default: '',
     required: false,
     type: String,
@@ -33,6 +33,11 @@ const props = defineProps({
     default: '',
     required: true,
     type: String,
+  },
+  inputtingPlaceholder: {
+    default: false,
+    required: false,
+    type: Boolean,
   },
   invalidFeedback: {
     default: () => [],
@@ -118,6 +123,11 @@ const emit = defineEmits(['update:modelValue']);
 const updateModelValue = (event) => {
   emit('update:modelValue', event.target.value);
 };
+const inputClassName = computed(() => {
+  return props.inputtingPlaceholder
+    ? `${props.classValue} show-inputting-placeholder`
+    : props.classValue;
+});
 const characterCountClassName = computed(() => {
   if (props.modelValue.length === 0) {
     return 'text-muted';
@@ -126,12 +136,10 @@ const characterCountClassName = computed(() => {
 </script>
 
 <template>
-  <div class="base-input">
+  <div class="input-text-wrapper">
     <input
       :aria-describedby="`${id}HelpBlock`"
-      :autocomplete="autocomplete"
-      :class="classValue"
-      class="form-control border-dark"
+      :class="'form-control border-dark ' + inputClassName"
       :disabled="disabled"
       :id="id"
       :inputmode="inputmode"
@@ -143,17 +151,19 @@ const characterCountClassName = computed(() => {
       :title="title"
       @input="updateModelValue"
     />
+    <div
+      v-if="inputtingPlaceholder && modelValue"
+      class="inputting-placeholder text-muted"
+    >
+      {{ placeholder }}
+    </div>
     <div class="option-area">
-      <div>
-        <small>{{ helpText }}</small>
-      </div>
-      <div class="character-length">
-        <small
-          v-if="characterCount && maxlength"
-          :class="characterCountClassName"
-          >{{ modelValue.length ?? 0 }}/{{ maxlength }}</small
-        >
-      </div>
+      <div>{{ helperText }}</div>
+      <small
+        v-if="characterCount && maxlength"
+        :class="'character-length ' + characterCountClassName"
+        >{{ modelValue.length ?? 0 }}/{{ maxlength }}</small
+      >
     </div>
     <div class="invalid-feedback">
       <div v-for="(error, index) in invalidFeedback" :key="index">
@@ -163,9 +173,19 @@ const characterCountClassName = computed(() => {
   </div>
 </template>
 
-<style>
-.base-input {
+<style scoped>
+.input-text-wrapper {
   margin-bottom: 1rem;
+  position: relative;
+}
+.show-inputting-placeholder {
+  padding: 1rem 0.5rem 0.5rem;
+}
+.inputting-placeholder {
+  position: absolute;
+  top: 0;
+  left: 8px;
+  font-size: 0.6rem;
 }
 .option-area {
   display: flex;
