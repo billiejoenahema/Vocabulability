@@ -5,17 +5,12 @@ defineProps({
     required: false,
     type: String,
   },
-  dataList: {
-    default: () => [],
-    required: false,
-    type: Array,
-  },
   disabled: {
     default: false,
     required: false,
     type: Boolean,
   },
-  helpText: {
+  helperText: {
     default: '',
     required: false,
     type: String,
@@ -67,7 +62,7 @@ const updateModelValue = (event) => {
         />
         <label :for="'gender_' + option.id">{{ option.name }}</label>
       </div>
-      <small class="help-text">{{ helpText }}</small>
+      <small class="help-text">{{ helperText }}</small>
     </div>
   </fieldset>
 

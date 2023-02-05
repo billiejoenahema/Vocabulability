@@ -2,7 +2,8 @@
 import { onUnmounted, reactive, ref } from 'vue';
 import 'vue-select/dist/vue-select.css';
 import { useStore } from 'vuex';
-import BaseInput from '../components/InputText.vue';
+import InputText from '../components/InputText.vue';
+import InputTextarea from '../components/InputTextarea.vue';
 
 const store = useStore();
 
@@ -18,6 +19,7 @@ const state = reactive({
   datetime: '',
 });
 const remarks = ref('');
+const longText = ref('');
 const file = ref(null);
 const fileUrl = ref(null);
 const changeFile = (e) => {
@@ -61,8 +63,21 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
       <VueSelect :options="options"></VueSelect>
     </div>
     <div class="input-text">
+      <label>LongText</label>
+      <InputTextarea
+        v-model="longText"
+        autocomplete="on"
+        id="longText"
+        type="text"
+        help-text="1000文字以内"
+        :maxlength="1000"
+        :character-count="true"
+        :rows="6"
+      />
+    </div>
+    <div class="input-text">
       <label>Remarks</label>
-      <BaseInput
+      <InputText
         v-model="remarks"
         autocomplete="on"
         id="remarks"
@@ -74,33 +89,42 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
     </div>
     <div class="input-text">
       <label>TEL</label>
-      <BaseInput v-model="state.tel" autocomplete="on" id="tel" type="tel" />
+      <InputText
+        v-model="state.tel"
+        autocomplete="on"
+        id="tel"
+        type="tel"
+        placeholder="例）09012345678"
+        :inputting-placeholder="true"
+      />
     </div>
     <div class="input-text">
       <label>Email</label>
-      <BaseInput
+      <InputText
         v-model="state.email"
         autocomplete="on"
         id="email"
         type="email"
+        placeholder="例）example@example.com"
       />
     </div>
     <div class="input-text">
-      <label>TEL</label>
-      <BaseInput v-model="state.text" autocomplete="on" id="text" type="tel" />
-    </div>
-    <div class="input-text">
-      <BaseInput type="month" id="month" v-model="state.month" />
+      <InputText type="month" id="month" v-model="state.month" />
     </div>
     <div class="input-text">
       <label>BirthDay</label>
-      <BaseInput v-model="state.date" autocomplete="on" id="date" type="date" />
+      <InputText v-model="state.date" autocomplete="on" id="date" type="date" />
     </div>
     <div class="input-text">
-      <BaseInput type="time" id="time" v-model="state.time" />
+      <InputText type="time" id="time" v-model="state.time" />
     </div>
     <div class="input-text">
-      <BaseInput type="datetime-local" id="datetime" v-model="state.datetime" />
+      <InputText
+        type="datetime-local"
+        id="datetime"
+        v-model="state.datetime"
+        placeholder="例）2023年01月23日"
+      />
     </div>
   </div>
 </template>

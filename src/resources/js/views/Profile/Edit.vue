@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import InputCheckbox from '../../components/InputCheckbox.vue';
 import InputDateSplit from '../../components/InputDateSplit.vue';
-import BaseInput from '../../components/InputText.vue';
+import InputText from '../../components/InputText.vue';
 
 const router = useRouter();
 const store = useStore();
@@ -51,23 +51,25 @@ const submit = async () => {
     <form class="mw-400">
       <div class="mb-2">
         <label for="name" class="mb-1">名前</label>
-        <BaseInput
+        <InputText
           type="text"
           :class-value="'form-control' + isInvalid('name')"
           id="name"
           :invalid-feedback="invalidFeedback('name')"
           maxlength="50"
+          placeholder="例）山田 太郎"
           v-model="user.name"
         />
       </div>
       <div class="mb-2">
         <label for="kana_name" class="mb-1">フリガナ</label>
-        <BaseInput
+        <InputText
           type="text"
           :class-value="'form-control' + isInvalid('kana_name')"
           id="kana_name"
           :invalid-feedback="invalidFeedback('kana_name')"
           maxlength="50"
+          placeholder="例）ヤマダ タロウ"
           v-model="user.kana_name"
         />
       </div>
@@ -86,40 +88,42 @@ const submit = async () => {
         :class-value="'form-control' + isInvalid('gender')"
         :invalid-feedback="invalidFeedback('gender')"
         :options="genderFormOptions"
-        help-text="ヘルプテキスト"
         legend="性別"
         v-model="user.gender"
       />
       <div class="mb-2">
         <label for="phone" class="mb-1">電話番号</label>
-        <BaseInput
+        <InputText
           type="text"
           :class-value="'form-control' + isInvalid('phone')"
           id="phone"
           :invalid-feedback="invalidFeedback('phone')"
           maxlength="14"
+          placeholder="例）09012345678"
           v-model="user.phone"
         />
       </div>
       <div class="mb-2">
         <label for="postcode" class="mb-1">郵便番号</label>
-        <BaseInput
+        <InputText
           :type="'text'"
           :class-value="'form-control' + isInvalid('postcode')"
           :id="'postcode'"
           :invalid-feedback="invalidFeedback('postcode')"
           autocorrect="postal-code"
           maxlength="8"
+          placeholder="例）1010001"
           v-model="user.postcode"
         />
       </div>
       <div class="mb-2">
         <label for="address" class="mb-1">住所</label>
-        <BaseInput
+        <InputText
           :type="'text'"
           :class-value="'form-control' + isInvalid('address')"
           :id="'address'"
           :invalid-feedback="invalidFeedback('address')"
+          placeholder="例）東京都千代田区丸の内１丁目９"
           v-model="user.address"
         />
       </div>
