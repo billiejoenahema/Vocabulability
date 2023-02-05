@@ -29,7 +29,7 @@ const props = defineProps({
     required: false,
     type: Boolean,
   },
-  helpText: {
+  helperText: {
     default: '',
     required: false,
     type: String,
@@ -154,7 +154,7 @@ const characterCountClassName = computed(() => {
       @input="updateModelValue"
     ></textarea>
     <div class="option-area">
-      <small class="text-white-50">{{ helpText }}</small>
+      <small class="text-white-50">{{ helperText }}</small>
       <small
         v-if="characterCount && maxlength"
         :class="'character-length ' + characterCountClassName"

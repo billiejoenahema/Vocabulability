@@ -12,7 +12,7 @@ const props = defineProps({
     required: false,
     type: Boolean,
   },
-  helpText: {
+  helperText: {
     default: '',
     required: false,
     type: String,
@@ -179,7 +179,7 @@ const onKeyDownEnter = (e) => {
         {{ error }}
       </div>
     </div>
-    <small class="help-text">{{ helpText }}</small>
+    <small class="help-text">{{ helperText }}</small>
   </div>
 </template>
 
