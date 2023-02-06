@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 export const formatPostcode = (value = '') => {
   const code1 = value.slice(0, 3);
   const code2 = value.slice(3);
-  return `${code1}-${code2}`;
+  return `〒${code1}-${code2}`;
 };
 
 // 日付フォーマット
