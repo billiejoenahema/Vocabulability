@@ -2,6 +2,8 @@
 import { onUnmounted, reactive, ref } from 'vue';
 import 'vue-select/dist/vue-select.css';
 import { useStore } from 'vuex';
+import InputPostalCode from '../components/InputPostalCode.vue';
+import InputTel from '../components/InputTel.vue';
 import InputText from '../components/InputText.vue';
 import InputTextarea from '../components/InputTextarea.vue';
 
@@ -20,6 +22,7 @@ const state = reactive({
 });
 const remarks = ref('');
 const longText = ref('');
+const postalCode = ref('');
 const file = ref(null);
 const fileUrl = ref(null);
 const changeFile = (e) => {
@@ -63,6 +66,15 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
       <VueSelect :options="options"></VueSelect>
     </div>
     <div class="input-text">
+      <label>PostalCode</label>
+      <InputPostalCode
+        v-model="postalCode"
+        id="postalCode"
+        placeholder="1001000"
+        helper-text="半角数字7文字"
+      />
+    </div>
+    <div class="input-text">
       <label>LongText</label>
       <InputTextarea
         v-model="longText"
@@ -89,7 +101,7 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
     </div>
     <div class="input-text">
       <label>TEL</label>
-      <InputText
+      <InputTel
         v-model="state.tel"
         autocomplete="on"
         id="tel"

@@ -139,6 +139,8 @@ const characterCountClassName = computed(() => {
   <div class="input-text-wrapper">
     <input
       :aria-describedby="`${id}HelpBlock`"
+      :autocomplete="autocomplete"
+      :autocorrect="autocorrect"
       :class="'form-control border-dark ' + inputClassName"
       :disabled="disabled"
       :id="id"
@@ -147,7 +149,6 @@ const characterCountClassName = computed(() => {
       :placeholder="placeholder"
       :type="type"
       :value="modelValue"
-      :list="id"
       :title="title"
       @input="updateModelValue"
     />

@@ -131,7 +131,7 @@ const onKeyDownEnter = (e) => {
   <div class="base-input">
     <!-- 年 -->
     <input
-      :aria-describedby="`${id}HelpBlock`"
+      :aria-describedby="`${id}HelpBlockYear`"
       :class="'form-control border-dark input-year ' + className.year"
       :disabled="disabled"
       :id="id"
@@ -146,7 +146,7 @@ const onKeyDownEnter = (e) => {
     <span>年</span>
     <!-- 月 -->
     <input
-      :aria-describedby="`${id}HelpBlock`"
+      :aria-describedby="`${id}HelpBlockMonth`"
       :class="'form-control border-dark input-month-day ' + className.month"
       :disabled="disabled"
       :id="id"
@@ -161,7 +161,7 @@ const onKeyDownEnter = (e) => {
     <span>月</span>
     <!-- 日 -->
     <input
-      :aria-describedby="`${id}HelpBlock`"
+      :aria-describedby="`${id}HelpBlockDay`"
       :class="'form-control border-dark input-month-day ' + className.day"
       :disabled="disabled"
       :id="id"

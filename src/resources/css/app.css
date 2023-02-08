@@ -60,6 +60,9 @@ li {
 .nav-item {
   display: flex;
 }
+.nav-item:hover {
+  cursor: pointer;
+}
 .bars-icon {
   display: none;
 }
