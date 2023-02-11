@@ -1,4 +1,5 @@
 <script setup>
+import 'floating-vue/dist/style.css';
 import { onUnmounted, reactive, ref } from 'vue';
 import 'vue-select/dist/vue-select.css';
 import { useStore } from 'vuex';
@@ -52,6 +53,13 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
       <li><router-link to="/item_create">項目登録</router-link></li>
     </ul>
   </div>
+  <VTooltip :triggers="['click']" auto-hide>
+    <p>テキストテキストテキスト...</p>
+    <template #popper>
+      テキスト全文テキスト全文テキスト全文テキスト
+      全文テキスト全文テキスト全文テキスト全文
+    </template>
+  </VTooltip>
   <div class="input-text">
     <input type="file" @change="(e) => changeFile(e)" />
     <iframe :src="fileUrl" height="160" width="120"></iframe>
@@ -140,3 +148,10 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
     </div>
   </div>
 </template>
+<style>
+pre {
+  opacity: 1;
+  margin: 0;
+  padding: 0;
+}
+</style>
