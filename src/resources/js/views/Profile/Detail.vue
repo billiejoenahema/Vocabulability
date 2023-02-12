@@ -63,6 +63,10 @@ const edit = () => {
           <td>登録日</td>
           <td>{{ user.created_at }}</td>
         </tr>
+        <tr>
+          <td>最終ログイン</td>
+          <td>{{ user.last_login_at }}</td>
+        </tr>
       </tbody>
     </table>
     <div>

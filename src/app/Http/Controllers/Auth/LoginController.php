@@ -8,6 +8,8 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 final class LoginController extends Controller
 {
@@ -30,6 +32,11 @@ final class LoginController extends Controller
         if ($this->auth->guard()->attempt($credentials)) {
 
             $request->session()->regenerate();
+            $user = Auth::user();
+            // 最終ログイン日時を更新する
+            DB::transaction(function () use ($user) {
+                $user->fill(['last_login_at' => now()])->save();
+            });
 
             return new JsonResponse([
                 'message' => ResponseEnum::LOGGED_IN->value,

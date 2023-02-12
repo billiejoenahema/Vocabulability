@@ -54,6 +54,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePostcode($value)
  * @mixin \Eloquent
+ * @property string|null $last_login_at 最終ログイン
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereLastLoginAt($value)
  */
 class User extends Authenticatable
 {
@@ -75,6 +77,7 @@ class User extends Authenticatable
         'address',
         'email',
         'password',
+        'last_login_at',
     ];
 
     /**
@@ -96,6 +99,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'updated_at' => 'datetime:Y年m月d日',
         'created_at' => 'datetime:Y年m月d日',
+        'last_login_at' => 'datetime:Y年m月d日 H:i',
     ];
 
     /**
