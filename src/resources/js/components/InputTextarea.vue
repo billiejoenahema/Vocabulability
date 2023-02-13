@@ -162,7 +162,7 @@ const characterCountClassName = computed(() => {
       >
     </div>
     <div class="invalid-feedback">
-      <div v-for="(error, index) in invalidFeedback" :key="index">
+      <div v-for="error in invalidFeedback" :key="error">
         {{ error }}
       </div>
     </div>

@@ -111,7 +111,7 @@ onUnmounted(() => {
       <button @click="resetParams()">リセット</button>
     </div>
     <div class="wrap">
-      <div class="row" v-for="(alphabet, index) in alphabets" :key="index">
+      <div class="row" v-for="alphabet in alphabets" :key="alphabet">
         <span v-if="index">/</span>
         <div
           class="index-item"
@@ -144,7 +144,7 @@ onUnmounted(() => {
     </div>
     <div v-else class="list-body">
       <div
-        v-for="(question, index) in questions"
+        v-for="question in questions"
         :key="question.id"
         class="row list-row"
       >
