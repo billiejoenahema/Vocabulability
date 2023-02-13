@@ -31,11 +31,6 @@ const changeFile = (e) => {
   const objUrl = URL.createObjectURL(file.value);
   fileUrl.value = objUrl;
 };
-const uploadFile = () => {
-  const formData = new FormData();
-  formData.append('file', file.value);
-  store.dispatch('upload_file/post', formData);
-};
 const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 onUnmounted(() => URL.revokeObjectURL(fileUrl));
 </script>
@@ -62,8 +57,6 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
   </VTooltip>
   <div class="input-text">
     <input type="file" @change="(e) => changeFile(e)" />
-    <iframe :src="fileUrl" height="160" width="120"></iframe>
-    <button type="button" @click="uploadFile">アップロード</button>
   </div>
   <div>
     <button @click="sendMail()">メール送信</button>

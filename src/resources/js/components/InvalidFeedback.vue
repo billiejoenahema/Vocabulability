@@ -9,7 +9,7 @@ defineProps({
 
 <template>
   <div class="errors">
-    <div v-for="(error, index) in errors" :key="index">
+    <div v-for="error in errors" :key="error">
       {{ error }}
     </div>
   </div>

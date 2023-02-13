@@ -23,6 +23,7 @@ const linkLabel = (label) => {
     <ul class="pagination">
       <li
         v-for="link in links"
+        :key="link.label"
         class="page-item"
         :class="{
           disabled: link.url === null,

@@ -160,11 +160,7 @@ onUnmounted(() => {
       <button @click="resetParams()">リセット</button>
     </div>
     <div class="wrap">
-      <div
-        class="row"
-        v-for="(character, index) in japaneseSyllabary"
-        :key="index"
-      >
+      <div class="row" v-for="character in japaneseSyllabary" :key="character">
         <div
           class="index-item jp-character"
           :class="character === params.filter && 'current-character'"
@@ -204,7 +200,7 @@ onUnmounted(() => {
       検索に一致する項目はありませんでした。
     </div>
     <div v-else class="list-body">
-      <div v-for="(item, index) in items" :key="item.id" class="row list-row">
+      <div v-for="item in items" :key="item.id" class="row list-row">
         <div v-if="editable[index]" class="column">
           <input
             v-model="item.name"
@@ -217,7 +213,7 @@ onUnmounted(() => {
           {{ item.name }}
         </div>
         <div class="precedent row">
-          <template v-for="(precedent, _index) in item.precedents">
+          <template v-for="precedent in item.precedents" :key="precedent.id">
             <div v-if="editable[index]" class="column">
               <div class="row">
                 <input

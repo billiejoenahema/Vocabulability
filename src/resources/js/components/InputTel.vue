@@ -107,7 +107,7 @@ const determineCorrectInput = (input) => {
       <div v-if="incorrectInput && !invalidFeedback.length">
         数字とハイフン以外は入力しないでください。
       </div>
-      <div v-for="(error, index) in invalidFeedback" :key="index">
+      <div v-for="error in invalidFeedback" :key="error">
         {{ error }}
       </div>
     </div>
