@@ -70,7 +70,9 @@ const date = computed(() => {
   };
 });
 // 整数または空文字であるかどうか
-const isNumberOnly = (v) => v.match(/^[0-9]*$/);
+const isNumberOnly = (v) => v.match(/^[0-9０-９]*$/);
+// 4桁であるかどうか
+const isFourDigit = (v) => v.length === 4;
 // 有効な月であるかどうか
 const validMonth = (v) => {
   return v === '' || (1 <= Number(v) && Number(v) <= 12);
@@ -79,9 +81,10 @@ const validMonth = (v) => {
 const validDay = (v) => {
   return v === '' || (1 <= Number(v) && Number(v) <= 31);
 };
+
 const onInput = (e) => {
   // 入力値が数字以外の文字を含む場合は入力欄を赤くする
-  if (isNumberOnly(yearRef.value.value)) {
+  if (isNumberOnly(yearRef.value.value) && isFourDigit(yearRef.value.value)) {
     invalidInputClassName.year = '';
   } else {
     invalidInputClassName.year = 'invalid-input';
