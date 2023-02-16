@@ -59,10 +59,11 @@ class SaveRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        // 郵便番号、電話番号のハイフンを取り除く
+        // 郵便番号、電話番号のハイフンを取り除き全角数字を半角に変換する
         $this->merge([
             'postcode' => toNumberOnly($this->postcode),
             'phone' => toNumberOnly($this->phone),
+            'last_login_at' => null,
         ]);
     }
 }
