@@ -1,5 +1,5 @@
-import { shuffle } from '../../functions/shuffle';
 import axios from 'axios';
+import { shuffle } from '../../functions/shuffle';
 
 const defaultParams = {
   column: '',
@@ -30,11 +30,14 @@ const getters = {
   hasErrors(state) {
     return Object.keys(state.errors).length > 0;
   },
-  invalidFeedback: (state) => (props) => {
-    return state.errors[props] ?? [];
+  invalidFeedback: (state) => (key) => {
+    return state.errors?.[key]?.reduce((acc, cur) => {
+      if (acc === '') return cur;
+      return `${acc}\n${cur}`;
+    }, '');
   },
   isInvalid: (state) => (key) => {
-    return state.errors?.[key] ? 'invalid' : '';
+    return state.errors?.[key] ? 'is-invalid' : '';
   },
   meta(state) {
     return {

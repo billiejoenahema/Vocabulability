@@ -52,7 +52,7 @@ onUnmounted(() => {
           :class="isInvalid('word')"
           maxlength="255"
         />
-        <InvalidFeedback :errors="invalidFeedback('word')" />
+        <InvalidFeedback :invalid-feedback="invalidFeedback('word')" />
       </div>
       <div class="column">
         <label>正解</label>
@@ -62,7 +62,9 @@ onUnmounted(() => {
           :class="isInvalid('correct_answer')"
           maxlength="255"
         />
-        <InvalidFeedback :errors="invalidFeedback('correct_answer')" />
+        <InvalidFeedback
+          :invalid-feedback="invalidFeedback('correct_answer')"
+        />
       </div>
       <div class="column"></div>
       <div class="button-area">
@@ -78,7 +80,7 @@ onUnmounted(() => {
             ref="csv"
             :class="isInvalid('file')"
           />
-          <InvalidFeedback :errors="invalidFeedback('file')" />
+          <InvalidFeedback :invalid-feedback="invalidFeedback('file')" />
         </div>
         <button @click="importCSV()">CSVファイルをインポート</button>
       </div>

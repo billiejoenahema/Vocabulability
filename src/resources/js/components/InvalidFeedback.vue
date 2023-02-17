@@ -1,22 +1,20 @@
 <script setup>
 defineProps({
-  errors: {
-    type: Array,
-    default: () => [],
+  invalidFeedback: {
+    type: String,
+    default: '',
   },
 });
 </script>
 
 <template>
-  <div class="errors">
-    <div v-for="error in errors" :key="error">
-      {{ error }}
-    </div>
+  <div class="invalid-feedback">
+    {{ invalidFeedback }}
   </div>
 </template>
 
 <style scoped>
-.errors {
+.invalidFeedback {
   color: red;
   font-size: 0.6rem;
 }
