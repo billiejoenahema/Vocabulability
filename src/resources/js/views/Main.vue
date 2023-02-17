@@ -1,12 +1,13 @@
 <script setup>
 import 'floating-vue/dist/style.css';
-import { onUnmounted, reactive, ref } from 'vue';
+import { computed, onUnmounted, reactive, ref } from 'vue';
 import 'vue-select/dist/vue-select.css';
 import { useStore } from 'vuex';
 import InputPostalCode from '../components/InputPostalCode.vue';
 import InputTel from '../components/InputTel.vue';
 import InputText from '../components/InputText.vue';
 import InputTextarea from '../components/InputTextarea.vue';
+import LoadingOverlay2 from '../components/LoadingOverlay2.vue';
 
 const store = useStore();
 
@@ -21,15 +22,20 @@ const state = reactive({
   time: '',
   datetime: '',
 });
+const isLoading = computed(() => store.getters['loading/isLoading']);
 const remarks = ref('');
 const longText = ref('');
 const postalCode = ref('');
 const file = ref(null);
 const fileUrl = ref(null);
 const changeFile = (e) => {
+  store.commit('loading/setIsLoading', true);
   file.value = e.target.files[0];
   const objUrl = URL.createObjectURL(file.value);
   fileUrl.value = objUrl;
+  setTimeout(() => {
+    store.commit('loading/setIsLoading', false);
+  }, 2000);
 };
 const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 onUnmounted(() => URL.revokeObjectURL(fileUrl));
@@ -48,6 +54,8 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
       <li><router-link to="/item_create">項目登録</router-link></li>
     </ul>
   </div>
+  <hr />
+  <LoadingOverlay2 :is-loading="isLoading" />
   <VTooltip :triggers="['click']" auto-hide>
     <p>テキストテキストテキスト...</p>
     <template #popper>
