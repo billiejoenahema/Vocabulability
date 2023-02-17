@@ -29,7 +29,7 @@ class SaveRequest extends FormRequest
             'birth_date' => 'nullable|date:Y-m-d',
             'gender' => 'nullable',
             'phone' => 'nullable|string|max:14|regex:/^[0-9]+$/',
-            'postcode' => 'nullable|string|max:7|regex:/^[0-9]+$/',
+            'postcode' => 'nullable|string|size:7|regex:/^[0-9]+$/',
             'address' => 'nullable|string|max:50',
         ];
     }
@@ -49,6 +49,19 @@ class SaveRequest extends FormRequest
             'phone' => '電話番号',
             'postcode' => '郵便番号',
             'address' => '住所',
+        ];
+    }
+
+    /**
+     * 定義済みバリデーションルールのエラーメッセージ取得
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'phone.regex' => '電話番号は数字とハイフンのみで入力してください。',
+            'postcode.regex' => '郵便番号は数字とハイフンのみで入力してください。',
         ];
     }
 
