@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 if (!function_exists('toNumberOnly')) {
     /**
-     * 文字列中の数字のみを返します
+     * 全角数字を半角に変換し、ハイフンを取り除く。
      *
      * @param string|null $value
      * @return ?string
@@ -16,8 +16,30 @@ if (!function_exists('toNumberOnly')) {
         }
         // 数字を半角に変換する
         $value = mb_convert_kana($value, "n");
-        // 数字以外を取り除く
-        $value = preg_replace('/[^0-9]/', '', $value);
+        // ハイフンを取り除く
+        $value = preg_replace('/[-－ー-−―‐ー-−ｰ]/', '', $value);
+        info($value);
+
+        return $value;
+    }
+}
+
+if (!function_exists('toHalfWidth')) {
+    /**
+     * 全角数字を半角に変換する。
+     *
+     * @param string|null $value
+     * @return ?string
+     */
+    function toHalfWidth($value): ?string
+    {
+        if (is_null($value)) {
+            return null;
+        }
+        // 数字を半角に変換する
+        $value = mb_convert_kana($value, "n");
+        // ハイフンを取り除く
+        $value = preg_replace('/[ー-−―‐ー-−ｰ]/', '', $value);
 
         return $value;
     }
