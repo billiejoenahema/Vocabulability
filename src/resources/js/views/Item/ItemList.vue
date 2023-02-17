@@ -146,7 +146,7 @@ onUnmounted(() => {
           ref="inputDateRef"
           @input="debounceSearch()"
         />
-        <InvalidFeedback :errors="invalidFeedback('datetime')" />
+        <InvalidFeedback :invalid-feedback="invalidFeedback('datetime')" />
       </div>
       <div class="search-input-wrapper">
         <input
@@ -207,7 +207,7 @@ onUnmounted(() => {
             :class="isInvalid('name')"
             maxlength="50"
           />
-          <InvalidFeedback :errors="invalidFeedback('name')" />
+          <InvalidFeedback :invalid-feedback="invalidFeedback('name')" />
         </div>
         <div v-else @click="onEdit(index)" class="list-item">
           {{ item.name }}
@@ -254,7 +254,7 @@ onUnmounted(() => {
             :class="isInvalid('description')"
             maxlength="50"
           />
-          <InvalidFeedback :errors="invalidFeedback('description')" />
+          <InvalidFeedback :invalid-feedback="invalidFeedback('description')" />
         </div>
         <div v-else @click="onEdit(index)" class="list-item">
           {{ item.description }}

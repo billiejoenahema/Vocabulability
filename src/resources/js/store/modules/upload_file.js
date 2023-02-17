@@ -15,8 +15,11 @@ const getters = {
   errors(state) {
     return state.errors ?? {};
   },
-  invalidFeedback: (state) => (props) => {
-    return state.errors[props] ?? [];
+  invalidFeedback: (state) => (key) => {
+    return state.errors?.[key]?.reduce((acc, cur) => {
+      if (acc === '') return cur;
+      return `${acc}\n${cur}`;
+    }, '');
   },
   isInvalid: (state) => (key) => {
     return state.errors?.[key] ? 'is-invalid' : '';
