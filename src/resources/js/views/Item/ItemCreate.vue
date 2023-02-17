@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onUnmounted, reactive, ref } from 'vue';
+import { computed, nextTick, onUnmounted, reactive, ref } from 'vue';
 import { useStore } from 'vuex';
 import InvalidFeedback from '../../components/InvalidFeedback';
 
@@ -24,16 +24,25 @@ const csvRef = ref(null);
 const add = () => {
   newItem.precedents.push({ name: '' });
 };
-const remove = (index) => {
+const remove = (index = null) => {
   newItem.precedents.splice(index, 1);
+};
+// newItemの初期化
+const initNewItem = () => {
+  Object.keys(newItem).forEach((key) => {
+    if (key === 'precedents') {
+      newItem[key] = [{ name: null }];
+      return;
+    }
+    newItem[key] = null;
+  });
 };
 const create = async () => {
   await store.dispatch('item/post', newItem);
   if (hasErrors.value) return;
   // newItemを初期化する
-  Object.entries(newItem).forEach(([k, v]) => {
-    newItem[k] = null;
-  });
+  initNewItem();
+  await nextTick();
   store.commit('item/setErrors', {});
 };
 const importCSV = async () => {
@@ -62,7 +71,7 @@ onUnmounted(() => {
       >
         <option value="01">01</option>
       </select>
-      <InvalidFeedback :errors="invalidFeedback('category')" />
+      <InvalidFeedback :invalid-feedback="invalidFeedback('category')" />
     </div>
     <div class="column">
       <label>項目名</label>
@@ -72,7 +81,7 @@ onUnmounted(() => {
         :class="isInvalid('name')"
         maxlength="50"
       />
-      <InvalidFeedback :errors="invalidFeedback('name')" />
+      <InvalidFeedback :invalid-feedback="invalidFeedback('name')" />
     </div>
     <div class="column">
       <label>項目名ふりがな</label>
@@ -82,10 +91,10 @@ onUnmounted(() => {
         :class="isInvalid('name_kana')"
         maxlength="50"
       />
-      <InvalidFeedback :errors="invalidFeedback('name_kana')" />
+      <InvalidFeedback :invalid-feedback="invalidFeedback('name_kana')" />
     </div>
     <div
-      v-for="precedent in newItem.precedents"
+      v-for="(precedent, index) in newItem.precedents"
       :key="precedent.id"
       class="column"
     >
@@ -111,12 +120,13 @@ onUnmounted(() => {
     <div class="column">
       <label>説明</label>
       <input
+        id="description"
         type="text"
         v-model="newItem.description"
         :class="isInvalid('description')"
         maxlength="200"
       />
-      <InvalidFeedback :errors="invalidFeedback('description')" />
+      <InvalidFeedback :invalid-feedback="invalidFeedback('description')" />
     </div>
     <div class="button-area">
       <button @click.prevent="create()" class="register">登録</button>
