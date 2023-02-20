@@ -198,7 +198,7 @@ onUnmounted(() => {
       検索に一致する項目はありませんでした。
     </div>
     <div v-else class="list-body">
-      <div v-for="item in items" :key="item.id" class="row list-row">
+      <div v-for="(item, index) in items" :key="item.id" class="row list-row">
         <div v-if="editable[index]" class="column">
           <input
             v-model="item.name"
@@ -211,7 +211,10 @@ onUnmounted(() => {
           {{ item.name }}
         </div>
         <div class="precedent row">
-          <template v-for="precedent in item.precedents" :key="precedent.id">
+          <template
+            v-for="(precedent, _index) in item.precedents"
+            :key="precedent.id ?? 'index_' + _index"
+          >
             <div v-if="editable[index]" class="column">
               <div class="row">
                 <input
