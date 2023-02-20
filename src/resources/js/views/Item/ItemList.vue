@@ -37,9 +37,7 @@ const defaultPrecedent = {
 
 const setFilter = (character) => {
   params.value.keyword = '';
-  editable.value = [];
   params.value.filter = character;
-
   fetchData();
 };
 const resetParams = () => {
@@ -48,9 +46,9 @@ const resetParams = () => {
 };
 const fetchData = () => {
   store.dispatch('item/get', params.value);
+  editable.value = [];
 };
 const sort = (label) => {
-  editable.value = false;
   if (params.value.column === label) {
     params.value.is_asc = !params.value.is_asc;
   } else {
@@ -86,7 +84,6 @@ const removePrecedent = async (index, _index, id = null) => {
   await store.dispatch('precedent/delete', id);
   if (hasErrorsPrecedent.value) return;
   setTimeout(() => {
-    editable.value = [];
     fetchData();
   }, 2000);
 };
@@ -113,13 +110,11 @@ const deleteItem = async (id) => {
     setLoading(false);
     if (hasErrors.value) return;
     setTimeout(() => {
-      editable.value = [];
       fetchData();
     }, 2000);
   }
 };
 const cancel = () => {
-  editable.value = [];
   fetchData();
 };
 const changePage = (page = null) => {
