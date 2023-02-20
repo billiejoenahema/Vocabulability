@@ -19,19 +19,25 @@ const invalidFeedback = computed(
 );
 const hasErrors = computed(() => store.getters['question/hasErrors']);
 const isInvalid = computed(() => store.getters['question/isInvalid']);
+const setIsLoading = (bool) => store.commit('loading/setIsLoading', bool);
 const csv = ref(null);
 
-const addWord = async () => {
+const post = async () => {
+  setIsLoading(true);
   await store.dispatch('question/post', newQuestion);
-  if (hasErrors.value) return;
-  newQuestion = { ...initialValue };
-  store.commit('question/setErrors', {});
+  if (!hasErrors.value) {
+    newQuestion = { ...initialValue };
+    store.commit('question/setErrors', {});
+  }
+  setIsLoading(false);
 };
 const importCSV = async () => {
+  setIsLoading(true);
   const formData = new FormData();
 
   formData.append('file', csv.value.files[0]);
   await store.dispatch('question/importCSV', formData);
+  setIsLoading(false);
 };
 onUnmounted(() => {
   store.commit('question/setErrors', {});
@@ -68,7 +74,7 @@ onUnmounted(() => {
       </div>
       <div class="column"></div>
       <div class="button-area">
-        <button @click.prevent="addWord()" class="register">追加</button>
+        <button @click.prevent="post()" class="register">追加</button>
       </div>
       <hr />
       <div class="csv-import">

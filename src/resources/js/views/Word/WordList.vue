@@ -3,7 +3,6 @@ import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import DataCount from '../../components/DataCount';
 import InvalidFeedback from '../../components/InvalidFeedback';
-import LoadingOverlay from '../../components/LoadingOverlay';
 import Pagination from '../../components/Pagination';
 import SortIcon from '../../components/SortIcon';
 import { useDebounce } from '../../functions/useDebounce';
@@ -35,15 +34,15 @@ const debounceSearch = useDebounce(() => {
   params.value.filter = '';
   fetchData();
 });
-const setFilter = (alphabet) => {
+const setFilter = async (alphabet) => {
   params.value.keyword = '';
   editable.value = [];
   params.value.filter = alphabet;
-  fetchData();
+  await fetchData();
 };
-const resetParams = () => {
+const resetParams = async () => {
   store.commit('question/resetParams');
-  fetchData();
+  await fetchData();
 };
 const onChangeSort = (label) => {
   editable.value = false;
@@ -65,19 +64,21 @@ const onEdit = (index) => {
 const updateQuestion = async (question, index) => {
   setIsLoading(true);
   await store.dispatch('question/update', question);
+  if (hasErrors.value) {
+    editable.value[index] = false;
+    fetchData();
+  }
   setIsLoading(false);
-  if (hasErrors.value) return;
-  editable.value[index] = false;
-  fetchData();
 };
 const deleteQuestion = async (id) => {
   if (confirm('削除しますか？')) {
     setIsLoading(true);
     await store.dispatch('question/delete', id);
-    setIsLoading(false);
-    if (hasErrors.value) return;
-    fetchData(currentAlphabet.value);
+    if (!hasErrors.value) {
+      fetchData(currentAlphabet.value);
+    }
     editable.value = [];
+    setIsLoading(false);
   }
 };
 const cancel = () => {
@@ -95,7 +96,6 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <LoadingOverlay :isLoading="isLoading" />
   <div class="container">
     <div class="row header">
       <div class="title">登録済み単語リスト</div>
