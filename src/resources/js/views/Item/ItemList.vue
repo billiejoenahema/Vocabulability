@@ -37,9 +37,7 @@ const defaultPrecedent = {
 
 const setFilter = (character) => {
   params.value.keyword = '';
-  editable.value = [];
   params.value.filter = character;
-
   fetchData();
 };
 const resetParams = () => {
@@ -48,9 +46,9 @@ const resetParams = () => {
 };
 const fetchData = () => {
   store.dispatch('item/get', params.value);
+  editable.value = [];
 };
-const onChangeSort = (label) => {
-  editable.value = false;
+const sort = (label) => {
   if (params.value.column === label) {
     params.value.is_asc = !params.value.is_asc;
   } else {
@@ -86,7 +84,6 @@ const removePrecedent = async (index, _index, id = null) => {
   await store.dispatch('precedent/delete', id);
   if (hasErrorsPrecedent.value) return;
   setTimeout(() => {
-    editable.value = [];
     fetchData();
   }, 2000);
 };
@@ -113,13 +110,11 @@ const deleteItem = async (id) => {
     setLoading(false);
     if (hasErrors.value) return;
     setTimeout(() => {
-      editable.value = [];
       fetchData();
     }, 2000);
   }
 };
 const cancel = () => {
-  editable.value = [];
   fetchData();
 };
 const changePage = (page = null) => {
@@ -172,21 +167,21 @@ onUnmounted(() => {
     </div>
     <DataCount v-if="meta" :meta="meta" />
     <div class="row list-header">
-      <div class="row" @click="onChangeSort('name_kana')">
+      <div class="row" @click="sort('name_kana')">
         <div class="list-column-title">項目</div>
         <SortIcon
           :is-asc="params?.is_asc"
           :active="params?.column === 'name_kana'"
         />
       </div>
-      <div class="row" @click="onChangeSort('precedent')">
+      <div class="row" @click="sort('precedent')">
         <div class="list-column-title">カラム名</div>
         <SortIcon
           :is-asc="params?.is_asc"
           :active="params?.column === 'precedent'"
         />
       </div>
-      <div class="row" @click="onChangeSort('description')">
+      <div class="row" @click="sort('description')">
         <div class="list-column-title">説明</div>
         <SortIcon
           :is-asc="params?.is_asc"
@@ -198,7 +193,7 @@ onUnmounted(() => {
       検索に一致する項目はありませんでした。
     </div>
     <div v-else class="list-body">
-      <div v-for="item in items" :key="item.id" class="row list-row">
+      <div v-for="(item, index) in items" :key="item.id" class="row list-row">
         <div v-if="editable[index]" class="column">
           <input
             v-model="item.name"
@@ -211,7 +206,10 @@ onUnmounted(() => {
           {{ item.name }}
         </div>
         <div class="precedent row">
-          <template v-for="precedent in item.precedents" :key="precedent.id">
+          <template
+            v-for="(precedent, _index) in item.precedents"
+            :key="precedent.id ?? 'index_' + _index"
+          >
             <div v-if="editable[index]" class="column">
               <div class="row">
                 <input
