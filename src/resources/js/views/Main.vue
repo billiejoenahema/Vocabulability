@@ -1,13 +1,12 @@
 <script setup>
 import 'floating-vue/dist/style.css';
-import { computed, onUnmounted, reactive, ref } from 'vue';
+import { onUnmounted, reactive, ref } from 'vue';
 import 'vue-select/dist/vue-select.css';
 import { useStore } from 'vuex';
 import InputPostalCode from '../components/InputPostalCode.vue';
 import InputTel from '../components/InputTel.vue';
 import InputText from '../components/InputText.vue';
 import InputTextarea from '../components/InputTextarea.vue';
-import LoadingOverlay2 from '../components/LoadingOverlay2.vue';
 
 const store = useStore();
 
@@ -22,7 +21,6 @@ const state = reactive({
   time: '',
   datetime: '',
 });
-const isLoading = computed(() => store.getters['loading/isLoading']);
 const remarks = ref('');
 const longText = ref('');
 const postalCode = ref('');
@@ -55,7 +53,6 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
     </ul>
   </div>
   <hr />
-  <LoadingOverlay2 :is-loading="isLoading" />
   <VTooltip :triggers="['click']" auto-hide>
     <p>テキストテキストテキスト...</p>
     <template #popper>

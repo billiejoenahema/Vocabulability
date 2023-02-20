@@ -3,7 +3,6 @@ import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import DataCount from '../../components/DataCount';
 import InvalidFeedback from '../../components/InvalidFeedback';
-import LoadingOverlay from '../../components/LoadingOverlay';
 import Pagination from '../../components/Pagination';
 import SortIcon from '../../components/SortIcon';
 import { useDebounce } from '../../functions/useDebounce';
@@ -135,7 +134,6 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <LoadingOverlay :isLoading="isLoading" />
   <div class="container">
     <div class="row header">
       <div class="title">登録済みカラム名リスト</div>
