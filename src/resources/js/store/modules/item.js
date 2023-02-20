@@ -123,7 +123,7 @@ const actions = {
             { root: true }
           );
         } else {
-          commit('loading/setIsLoading', false, { root: true });
+          commit('loading/setLoading', false, { root: true });
         }
       });
   },

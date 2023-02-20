@@ -9,12 +9,12 @@ import Navigation from './views/Navigation';
 const router = useRouter();
 const store = useStore();
 
-const isLoading = computed(() => store.getters['loading/isLoading']);
+const loading = computed(() => store.getters['loading/loading']);
 </script>
 
 <template>
   <main>
-    <CircleDotsLoader :isLoading="isLoading" />
+    <CircleDotsLoader :loading="loading" />
     <Toast />
     <Navigation v-if="router.currentRoute.value.path !== '/login'" />
     <router-view />

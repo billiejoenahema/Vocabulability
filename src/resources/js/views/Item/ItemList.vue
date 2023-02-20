@@ -10,9 +10,9 @@ import { useDebounce } from '../../functions/useDebounce';
 const store = useStore();
 
 onMounted(async () => {
-  setIsLoading(true);
+  setLoading(true);
   await store.dispatch('item/get', params.value);
-  setIsLoading(false);
+  setLoading(false);
 });
 
 const items = computed(() => store.getters['item/data']);
@@ -27,8 +27,8 @@ const isInvalid = computed(() => store.getters['item/isInvalid']);
 const meta = computed(() => store.getters['item/meta']);
 const editable = ref([]);
 const inputDateRef = ref(null);
-const isLoading = computed(() => store.getters['loading/isLoading']);
-const setIsLoading = (bool) => store.commit('loading/setIsLoading', bool);
+const loading = computed(() => store.getters['loading/loading']);
+const setLoading = (bool) => store.commit('loading/setLoading', bool);
 const defaultPrecedent = {
   id: null,
   item_id: null,
@@ -97,9 +97,9 @@ const updateItem = async (item, index) => {
   item.precedents.forEach((v) => {
     v.item_id = item.id;
   });
-  setIsLoading(true);
+  setLoading(true);
   await store.dispatch('item/update', item);
-  setIsLoading(false);
+  setLoading(false);
   if (hasErrors.value) return;
   setTimeout(() => {
     editable.value[index] = false;
@@ -108,9 +108,9 @@ const updateItem = async (item, index) => {
 };
 const deleteItem = async (id) => {
   if (confirm('削除しますか？')) {
-    setIsLoading(true);
+    setLoading(true);
     await store.dispatch('item/delete', id);
-    setIsLoading(false);
+    setLoading(false);
     if (hasErrors.value) return;
     setTimeout(() => {
       editable.value = [];
@@ -194,7 +194,7 @@ onUnmounted(() => {
         />
       </div>
     </div>
-    <div v-if="!isLoading && !items.length">
+    <div v-if="!loading && !items.length">
       検索に一致する項目はありませんでした。
     </div>
     <div v-else class="list-body">
