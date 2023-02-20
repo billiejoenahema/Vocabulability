@@ -1,16 +1,16 @@
 const state = {
-  isLoading: false,
+  loading: false,
 };
 
 const getters = {
-  isLoading(state) {
-    return state.isLoading;
+  loading(state) {
+    return state.loading;
   },
 };
 
 const mutations = {
-  setIsLoading(state, bool) {
-    state.isLoading = bool;
+  setLoading(state, bool) {
+    state.loading = bool;
   },
 };
 

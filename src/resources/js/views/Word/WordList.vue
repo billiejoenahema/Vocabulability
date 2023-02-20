@@ -10,9 +10,9 @@ import { useDebounce } from '../../functions/useDebounce';
 const store = useStore();
 
 onMounted(async () => {
-  setIsLoading(true);
+  setLoading(true);
   await store.dispatch('question/get');
-  setIsLoading(false);
+  setLoading(false);
 });
 
 const questions = computed(() => store.getters['question/data']);
@@ -25,8 +25,8 @@ const hasErrors = computed(() => store.getters['question/hasErrors']);
 const isInvalid = computed(() => store.getters['question/isInvalid']);
 const meta = computed(() => store.getters['question/meta']);
 const editable = ref([]);
-const isLoading = computed(() => store.getters['loading/isLoading']);
-const setIsLoading = (bool) => store.commit('loading/setIsLoading', bool);
+const loading = computed(() => store.getters['loading/loading']);
+const setLoading = (bool) => store.commit('loading/setLoading', bool);
 const fetchData = () => {
   store.dispatch('question/get', params.value);
 };
@@ -62,23 +62,23 @@ const onEdit = (index) => {
   store.commit('question/setErrors', {});
 };
 const updateQuestion = async (question, index) => {
-  setIsLoading(true);
+  setLoading(true);
   await store.dispatch('question/update', question);
   if (hasErrors.value) {
     editable.value[index] = false;
     fetchData();
   }
-  setIsLoading(false);
+  setLoading(false);
 };
 const deleteQuestion = async (id) => {
   if (confirm('削除しますか？')) {
-    setIsLoading(true);
+    setLoading(true);
     await store.dispatch('question/delete', id);
     if (!hasErrors.value) {
       fetchData(currentAlphabet.value);
     }
     editable.value = [];
-    setIsLoading(false);
+    setLoading(false);
   }
 };
 const cancel = () => {
@@ -139,7 +139,7 @@ onUnmounted(() => {
         />
       </div>
     </div>
-    <div v-if="!isLoading && !questions.length">
+    <div v-if="!loading && !questions.length">
       検索に一致する単語はありませんでした。
     </div>
     <div v-else class="list-body">

@@ -3,7 +3,7 @@ import Loading from 'vue3-loading-overlay/dist/index';
 import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
 
 defineProps({
-  isLoading: {
+  loading: {
     type: Boolean,
     default: false,
   },
@@ -17,7 +17,7 @@ const { color, background, opacity } = {
 
 <template>
   <Loading
-    :active="isLoading"
+    :active="loading"
     :color="color"
     :background-color="background"
     :opacity="opacity"

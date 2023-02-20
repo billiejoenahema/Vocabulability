@@ -27,12 +27,12 @@ const postalCode = ref('');
 const file = ref(null);
 const fileUrl = ref(null);
 const changeFile = (e) => {
-  store.commit('loading/setIsLoading', true);
+  store.commit('loading/setLoading', true);
   file.value = e.target.files[0];
   const objUrl = URL.createObjectURL(file.value);
   fileUrl.value = objUrl;
   setTimeout(() => {
-    store.commit('loading/setIsLoading', false);
+    store.commit('loading/setLoading', false);
   }, 2000);
 };
 const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];

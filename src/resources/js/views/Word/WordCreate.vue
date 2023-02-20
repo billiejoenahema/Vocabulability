@@ -19,25 +19,25 @@ const invalidFeedback = computed(
 );
 const hasErrors = computed(() => store.getters['question/hasErrors']);
 const isInvalid = computed(() => store.getters['question/isInvalid']);
-const setIsLoading = (bool) => store.commit('loading/setIsLoading', bool);
+const setLoading = (bool) => store.commit('loading/setLoading', bool);
 const csv = ref(null);
 
 const post = async () => {
-  setIsLoading(true);
+  setLoading(true);
   await store.dispatch('question/post', newQuestion);
   if (!hasErrors.value) {
     newQuestion = { ...initialValue };
     store.commit('question/setErrors', {});
   }
-  setIsLoading(false);
+  setLoading(false);
 };
 const importCSV = async () => {
-  setIsLoading(true);
+  setLoading(true);
   const formData = new FormData();
 
   formData.append('file', csv.value.files[0]);
   await store.dispatch('question/importCSV', formData);
-  setIsLoading(false);
+  setLoading(false);
 };
 onUnmounted(() => {
   store.commit('question/setErrors', {});

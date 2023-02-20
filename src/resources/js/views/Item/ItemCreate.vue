@@ -19,7 +19,7 @@ const newItem = reactive({
 const invalidFeedback = computed(() => store.getters['item/invalidFeedback']);
 const hasErrors = computed(() => store.getters['item/hasErrors']);
 const isInvalid = computed(() => store.getters['item/isInvalid']);
-const setIsLoading = (bool) => store.commit('loading/setIsLoading', bool);
+const setLoading = (bool) => store.commit('loading/setLoading', bool);
 const csvRef = ref(null);
 
 const add = () => {
@@ -39,7 +39,7 @@ const initNewItem = () => {
   });
 };
 const create = async () => {
-  setIsLoading(true);
+  setLoading(true);
   await store.dispatch('item/post', newItem);
   if (!hasErrors.value) {
     // newItemを初期化する
@@ -47,17 +47,17 @@ const create = async () => {
     await nextTick();
     store.commit('item/setErrors', {});
   }
-  setIsLoading(false);
+  setLoading(false);
 };
 const importCSV = async () => {
-  setIsLoading(true);
+  setLoading(true);
   const formData = new FormData();
   formData.append('file', csvRef.value.files[0]);
   await store.dispatch('item/importCSV', formData);
   if (!hasErrors.value) {
     csvRef.value.files[0] = null;
   }
-  setIsLoading(false);
+  setLoading(false);
 };
 onUnmounted(() => {
   store.commit('item/setErrors', {});

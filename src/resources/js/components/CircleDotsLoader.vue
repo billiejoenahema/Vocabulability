@@ -1,6 +1,6 @@
 <script setup>
 defineProps({
-  isLoading: {
+  loading: {
     type: Boolean,
     default: false,
   },
@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="overlay" v-if="isLoading">
+  <div class="overlay" v-if="loading">
     <div class="loader"></div>
   </div>
 </template>

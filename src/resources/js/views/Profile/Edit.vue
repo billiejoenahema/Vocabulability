@@ -31,15 +31,15 @@ const isInvalid = computed(() => store.getters['profile/isInvalid']);
 const genderFormOptions = computed(
   () => store.getters['consts/genderFormOptions']
 );
-const setIsLoading = (bool) => store.commit('loading/setIsLoading', bool);
+const setLoading = (bool) => store.commit('loading/setLoading', bool);
 
 const cancel = () => {
   router.push('/profile');
 };
 const submit = async () => {
-  setIsLoading(true);
+  setLoading(true);
   await store.dispatch('profile/post', user);
-  setIsLoading(false);
+  setLoading(false);
   if (!hasErrors.value) {
     router.push('/profile');
   }
