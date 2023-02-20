@@ -43,15 +43,57 @@ const logout = async () => {
   <teleport to="body">
     <div class="backdrop" v-if="showMenu" @click.self="showMenu = false">
       <ul class="dropdown-menu user-menu">
-        <li><a class="dropdown-item" href="/">Home</a></li>
-        <li><a class="dropdown-item" href="word_check">WordCheck</a></li>
-        <li><a class="dropdown-item" href="word_list">WordList</a></li>
-        <li><a class="dropdown-item" href="word_create">WordCreate</a></li>
-        <li><a class="dropdown-item" href="item_list">ItemList</a></li>
-        <li><a class="dropdown-item" href="item_create">ItemCreate</a></li>
         <li>
-          <a class="dropdown-item text-decoration-none" href="profile"
-            >Profile</a
+          <router-link to="/" class="dropdown-item" @click="showMenu = false"
+            >Home</router-link
+          >
+        </li>
+        <li>
+          <router-link
+            to="/word_check"
+            class="dropdown-item"
+            @click="showMenu = false"
+            >WordCheck</router-link
+          >
+        </li>
+        <li>
+          <router-link
+            to="/word_list"
+            class="dropdown-item"
+            @click="showMenu = false"
+            >WordList</router-link
+          >
+        </li>
+        <li>
+          <router-link
+            to="/word_create"
+            class="dropdown-item"
+            @click="showMenu = false"
+            >WordCreate</router-link
+          >
+        </li>
+        <li>
+          <router-link
+            to="/item_list"
+            class="dropdown-item"
+            @click="showMenu = false"
+            >ItemList</router-link
+          >
+        </li>
+        <li>
+          <router-link
+            to="/item_create"
+            class="dropdown-item"
+            @click="showMenu = false"
+            >ItemCreate</router-link
+          >
+        </li>
+        <li>
+          <router-link
+            to="/profile"
+            class="dropdown-item text-decoration-none"
+            @click="showMenu = false"
+            >Profile</router-link
           >
         </li>
       </ul>
