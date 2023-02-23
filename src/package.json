@@ -35,6 +35,7 @@
     "vue-router": "^4.1.5",
     "vue-select": "^4.0.0-beta.6",
     "vue3-loading-overlay": "0.0.0",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "yubinbango-core2": "^0.6.3"
   }
 }
