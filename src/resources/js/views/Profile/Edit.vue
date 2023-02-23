@@ -2,6 +2,7 @@
 import { computed, onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import YubinBango from 'yubinbango-core2';
 import InputCheckbox from '../../components/InputCheckbox.vue';
 import InputDateSplit from '../../components/InputDateSplit.vue';
 import InputText from '../../components/InputText.vue';
@@ -36,6 +37,17 @@ const setLoading = (bool) => store.commit('loading/setLoading', bool);
 const cancel = () => {
   router.push('/profile');
 };
+// 住所を自動入力
+const setAddress = (input) => {
+  // ハイフンを取り除く
+  const code = input.replace('-', '');
+  // 7桁の数字でなかったら処理を終了する
+  if (!code.match(/^\d{7}/)) return false;
+  new YubinBango.Core(code, (address) => {
+    user.address = `${address.region}${address.locality}${address.street}`;
+  });
+};
+
 const submit = async () => {
   setLoading(true);
   await store.dispatch('profile/post', user);
@@ -117,6 +129,7 @@ const submit = async () => {
           maxlength="8"
           placeholder="例）1010001"
           v-model="user.postcode"
+          @update:model-value="setAddress(user.postcode)"
         />
       </div>
       <div class="mb-2">
