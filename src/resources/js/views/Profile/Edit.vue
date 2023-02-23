@@ -6,6 +6,7 @@ import YubinBango from 'yubinbango-core2';
 import InputCheckbox from '../../components/InputCheckbox.vue';
 import InputDateSplit from '../../components/InputDateSplit.vue';
 import InputText from '../../components/InputText.vue';
+import SubmitDialog from '../../components/SubmitDialog.vue';
 
 const router = useRouter();
 const store = useStore();
@@ -145,8 +146,16 @@ const submit = async () => {
       </div>
       <div class="between">
         <button type="button" @click="cancel" class="cancel">キャンセル</button>
-        <button type="button" @click="submit" class="submit">保存</button>
+        <button
+          type="button"
+          class="submit"
+          data-bs-toggle="modal"
+          data-bs-target="#submit"
+        >
+          保存
+        </button>
       </div>
     </form>
   </div>
+  <SubmitDialog @submit="submit" id="submit" />
 </template>
