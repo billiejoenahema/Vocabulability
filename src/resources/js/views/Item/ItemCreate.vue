@@ -1,5 +1,5 @@
 <script setup>
-import { computed, nextTick, onUnmounted, reactive, ref } from 'vue';
+import { computed, nextTick, reactive, ref } from 'vue';
 import { useStore } from 'vuex';
 import InvalidFeedback from '../../components/InvalidFeedback';
 
@@ -59,9 +59,6 @@ const importCSV = async () => {
   }
   setLoading(false);
 };
-onUnmounted(() => {
-  store.commit('item/setErrors', {});
-});
 </script>
 
 <template>
