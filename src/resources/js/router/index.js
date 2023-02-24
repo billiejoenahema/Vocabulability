@@ -91,4 +91,19 @@ router.beforeEach(async (to, _from, next) => {
   }
 });
 
+router.afterEach(() => {
+  resetErrors();
+});
+
+// エラーメッセージを初期化
+const resetErrors = () => {
+  store.commit('auth/setErrors', {});
+  store.commit('item/setErrors', {});
+  store.commit('precedent/setErrors', {});
+  store.commit('profile/setErrors', {});
+  store.commit('question/setErrors', {});
+  store.commit('test_mail/setErrors', {});
+  store.commit('upload_file/setErrors', {});
+};
+
 export default router;

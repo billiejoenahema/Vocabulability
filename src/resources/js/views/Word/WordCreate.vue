@@ -1,13 +1,9 @@
 <script setup>
-import { computed, onUnmounted, reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useStore } from 'vuex';
 import InvalidFeedback from '../../components/InvalidFeedback';
 
 const store = useStore();
-
-onUnmounted(() => {
-  store.commit('question/setErrors', {});
-});
 const initialValue = {
   word: '',
   correct_answer: '',
@@ -39,9 +35,6 @@ const importCSV = async () => {
   await store.dispatch('question/importCSV', formData);
   setLoading(false);
 };
-onUnmounted(() => {
-  store.commit('question/setErrors', {});
-});
 </script>
 
 <template>

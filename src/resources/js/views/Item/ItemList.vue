@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import DataCount from '../../components/DataCount';
 import InvalidFeedback from '../../components/InvalidFeedback';
@@ -123,9 +123,6 @@ const changePage = (page = null) => {
     fetchData();
   }
 };
-onUnmounted(() => {
-  store.commit('item/setErrors', {});
-});
 </script>
 
 <template>
