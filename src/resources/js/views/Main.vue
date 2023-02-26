@@ -89,7 +89,7 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
         type="text"
         help-text="1000文字以内"
         :maxlength="1000"
-        :character-count="true"
+        :input-length="true"
         :rows="6"
       />
     </div>
@@ -102,7 +102,7 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
         type="text"
         help-text="200文字以内"
         :maxlength="200"
-        :character-count="true"
+        :input-length="true"
       />
     </div>
     <div class="input-text">
