@@ -9,11 +9,6 @@ const props = defineProps({
       return ['on', 'off'].includes(value);
     },
   },
-  characterCount: {
-    default: false,
-    required: false,
-    type: Boolean,
-  },
   classValue: {
     default: '',
     required: false,
@@ -34,7 +29,14 @@ const props = defineProps({
     required: true,
     type: String,
   },
+  // 入力中のプレースホルダー表示/非表示
   inputtingPlaceholder: {
+    default: false,
+    required: false,
+    type: Boolean,
+  },
+  // 入力文字数カウント表示/非表示
+  inputLength: {
     default: false,
     required: false,
     type: Boolean,
@@ -128,7 +130,7 @@ const inputClassName = computed(() => {
     ? `${props.classValue} show-inputting-placeholder`
     : props.classValue;
 });
-const characterCountClassName = computed(() => {
+const inputLengthClassName = computed(() => {
   if (props.modelValue.length === 0) {
     return 'text-muted';
   }
@@ -160,11 +162,9 @@ const characterCountClassName = computed(() => {
     </div>
     <div class="option-area">
       <div>{{ helperText }}</div>
-      <small
-        v-if="characterCount && maxlength"
-        :class="'character-length ' + characterCountClassName"
-        >{{ modelValue.length ?? 0 }}/{{ maxlength }}</small
-      >
+      <small v-if="inputLength && maxlength" :class="inputLengthClassName">
+        {{ modelValue.length ?? 0 }}/{{ maxlength }}
+      </small>
     </div>
     <div class="invalid-feedback">
       <div v-for="error in invalidFeedback" :key="error">
@@ -179,9 +179,6 @@ const characterCountClassName = computed(() => {
   margin-bottom: 1rem;
   position: relative;
 }
-.show-inputting-placeholder {
-  padding: 1rem 0.5rem 0.5rem;
-}
 .inputting-placeholder {
   position: absolute;
   top: 0;
@@ -191,8 +188,5 @@ const characterCountClassName = computed(() => {
 .option-area {
   display: flex;
   justify-content: space-between;
-}
-.character-length {
-  font-size: 0.6rem;
 }
 </style>

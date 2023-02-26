@@ -132,7 +132,4 @@ const determineCorrectInput = (input) => {
   display: flex;
   justify-content: space-between;
 }
-.character-length {
-  font-size: 0.6rem;
-}
 </style>

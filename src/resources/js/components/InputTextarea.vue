@@ -9,11 +9,6 @@ const props = defineProps({
       return ['on', 'off'].includes(value);
     },
   },
-  characterCount: {
-    default: false,
-    required: false,
-    type: Boolean,
-  },
   classValue: {
     default: '',
     required: false,
@@ -38,6 +33,11 @@ const props = defineProps({
     default: '',
     required: true,
     type: String,
+  },
+  inputLength: {
+    default: false,
+    required: false,
+    type: Boolean,
   },
   invalidFeedback: {
     default: () => [],
@@ -128,7 +128,7 @@ const emit = defineEmits(['update:modelValue']);
 const updateModelValue = (event) => {
   emit('update:modelValue', event.target.value);
 };
-const characterCountClassName = computed(() => {
+const inputLengthClassName = computed(() => {
   if (props.modelValue.length === 0) {
     return 'text-muted';
   }
@@ -156,8 +156,8 @@ const characterCountClassName = computed(() => {
     <div class="option-area">
       <small class="text-white-50">{{ helperText }}</small>
       <small
-        v-if="characterCount && maxlength"
-        :class="'character-length ' + characterCountClassName"
+        v-if="inputLength && maxlength"
+        :class="'character-length ' + inputLengthClassName"
         >{{ modelValue.length ?? 0 }}/{{ maxlength }}</small
       >
     </div>
@@ -179,8 +179,5 @@ const characterCountClassName = computed(() => {
 .option-area {
   display: flex;
   justify-content: space-between;
-}
-.character-length {
-  font-size: 0.6rem;
 }
 </style>
