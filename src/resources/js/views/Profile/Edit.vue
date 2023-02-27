@@ -6,7 +6,7 @@ import YubinBango from 'yubinbango-core2';
 import InputCheckbox from '../../components/InputCheckbox.vue';
 import InputDateSplit from '../../components/InputDateSplit.vue';
 import InputText from '../../components/InputText.vue';
-import SubmitDialog from '../../components/SubmitDialog.vue';
+import ModalSubmit from '../../components/ModalSubmit.vue';
 
 const router = useRouter();
 const store = useStore();
@@ -157,5 +157,5 @@ const submit = async () => {
       </div>
     </form>
   </div>
-  <SubmitDialog @submit="submit" id="submit" />
+  <ModalSubmit @submit="submit" id="submit" />
 </template>

@@ -35,7 +35,7 @@ const submit = () => {
     :aria-labelledby="id + 'ModalLabel'"
   >
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content modal-dialog-centered">
         <div class="modal-header">
           <h5 class="modal-title" :id="id + 'ModalLabel'">{{ confirmText }}</h5>
           <button
