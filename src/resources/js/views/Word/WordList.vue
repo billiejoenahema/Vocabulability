@@ -29,23 +29,22 @@ const loading = computed(() => store.getters['loading/loading']);
 const setLoading = (bool) => store.commit('loading/setLoading', bool);
 const fetchData = () => {
   store.dispatch('question/get', params.value);
+  editable.value = [];
 };
 const debounceSearch = useDebounce(() => {
   params.value.filter = '';
   fetchData();
 });
-const setFilter = async (alphabet) => {
+const setFilter = (alphabet) => {
   params.value.keyword = '';
-  editable.value = [];
   params.value.filter = alphabet;
-  await fetchData();
+  fetchData();
 };
-const resetParams = async () => {
+const resetParams = () => {
   store.commit('question/resetParams');
-  await fetchData();
+  fetchData();
 };
 const onChangeSort = (label) => {
-  editable.value = false;
   if (params.value.column === label) {
     params.value.is_asc = !params.value.is_asc;
   } else {
@@ -61,11 +60,10 @@ const onEdit = (index) => {
   editable.value[index] = true;
   store.commit('question/setErrors', {});
 };
-const updateQuestion = async (question, index) => {
+const updateQuestion = async (question) => {
   setLoading(true);
   await store.dispatch('question/update', question);
   if (hasErrors.value) {
-    editable.value[index] = false;
     fetchData();
   }
   setLoading(false);
@@ -77,7 +75,6 @@ const deleteQuestion = async (id) => {
     if (!hasErrors.value) {
       fetchData(currentAlphabet.value);
     }
-    editable.value = [];
     setLoading(false);
   }
 };
@@ -141,7 +138,7 @@ const changePage = (page = null) => {
     </div>
     <div v-else class="list-body">
       <div
-        v-for="question in questions"
+        v-for="(question, index) in questions"
         :key="question.id"
         class="row list-row"
       >
@@ -167,7 +164,7 @@ const changePage = (page = null) => {
         </div>
         <button
           v-if="editable[index]"
-          @click="updateQuestion(question, index)"
+          @click="updateQuestion(question, id)"
           title="更新"
         >
           <font-awesome-icon class="check-icon" icon="check" />
