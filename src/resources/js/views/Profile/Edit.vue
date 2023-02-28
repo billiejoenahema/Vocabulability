@@ -6,7 +6,7 @@ import YubinBango from 'yubinbango-core2';
 import InputCheckbox from '../../components/InputCheckbox.vue';
 import InputDateSplit from '../../components/InputDateSplit.vue';
 import InputText from '../../components/InputText.vue';
-import SubmitDialog from '../../components/SubmitDialog.vue';
+import ModalSubmit from '../../components/ModalSubmit.vue';
 
 const router = useRouter();
 const store = useStore();
@@ -33,7 +33,6 @@ const isInvalid = computed(() => store.getters['profile/isInvalid']);
 const genderFormOptions = computed(
   () => store.getters['consts/genderFormOptions']
 );
-const setLoading = (bool) => store.commit('loading/setLoading', bool);
 
 const cancel = () => {
   router.push('/profile');
@@ -50,9 +49,7 @@ const setAddress = (input) => {
 };
 
 const submit = async () => {
-  setLoading(true);
   await store.dispatch('profile/post', user);
-  setLoading(false);
   if (!hasErrors.value) {
     router.push('/profile');
   }
@@ -157,5 +154,5 @@ const submit = async () => {
       </div>
     </form>
   </div>
-  <SubmitDialog @submit="submit" id="submit" />
+  <ModalSubmit @submit="submit" id="submit" />
 </template>

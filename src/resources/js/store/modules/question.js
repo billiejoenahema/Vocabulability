@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { shuffle } from '../../functions/shuffle';
 
+const setLoading = (commit, bool) =>
+  commit('loading/setLoading', bool, { root: true });
+
 const defaultParams = {
   column: '',
   is_asc: true,
@@ -25,7 +28,7 @@ const getters = {
     return state.params ?? {};
   },
   randomData(state) {
-    return shuffle(state.data.data);
+    return shuffle(Object.entries(state.data?.data));
   },
   hasErrors(state) {
     return Object.keys(state.errors).length > 0;
@@ -53,6 +56,7 @@ const getters = {
 
 const actions = {
   async get({ commit }, params) {
+    setLoading(commit, true);
     await axios
       .get('/api/questions', { params })
       .then((res) => {
@@ -62,8 +66,10 @@ const actions = {
       .catch((err) => {
         commit('setErrors', err.response.data.errors);
       });
+    setLoading(commit, false);
   },
   async post({ commit }, data) {
+    setLoading(commit, true);
     await axios
       .post('/api/questions', data)
       .then((res) => {
@@ -84,8 +90,10 @@ const actions = {
           );
         }
       });
+    setLoading(commit, false);
   },
   async importCSV({ commit }, formData) {
+    setLoading(commit, true);
     await axios
       .post('/api/questions/import', formData)
       .then((res) => {
@@ -106,8 +114,10 @@ const actions = {
           );
         }
       });
+    setLoading(commit, false);
   },
   async update({ commit }, data) {
+    setLoading(commit, true);
     await axios
       .patch(`/api/questions/${data.id}`, data)
       .then((res) => {
@@ -128,8 +138,10 @@ const actions = {
           );
         }
       });
+    setLoading(commit, false);
   },
   async delete({ commit }, id) {
+    setLoading(commit, true);
     await axios
       .delete(`/api/questions/${id}`)
       .then((res) => {
@@ -149,6 +161,7 @@ const actions = {
           { root: true }
         );
       });
+    setLoading(commit, false);
   },
 };
 

@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+const setLoading = (commit, bool) =>
+  commit('loading/setLoading', bool, { root: true });
+
 const defaultParams = {
   column: '',
   is_asc: true,
@@ -49,6 +52,7 @@ const getters = {
 
 const actions = {
   async get({ commit }, params) {
+    setLoading(commit, true);
     await axios
       .get('/api/items', { params })
       .then((res) => {
@@ -58,8 +62,10 @@ const actions = {
       .catch((err) => {
         commit('setErrors', err.response.data.errors);
       });
+    setLoading(commit, false);
   },
   async post({ commit }, data) {
+    setLoading(commit, true);
     await axios
       .post('/api/items', data)
       .then((res) => {
@@ -80,8 +86,10 @@ const actions = {
           );
         }
       });
+    setLoading(commit, false);
   },
   async importCSV({ commit }, formData) {
+    setLoading(commit, true);
     await axios
       .post('/api/items/import', formData)
       .then((res) => {
@@ -102,8 +110,10 @@ const actions = {
           );
         }
       });
+    setLoading(commit, false);
   },
   async update({ commit }, data) {
+    setLoading(commit, true);
     await axios
       .patch(`/api/items/${data.id}`, data)
       .then((res) => {
@@ -126,8 +136,10 @@ const actions = {
           commit('loading/setLoading', false, { root: true });
         }
       });
+    setLoading(commit, false);
   },
   async delete({ commit }, id) {
+    setLoading(commit, true);
     await axios
       .delete(`/api/items/${id}`)
       .then((res) => {
@@ -147,6 +159,7 @@ const actions = {
           { root: true }
         );
       });
+    setLoading(commit, false);
   },
 };
 

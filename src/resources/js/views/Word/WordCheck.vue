@@ -9,7 +9,6 @@ const index = ref(0);
 const isShowAnswer = ref(false);
 const isLastQuestion = ref(false);
 const toNextQuestion = async () => {
-  store.commit('loading/setLoading', true);
   if (isLastQuestion.value) {
     await store.dispatch('question/get');
     index.value = 0;
@@ -21,7 +20,6 @@ const toNextQuestion = async () => {
   if (index.value + 1 >= questions.value.length) {
     isLastQuestion.value = true;
   }
-  store.commit('loading/setLoading', false);
 };
 </script>
 

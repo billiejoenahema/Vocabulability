@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+const setLoading = (commit, bool) =>
+  commit('loading/setLoading', bool, { root: true });
+
 const state = {
   data: {},
   errors: {},
@@ -31,6 +34,7 @@ const getters = {
 
 const actions = {
   async get({ commit }) {
+    setLoading(commit, true);
     await axios
       .get('/api/profile')
       .then((res) => {
@@ -41,12 +45,14 @@ const actions = {
         commit('setErrors', err.message);
         commit('setData', {});
       });
+    setLoading(commit, false);
   },
   async getIfNeeded({ dispatch, getters }) {
     if (getters.isLogin) return;
     await dispatch('get');
   },
   async post({ commit }, data) {
+    setLoading(commit, true);
     await axios
       .post('/api/profile', data)
       .then((res) => {
@@ -67,6 +73,7 @@ const actions = {
           );
         }
       });
+    setLoading(commit, false);
   },
 };
 
