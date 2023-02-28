@@ -10,9 +10,7 @@ import { useDebounce } from '../../functions/useDebounce';
 const store = useStore();
 
 onMounted(async () => {
-  setLoading(true);
   await store.dispatch('item/get', params.value);
-  setLoading(false);
 });
 
 const items = computed(() => store.getters['item/data']);
@@ -28,7 +26,6 @@ const meta = computed(() => store.getters['item/meta']);
 const editable = ref([]);
 const inputDateRef = ref(null);
 const loading = computed(() => store.getters['loading/loading']);
-const setLoading = (bool) => store.commit('loading/setLoading', bool);
 const defaultPrecedent = {
   id: null,
   item_id: null,
@@ -94,9 +91,7 @@ const updateItem = async (item, index) => {
   item.precedents.forEach((v) => {
     v.item_id = item.id;
   });
-  setLoading(true);
   await store.dispatch('item/update', item);
-  setLoading(false);
   if (hasErrors.value) return;
   setTimeout(() => {
     editable.value[index] = false;
@@ -105,9 +100,7 @@ const updateItem = async (item, index) => {
 };
 const deleteItem = async (id) => {
   if (confirm('削除しますか？')) {
-    setLoading(true);
     await store.dispatch('item/delete', id);
-    setLoading(false);
     if (hasErrors.value) return;
     setTimeout(() => {
       fetchData();

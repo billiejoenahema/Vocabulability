@@ -33,7 +33,6 @@ const isInvalid = computed(() => store.getters['profile/isInvalid']);
 const genderFormOptions = computed(
   () => store.getters['consts/genderFormOptions']
 );
-const setLoading = (bool) => store.commit('loading/setLoading', bool);
 
 const cancel = () => {
   router.push('/profile');
@@ -50,9 +49,7 @@ const setAddress = (input) => {
 };
 
 const submit = async () => {
-  setLoading(true);
   await store.dispatch('profile/post', user);
-  setLoading(false);
   if (!hasErrors.value) {
     router.push('/profile');
   }

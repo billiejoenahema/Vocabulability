@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+const setLoading = (commit, bool) =>
+  commit('loading/setLoading', bool, { root: true });
+
 const state = {
   data: [],
   errors: {},
@@ -25,6 +28,7 @@ const getters = {
 
 const actions = {
   async send({ commit }) {
+    setLoading(commit, true);
     await axios
       .get('/api/test-mail')
       .then((res) => {
@@ -34,6 +38,7 @@ const actions = {
       .catch((err) => {
         commit('setErrors', err.response.data.errors);
       });
+    setLoading(commit, false);
   },
 };
 

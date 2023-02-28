@@ -10,9 +10,7 @@ import { useDebounce } from '../../functions/useDebounce';
 const store = useStore();
 
 onMounted(async () => {
-  setLoading(true);
   await store.dispatch('question/get');
-  setLoading(false);
 });
 
 const questions = computed(() => store.getters['question/data']);
@@ -26,7 +24,6 @@ const isInvalid = computed(() => store.getters['question/isInvalid']);
 const meta = computed(() => store.getters['question/meta']);
 const editable = ref([]);
 const loading = computed(() => store.getters['loading/loading']);
-const setLoading = (bool) => store.commit('loading/setLoading', bool);
 const fetchData = () => {
   store.dispatch('question/get', params.value);
   editable.value = [];
@@ -61,21 +58,17 @@ const onEdit = (index) => {
   store.commit('question/setErrors', {});
 };
 const updateQuestion = async (question) => {
-  setLoading(true);
   await store.dispatch('question/update', question);
   if (hasErrors.value) {
     fetchData();
   }
-  setLoading(false);
 };
 const deleteQuestion = async (id) => {
   if (confirm('削除しますか？')) {
-    setLoading(true);
     await store.dispatch('question/delete', id);
     if (!hasErrors.value) {
       fetchData(currentAlphabet.value);
     }
-    setLoading(false);
   }
 };
 const cancel = () => {

@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+const setLoading = (commit, bool) =>
+  commit('loading/setLoading', bool, { root: true });
+
 const state = {
   data: [],
   errors: {},
@@ -25,6 +28,7 @@ const getters = {
 
 const actions = {
   async delete({ commit }, id) {
+    setLoading(commit, true);
     await axios
       .delete(`/api/precedents/${id}`)
       .then((res) => {
@@ -44,6 +48,7 @@ const actions = {
           { root: true }
         );
       });
+    setLoading(commit, false);
   },
 };
 
