@@ -18,7 +18,6 @@ class UserSeeder extends Seeder
         // ゲストユーザー
         User::create([
             'name' => 'guest_user',
-            'pref' => 1,
             'email' => 'guest@example.com',
             'password' => Hash::make('guest_user'),
             'is_admin' => false,

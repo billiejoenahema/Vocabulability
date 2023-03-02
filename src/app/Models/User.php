@@ -134,7 +134,7 @@ class User extends Authenticatable
     }
 
     /**
-     * 権限レベルの取得
+     * 郵便番号を含む住所の取得
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
