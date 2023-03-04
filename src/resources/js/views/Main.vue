@@ -7,6 +7,7 @@ import InputPostalCode from '../components/InputPostalCode.vue';
 import InputTel from '../components/InputTel.vue';
 import InputText from '../components/InputText.vue';
 import InputTextarea from '../components/InputTextarea.vue';
+import Tooltip from '../components/Tooltip.vue';
 
 const store = useStore();
 
@@ -56,6 +57,9 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
       全文テキスト全文テキスト全文テキスト全文
     </template>
   </VTooltip>
+  <Tooltip content="ツールチップが表示されました。">
+    テキストにカーソルを乗せるとツールチップが表示されます。
+  </Tooltip>
   <div class="input-text">
     <input type="file" @change="(e) => changeFile(e)" />
   </div>
