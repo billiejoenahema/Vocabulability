@@ -1,9 +1,9 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
-import DataCount from '../../components/DataCount';
 import InvalidFeedback from '../../components/InvalidFeedback';
 import Pagination from '../../components/Pagination';
+import ResultInfo from '../../components/ResultInfo';
 import SortIcon from '../../components/SortIcon';
 import { useDebounce } from '../../functions/useDebounce';
 
@@ -109,7 +109,7 @@ const changePage = (page = null) => {
         </div>
       </div>
     </div>
-    <DataCount v-if="meta" :meta="meta" />
+    <ResultInfo :meta="meta" />
     <div class="row list-header">
       <div class="row" @click="onChangeSort('word')">
         <div class="list-column-title">単語</div>

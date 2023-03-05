@@ -9,13 +9,13 @@ defineProps({
 </script>
 
 <template>
-  <div class="data-count">
+  <div v-if="meta" class="result-info">
     {{ meta.from + '-' + meta.to + ' of ' + meta.total }}
   </div>
 </template>
 
 <style>
-.data-count {
+.result-info {
   margin-bottom: 8px;
 }
 </style>
