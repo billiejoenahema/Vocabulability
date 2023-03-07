@@ -9,63 +9,6 @@ const props = defineProps({
       return ['on', 'off'].includes(value);
     },
   },
-  classValue: {
-    default: '',
-    required: false,
-    type: String,
-  },
-  disabled: {
-    default: false,
-    required: false,
-    type: Boolean,
-  },
-  helperText: {
-    default: '',
-    required: false,
-    type: String,
-  },
-  id: {
-    default: '',
-    required: true,
-    type: String,
-  },
-  // 入力中のプレースホルダー表示/非表示
-  inputtingPlaceholder: {
-    default: false,
-    required: false,
-    type: Boolean,
-  },
-  // 入力文字数カウント表示/非表示
-  inputLength: {
-    default: false,
-    required: false,
-    type: Boolean,
-  },
-  invalidFeedback: {
-    default: () => [],
-    required: false,
-    type: Array,
-  },
-  maxlength: {
-    default: null,
-    required: false,
-    type: [String, Number],
-  },
-  modelValue: {
-    default: '',
-    required: false,
-    type: [String, Number],
-  },
-  placeholder: {
-    default: '',
-    required: false,
-    type: String,
-  },
-  title: {
-    default: '',
-    required: false,
-    type: String,
-  },
   autocorrect: {
     default: 'off',
     required: false,
@@ -86,8 +29,37 @@ const props = defineProps({
       ].includes(value);
     },
   },
+  classValue: {
+    default: '',
+    required: false,
+    type: String,
+  },
+  disabled: {
+    default: false,
+    required: false,
+    type: Boolean,
+  },
+  helperText: {
+    default: '',
+    required: false,
+    type: String,
+  },
+  id: {
+    default: '',
+    required: true,
+    type: String,
+  },
+  // 入力文字数カウント表示/非表示
+  inputLength: {
+    default: 'off',
+    required: false,
+    type: String,
+    validator(value) {
+      return ['on', 'off'].includes(value);
+    },
+  },
   inputmode: {
-    default: null,
+    default: 'text',
     required: false,
     type: [String],
     validator(value) {
@@ -101,6 +73,35 @@ const props = defineProps({
         'url',
       ].includes(value);
     },
+  },
+  // 入力中のプレースホルダー表示/非表示
+  inputtingPlaceholder: {
+    default: 'off',
+    required: false,
+    type: String,
+    validator(value) {
+      return ['on', 'off'].includes(value);
+    },
+  },
+  invalidFeedback: {
+    default: '',
+    required: false,
+    type: String,
+  },
+  maxlength: {
+    default: null,
+    required: false,
+    type: [String, Number],
+  },
+  modelValue: {
+    default: '',
+    required: false,
+    type: [String, Number],
+  },
+  placeholder: {
+    default: '',
+    required: false,
+    type: String,
   },
   type: {
     default: 'text',
@@ -125,25 +126,21 @@ const emit = defineEmits(['update:modelValue']);
 const updateModelValue = (event) => {
   emit('update:modelValue', event.target.value);
 };
-const inputClassName = computed(() => {
-  return props.inputtingPlaceholder
-    ? `${props.classValue} show-inputting-placeholder`
-    : props.classValue;
-});
-const inputLengthClassName = computed(() => {
-  if (props.modelValue.length === 0) {
-    return 'text-muted';
-  }
-});
+const showInputLength = computed(
+  () => props.inputLength === 'on' && props.maxlength
+);
+const showInputtingPlaceholder = computed(
+  () => props.inputtingPlaceholder === 'on' && props.modelValue
+);
 </script>
 
 <template>
   <div class="input-text-wrapper">
     <input
-      :aria-describedby="`${id}HelpBlock`"
+      :aria-describedby="`${id}Help`"
       :autocomplete="autocomplete"
       :autocorrect="autocorrect"
-      :class="'form-control border-dark ' + inputClassName"
+      :class="'form-control border-dark ' + classValue"
       :disabled="disabled"
       :id="id"
       :inputmode="inputmode"
@@ -151,25 +148,25 @@ const inputLengthClassName = computed(() => {
       :placeholder="placeholder"
       :type="type"
       :value="modelValue"
-      :title="title"
       @input="updateModelValue"
     />
     <div
-      v-if="inputtingPlaceholder && modelValue"
+      v-if="showInputtingPlaceholder"
       class="inputting-placeholder text-muted"
     >
       {{ placeholder }}
     </div>
     <div class="option-area">
-      <div>{{ helperText }}</div>
-      <small v-if="inputLength && maxlength" :class="inputLengthClassName">
+      <small :id="`${id}Help`">{{ helperText }}</small>
+      <small
+        v-if="showInputLength"
+        :class="modelValue.length === 0 ? 'text-muted' : ''"
+      >
         {{ modelValue.length ?? 0 }}/{{ maxlength }}
       </small>
     </div>
     <div class="invalid-feedback">
-      <div v-for="error in invalidFeedback" :key="error">
-        {{ error }}
-      </div>
+      {{ invalidFeedback }}
     </div>
   </div>
 </template>
