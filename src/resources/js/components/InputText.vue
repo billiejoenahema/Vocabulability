@@ -50,7 +50,7 @@ const props = defineProps({
     type: String,
   },
   // 入力文字数カウント表示/非表示
-  inputLength: {
+  inputCounter: {
     default: 'off',
     required: false,
     type: String,
@@ -126,18 +126,21 @@ const emit = defineEmits(['update:modelValue']);
 const updateModelValue = (event) => {
   emit('update:modelValue', event.target.value);
 };
-const showInputLength = computed(
-  () => props.inputLength === 'on' && props.maxlength
+const showInputCounter = computed(
+  () => props.inputCounter === 'on' && props.maxlength
 );
 const showInputtingPlaceholder = computed(
   () => props.inputtingPlaceholder === 'on' && props.modelValue
+);
+const textMuted = computed(() =>
+  props.modelValue.length === 0 ? 'text-muted' : ''
 );
 </script>
 
 <template>
   <div class="input-text-wrapper">
     <input
-      :aria-describedby="`${id}Help`"
+      :aria-describedby="`${id}HelpBlock`"
       :autocomplete="autocomplete"
       :autocorrect="autocorrect"
       :class="'form-control border-dark ' + classValue"
@@ -156,14 +159,11 @@ const showInputtingPlaceholder = computed(
     >
       {{ placeholder }}
     </div>
-    <div class="option-area">
-      <small :id="`${id}Help`">{{ helperText }}</small>
-      <small
-        v-if="showInputLength"
-        :class="modelValue.length === 0 ? 'text-muted' : ''"
-      >
+    <div class="form-text-area">
+      <div :id="`${id}HelpBlock`" class="form-text">{{ helperText }}</div>
+      <div v-if="showInputCounter" :class="'form-text ' + textMuted">
         {{ modelValue.length ?? 0 }}/{{ maxlength }}
-      </small>
+      </div>
     </div>
     <div class="invalid-feedback">
       {{ invalidFeedback }}
@@ -173,7 +173,6 @@ const showInputtingPlaceholder = computed(
 
 <style scoped>
 .input-text-wrapper {
-  margin-bottom: 1rem;
   position: relative;
 }
 .inputting-placeholder {
@@ -182,8 +181,11 @@ const showInputtingPlaceholder = computed(
   left: 8px;
   font-size: 0.6rem;
 }
-.option-area {
+.form-text-area {
   display: flex;
   justify-content: space-between;
+}
+.form-text {
+  font-size: 0.6em;
 }
 </style>
