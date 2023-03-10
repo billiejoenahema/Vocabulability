@@ -1,6 +1,7 @@
 <script setup>
 import { computed, nextTick, reactive, ref } from 'vue';
 import { useStore } from 'vuex';
+import InputText from '../../components/InputText';
 import InvalidFeedback from '../../components/InvalidFeedback';
 
 const store = useStore();
@@ -74,13 +75,14 @@ const importCSV = async () => {
     </div>
     <div class="column">
       <label>項目名</label>
-      <input
-        type="text"
+      <InputText
+        id="name"
+        :class-value="isInvalid('name')"
         v-model="newItem.name"
-        :class="isInvalid('name')"
-        maxlength="50"
+        :max-length="50"
+        placeholder="項目名"
+        :invalid-feedback="invalidFeedback('name')"
       />
-      <InvalidFeedback :invalid-feedback="invalidFeedback('name')" />
     </div>
     <div class="column">
       <label>項目名ふりがな</label>

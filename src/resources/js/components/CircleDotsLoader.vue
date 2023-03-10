@@ -23,7 +23,6 @@ defineProps({
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #fff;
   z-index: 10000;
 }
 .loader {

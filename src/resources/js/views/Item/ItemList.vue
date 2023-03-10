@@ -268,7 +268,7 @@ const changePage = (page = null) => {
           class="delete"
           @click="deleteItem(item.id)"
         >
-          <font-awesome-icon class="minus-icon" icon="minus" />
+          <font-awesome-icon class="minus-icon" icon="trash-can" />
         </button>
         <div v-else @click="onEdit(index)"></div>
       </div>

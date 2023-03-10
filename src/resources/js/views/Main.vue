@@ -58,7 +58,7 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
     </template>
   </VTooltip>
   <Tooltip content="ツールチップが表示されました。">
-    テキストにカーソルを乗せるとツールチップが表示されます。
+    <div>テキストにカーソルを乗せるとツールチップが表示されます。</div>
   </Tooltip>
   <div class="input-text">
     <input type="file" @change="(e) => changeFile(e)" />
@@ -85,11 +85,12 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
       <InputTextarea
         v-model="longText"
         autocomplete="on"
+        :class-value="'class-value'"
         id="longText"
         type="text"
-        help-text="1000文字以内"
+        helper-text="1000文字以内"
         :maxlength="1000"
-        :input-length="true"
+        input-counter="on"
         :rows="6"
       />
     </div>
@@ -100,9 +101,9 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
         autocomplete="on"
         id="remarks"
         type="text"
-        help-text="200文字以内"
+        helper-text="200文字以内"
         :maxlength="200"
-        :input-length="true"
+        input-counter="on"
       />
     </div>
     <div class="input-text">
@@ -113,7 +114,7 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
         id="tel"
         type="tel"
         placeholder="例）09012345678"
-        :inputting-placeholder="true"
+        inputting-placeholder="on"
       />
     </div>
     <div class="input-text">
