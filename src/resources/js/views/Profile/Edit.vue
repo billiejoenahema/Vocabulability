@@ -70,6 +70,8 @@ const submit = async () => {
           id="name"
           :invalid-feedback="invalidFeedback('name')"
           maxlength="50"
+          input-counter="on"
+          helper-text="名前は50文字以内で入力してください。"
           placeholder="例）山田 太郎"
           v-model="user.name"
         />
@@ -92,7 +94,7 @@ const submit = async () => {
           id="birth_date"
           :class-value="isInvalid('birth_date')"
           :invalid-feedback="invalidFeedback('birth_date')"
-          :help-text="'半角数字で入力してください。'"
+          :helper-text="'半角数字で入力してください。'"
           v-model="user.birth_date"
         />
       </div>
