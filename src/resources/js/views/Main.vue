@@ -87,7 +87,6 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
         autocomplete="on"
         :class-value="'class-value'"
         id="longText"
-        type="text"
         helper-text="1000文字以内"
         :maxlength="1000"
         input-counter="on"
