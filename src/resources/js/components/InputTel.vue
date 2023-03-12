@@ -30,14 +30,17 @@ const props = defineProps({
     type: String,
   },
   inputtingPlaceholder: {
-    default: false,
+    default: 'off',
     required: false,
-    type: Boolean,
+    type: String,
+    validator(value) {
+      return ['on', 'off'].includes(value);
+    },
   },
   invalidFeedback: {
-    default: () => [],
+    default: '',
     required: false,
-    type: Array,
+    type: String,
   },
   maxlength: {
     default: null,
@@ -54,11 +57,6 @@ const props = defineProps({
     required: false,
     type: String,
   },
-  title: {
-    default: '',
-    required: false,
-    type: String,
-  },
 });
 const incorrectInput = ref('');
 const emit = defineEmits(['update:modelValue']);
@@ -67,14 +65,20 @@ const updateModelValue = (event) => {
   determineCorrectInput(event.target.value);
 };
 const inputClassName = computed(() => {
-  return props.inputtingPlaceholder
+  return props.inputtingPlaceholder === 'on'
     ? `${props.classValue} ${incorrectInput.value} show-inputting-placeholder`
     : `${props.classValue} ${incorrectInput.value}`;
 });
+const showInputtingPlaceholder = computed(
+  () => props.inputtingPlaceholder === 'on' && props.modelValue
+);
 // 不正な値が入力されたら入力欄を赤くする
+//   半角数字のみ許可 /[^0-9]/g
+//   数字のみ許可 /[^０-９0-9]/g
+//   数字とハイフンのみ許可 /[^０-９0-9-－]/g
 const determineCorrectInput = (input) => {
-  const containedString = input.match(/[^０-９0-9-－]/g);
-  incorrectInput.value = containedString?.length ? ' is-invalid' : '';
+  const inputtedString = input.match(/[^0-9]/g);
+  incorrectInput.value = inputtedString?.length ? 'is-invalid' : '';
 };
 </script>
 
@@ -91,25 +95,24 @@ const determineCorrectInput = (input) => {
       :placeholder="placeholder"
       type="tel"
       :value="modelValue"
-      :title="title"
       @input="updateModelValue"
     />
     <div
-      v-if="inputtingPlaceholder && modelValue"
+      v-if="showInputtingPlaceholder"
       class="inputting-placeholder text-muted"
     >
       {{ placeholder }}
     </div>
-    <div class="option-area">
-      <div>{{ helperText }}</div>
+    <div class="form-text-area">
+      <div :id="`${id}HelpBlock`" class="form-text text-muted">
+        {{ helperText }}
+      </div>
     </div>
     <div class="invalid-feedback">
-      <div v-if="incorrectInput && !invalidFeedback.length">
-        数字とハイフン以外は入力しないでください。
+      <div v-if="incorrectInput && !invalidFeedback">
+        半角数字のみで入力してください。
       </div>
-      <div v-for="error in invalidFeedback" :key="error">
-        {{ error }}
-      </div>
+      {{ invalidFeedback }}
     </div>
   </div>
 </template>
@@ -128,8 +131,11 @@ const determineCorrectInput = (input) => {
   left: 8px;
   font-size: 0.6rem;
 }
-.option-area {
+.form-text-area {
   display: flex;
   justify-content: space-between;
+}
+.form-text {
+  font-size: 0.6em;
 }
 </style>
