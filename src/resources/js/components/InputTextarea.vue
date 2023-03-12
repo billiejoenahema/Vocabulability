@@ -73,8 +73,11 @@ const emit = defineEmits(['update:modelValue']);
 const updateModelValue = (event) => {
   emit('update:modelValue', event.target.value);
 };
-const showInputLength = computed(
-  () => props.inputLength === 'on' && props.maxlength
+const showInputCounter = computed(
+  () => props.inputCounter === 'on' && props.maxlength
+);
+const textMuted = computed(() =>
+  props.modelValue?.length === 0 ? 'text-muted' : ''
 );
 </script>
 
@@ -94,11 +97,8 @@ const showInputLength = computed(
   ></textarea>
   <div class="option-area">
     <small class="text-white-50">{{ helperText }}</small>
-    <small
-      v-if="showInputLength"
-      :class="modelValue.length === 0 ? 'text-muted' : ''"
-    >
-      {{ modelValue.length ?? 0 }}/{{ maxlength }}
+    <small v-if="showInputCounter" :class="'form-text ' + textMuted">
+      {{ modelValue?.length ?? 0 }}/{{ maxlength }}
     </small>
   </div>
   <div class="invalid-feedback">

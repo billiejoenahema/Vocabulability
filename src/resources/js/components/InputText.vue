@@ -133,7 +133,7 @@ const showInputtingPlaceholder = computed(
   () => props.inputtingPlaceholder === 'on' && props.modelValue
 );
 const textMuted = computed(() =>
-  props.modelValue.length === 0 ? 'text-muted' : ''
+  props.modelValue?.length === 0 ? 'text-muted' : ''
 );
 </script>
 
@@ -162,7 +162,7 @@ const textMuted = computed(() =>
     <div class="form-text-area">
       <div :id="`${id}HelpBlock`" class="form-text">{{ helperText }}</div>
       <div v-if="showInputCounter" :class="'form-text ' + textMuted">
-        {{ modelValue.length ?? 0 }}/{{ maxlength }}
+        {{ modelValue?.length ?? 0 }}/{{ maxlength }}
       </div>
     </div>
     <div class="invalid-feedback">

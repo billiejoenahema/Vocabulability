@@ -80,7 +80,7 @@ const submit = async () => {
         <label for="kana_name" class="mb-1">フリガナ</label>
         <InputText
           type="text"
-          :class-value="'form-control' + isInvalid('kana_name')"
+          :class-value="'form-control ' + isInvalid('kana_name')"
           id="kana_name"
           :invalid-feedback="invalidFeedback('kana_name')"
           maxlength="50"
@@ -100,7 +100,7 @@ const submit = async () => {
       </div>
       <InputCheckbox
         id="gender"
-        :class-value="'form-control' + isInvalid('gender')"
+        :class-value="'form-control ' + isInvalid('gender')"
         :invalid-feedback="invalidFeedback('gender')"
         :options="genderFormOptions"
         legend="性別"
@@ -122,7 +122,7 @@ const submit = async () => {
         <label for="postcode" class="mb-1">郵便番号</label>
         <InputText
           :type="'text'"
-          :class-value="'form-control' + isInvalid('postcode')"
+          :class-value="'form-control ' + isInvalid('postcode')"
           :id="'postcode'"
           :invalid-feedback="invalidFeedback('postcode')"
           autocorrect="postal-code"
@@ -136,9 +136,10 @@ const submit = async () => {
         <label for="address" class="mb-1">住所</label>
         <InputText
           :type="'text'"
-          :class-value="'form-control' + isInvalid('address')"
+          :class-value="'form-control ' + isInvalid('address')"
           :id="'address'"
           :invalid-feedback="invalidFeedback('address')"
+          maxlength="50"
           placeholder="例）東京都千代田区丸の内１丁目９"
           v-model="user.address"
         />
