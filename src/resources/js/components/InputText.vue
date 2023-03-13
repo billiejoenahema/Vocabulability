@@ -160,7 +160,9 @@ const textMuted = computed(() =>
       {{ placeholder }}
     </div>
     <div class="form-text-area">
-      <div :id="`${id}HelpBlock`" class="form-text">{{ helperText }}</div>
+      <div :id="`${id}HelpBlock`" class="form-text text-muted">
+        {{ helperText }}
+      </div>
       <div v-if="showInputCounter" :class="'form-text ' + textMuted">
         {{ modelValue?.length ?? 0 }}/{{ maxlength }}
       </div>

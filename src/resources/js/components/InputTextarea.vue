@@ -95,11 +95,13 @@ const textMuted = computed(() =>
     :value="modelValue"
     @input="updateModelValue"
   ></textarea>
-  <div class="option-area">
-    <small class="text-white-50">{{ helperText }}</small>
-    <small v-if="showInputCounter" :class="'form-text ' + textMuted">
+  <div class="form-text-area">
+    <div :id="`${id}HelpBlock`" class="form-text text-muted">
+      {{ helperText }}
+    </div>
+    <div v-if="showInputCounter" :class="'form-text ' + textMuted">
       {{ modelValue?.length ?? 0 }}/{{ maxlength }}
-    </small>
+    </div>
   </div>
   <div class="invalid-feedback">
     {{ invalidFeedback }}
@@ -110,8 +112,11 @@ const textMuted = computed(() =>
 .textarea {
   margin: 0;
 }
-.option-area {
+.form-text-area {
   display: flex;
   justify-content: space-between;
+}
+.form-text {
+  font-size: 0.6em;
 }
 </style>
