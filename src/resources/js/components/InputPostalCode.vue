@@ -29,15 +29,10 @@ const props = defineProps({
     required: true,
     type: String,
   },
-  inputtingPlaceholder: {
-    default: false,
-    required: false,
-    type: Boolean,
-  },
   invalidFeedback: {
-    default: () => [],
+    default: '',
     required: false,
-    type: Array,
+    type: String,
   },
   modelValue: {
     default: '',
@@ -49,11 +44,6 @@ const props = defineProps({
     required: false,
     type: String,
   },
-  title: {
-    default: '',
-    required: false,
-    type: String,
-  },
 });
 const incorrectInput = ref('');
 const emit = defineEmits(['update:modelValue']);
@@ -61,40 +51,52 @@ const updateModelValue = (event) => {
   emit('update:modelValue', event.target.value);
   determineCorrectInput(event.target.value);
 };
+const search = () => {
+  emit('search', props.modelValue);
+};
 const inputClassName = computed(() => {
   return `${props.classValue}`;
 });
 // 不正な値が入力されたら入力欄を赤くする
+//   半角数字のみ許可 /[^0-9]/g
+//   数字のみ許可 /[^０-９0-9]/g
+//   数字とハイフンのみ許可 /[^０-９0-9-－]/g
 const determineCorrectInput = (input) => {
-  const containedString = input.match(/[^０-９0-9-－]/g);
-  incorrectInput.value = containedString?.length ? ' is-invalid' : '';
+  const inputtedString = input.match(/[^0-9]/g);
+  incorrectInput.value = inputtedString?.length ? 'is-invalid' : '';
 };
 </script>
 
 <template>
   <div class="input-text-wrapper">
-    <input
-      :aria-describedby="`${id}HelpBlock`"
-      autocorrect="postal-code"
-      :autocomplete="autocomplete"
-      :class="'form-control border-dark ' + inputClassName + incorrectInput"
-      :disabled="disabled"
-      :id="id"
-      inputmode="numeric"
-      maxlength="8"
-      :placeholder="placeholder"
-      type="text"
-      :value="modelValue"
-      :title="title"
-      @input="updateModelValue"
-    />
-    <div class="option-area">
-      <div>{{ helperText }}</div>
+    <form @submit.prevent="search" class="input-area">
+      <input
+        :aria-describedby="`${id}HelpBlock`"
+        autocorrect="postal-code"
+        :autocomplete="autocomplete"
+        :class="
+          'form-control border-dark me-2 ' + inputClassName + incorrectInput
+        "
+        :disabled="disabled"
+        :id="id"
+        inputmode="numeric"
+        maxlength="8"
+        :placeholder="placeholder"
+        type="text"
+        :value="modelValue"
+        @input="updateModelValue"
+      />
+      <button class="address-search-button" type="button" @click="search">
+        住所を検索
+      </button>
+    </form>
+    <div class="form-text-area">
+      <div :id="`${id}HelpBlock`" class="form-text text-muted">
+        {{ helperText }}
+      </div>
     </div>
     <div class="invalid-feedback">
-      <div v-for="error in invalidFeedback" :key="error">
-        {{ error }}
-      </div>
+      {{ invalidFeedback }}
     </div>
   </div>
 </template>
@@ -104,11 +106,21 @@ const determineCorrectInput = (input) => {
   margin-bottom: 1rem;
   position: relative;
 }
-.input-text-wrapper > input {
-  width: 100px;
+.input-area {
+  display: flex;
+  flex-direction: row;
 }
-.option-area {
+.input-area > input {
+  margin-right: 2rem;
+}
+.address-search-button {
+  white-space: nowrap;
+}
+.form-text-area {
   display: flex;
   justify-content: space-between;
+}
+.form-text {
+  font-size: 0.6em;
 }
 </style>
