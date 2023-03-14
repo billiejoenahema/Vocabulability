@@ -1,8 +1,9 @@
 <script setup>
 import 'floating-vue/dist/style.css';
-import { onUnmounted, reactive, ref } from 'vue';
+import { computed, onUnmounted, reactive, ref } from 'vue';
 import 'vue-select/dist/vue-select.css';
 import { useStore } from 'vuex';
+import YubinBango from 'yubinbango-core2';
 import InputPostalCode from '../components/InputPostalCode.vue';
 import InputTel from '../components/InputTel.vue';
 import InputText from '../components/InputText.vue';
@@ -21,16 +22,32 @@ const state = reactive({
   date: '',
   time: '',
   datetime: '',
+  address: '',
+  postal_code: '',
+  remarks: '',
+  long_text: '',
 });
-const remarks = ref('');
-const longText = ref('');
-const postalCode = ref('');
+const invalidFeedback = computed(
+  () => store.getters['profile/invalidFeedback']
+);
 const file = ref(null);
 const fileUrl = ref(null);
 const changeFile = (e) => {
   file.value = e.target.files[0];
   const objUrl = URL.createObjectURL(file.value);
   fileUrl.value = objUrl;
+};
+// 入力された郵便番号から住所を自動入力
+const setAddress = (code) => {
+  if (!code.match(/^\d{7}/)) return false;
+  const response = new YubinBango.Core(code, (address) => {
+    state.address = `${address.region}${address.locality}${address.street}`;
+    if (!address.region) {
+      store.commit('profile/setErrors', {
+        postal_code: ['該当する住所が見つかりませんでした。'],
+      });
+    }
+  });
 };
 const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 onUnmounted(() => URL.revokeObjectURL(fileUrl));
@@ -74,37 +91,15 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
     <div class="input-text">
       <label>PostalCode</label>
       <InputPostalCode
-        v-model="postalCode"
+        v-model="state.postal_code"
         id="postalCode"
-        placeholder="1001000"
+        placeholder="1010001"
         helper-text="半角数字7文字"
+        :invalid-feedback="invalidFeedback('postal_code')"
+        @search="setAddress"
       />
     </div>
-    <div class="input-text">
-      <label>LongText</label>
-      <InputTextarea
-        v-model="longText"
-        autocomplete="on"
-        :class-value="'class-value'"
-        id="longText"
-        helper-text="1000文字以内"
-        :maxlength="1000"
-        input-counter="on"
-        :rows="6"
-      />
-    </div>
-    <div class="input-text">
-      <label>Remarks</label>
-      <InputText
-        v-model="remarks"
-        autocomplete="on"
-        id="remarks"
-        type="text"
-        helper-text="200文字以内"
-        :maxlength="200"
-        input-counter="on"
-      />
-    </div>
+    <div>住所: {{ state.address }}</div>
     <div class="input-text">
       <label>TEL</label>
       <InputTel
@@ -124,6 +119,31 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
         id="email"
         type="email"
         placeholder="例）example@example.com"
+      />
+    </div>
+    <div class="input-text">
+      <label>LongText</label>
+      <InputTextarea
+        v-model="state.long_text"
+        autocomplete="on"
+        :class-value="'class-value'"
+        id="longText"
+        helper-text="1000文字以内"
+        :maxlength="1000"
+        input-counter="on"
+        :rows="6"
+      />
+    </div>
+    <div class="input-text">
+      <label>Remarks</label>
+      <InputText
+        v-model="state.remarks"
+        autocomplete="on"
+        id="remarks"
+        type="text"
+        helper-text="200文字以内"
+        :maxlength="200"
+        input-counter="on"
       />
     </div>
     <div class="input-text">
@@ -151,5 +171,8 @@ pre {
   opacity: 1;
   margin: 0;
   padding: 0;
+}
+.input-postal-code {
+  margin-right: 2rem;
 }
 </style>
