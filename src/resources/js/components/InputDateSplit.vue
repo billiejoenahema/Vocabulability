@@ -23,9 +23,9 @@ const props = defineProps({
     type: String,
   },
   invalidFeedback: {
-    default: () => [],
+    default: '',
     required: false,
-    type: Array,
+    type: String,
   },
   modelValue: {
     default: '',
@@ -34,11 +34,6 @@ const props = defineProps({
   },
   placeholder: {
     default: '1970-01-23',
-    required: false,
-    type: String,
-  },
-  tooltipTitle: {
-    default: '',
     required: false,
     type: String,
   },
@@ -69,10 +64,14 @@ const date = computed(() => {
     day: day,
   };
 });
+const invalidInputFeedback = ref('');
 // 整数または空文字であるかどうか
-const isNumberOnly = (v) => v.match(/^[0-9０-９]*$/);
-// 4桁であるかどうか
-const isFourDigit = (v) => v.length === 4;
+const isNumberOnly = (v) => v.match(/^[0-9]*$/);
+// 有効な年であるかどうか
+const validYear = (v) => {
+  console.log(!v.startsWith('0'));
+  return v === '' || (1 <= Number(v) && !v.startsWith('0'));
+};
 // 有効な月であるかどうか
 const validMonth = (v) => {
   return v === '' || (1 <= Number(v) && Number(v) <= 12);
@@ -83,21 +82,40 @@ const validDay = (v) => {
 };
 
 const onInput = (e) => {
+  // 初期化
+  invalidInputFeedback.value = '';
+  Object.keys(invalidInputClassName).forEach((key) => {
+    invalidInputClassName[key] = '';
+  });
   // 入力値が数字以外の文字を含む場合は入力欄を赤くする
-  if (isNumberOnly(yearRef.value.value) && isFourDigit(yearRef.value.value)) {
-    invalidInputClassName.year = '';
-  } else {
+  if (!isNumberOnly(yearRef.value.value) && !e.isComposing) {
     invalidInputClassName.year = 'invalid-input';
+    invalidInputFeedback.value = '年は半角数字で入力してください。';
   }
-  if (isNumberOnly(monthRef.value.value) && validMonth(monthRef.value.value)) {
-    invalidInputClassName.month = '';
-  } else {
+  if (!validYear(yearRef.value.value)) {
+    invalidInputClassName.year = 'invalid-input';
+    invalidInputFeedback.value =
+      invalidInputFeedback.value.concat('存在しない年が入力されています。');
+  }
+  if (!isNumberOnly(monthRef.value.value)) {
     invalidInputClassName.month = 'invalid-input';
+    invalidInputFeedback.value =
+      invalidInputFeedback.value.concat('月は半角数字で入力してください。');
   }
-  if (isNumberOnly(dayRef.value.value) && validDay(dayRef.value.value)) {
-    invalidInputClassName.day = '';
-  } else {
+  if (!validMonth(monthRef.value.value)) {
+    invalidInputClassName.month = 'invalid-input';
+    invalidInputFeedback.value =
+      invalidInputFeedback.value.concat('存在しない月が入力されています。');
+  }
+  if (!isNumberOnly(dayRef.value.value)) {
     invalidInputClassName.day = 'invalid-input';
+    invalidInputFeedback.value =
+      invalidInputFeedback.value.concat('日は半角数字で入力してください。');
+  }
+  if (!validDay(dayRef.value.value)) {
+    invalidInputClassName.day = 'invalid-input';
+    invalidInputFeedback.value =
+      invalidInputFeedback.value.concat('存在しない日が入力されています。');
   }
   // 「年」が4桁入力されたら「月」に移動し入力値を選択した状態にする
   if (
@@ -178,11 +196,10 @@ const onKeyDownEnter = (e) => {
     />
     <span>日</span>
     <div class="invalid-feedback">
-      <div v-for="error in invalidFeedback" :key="error">
-        {{ error }}
-      </div>
+      {{ invalidFeedback }}
     </div>
-    <small class="help-text">{{ helperText }}</small>
+    <div class="invalid-feedback">{{ invalidInputFeedback }}</div>
+    <small class="helper-text">{{ helperText }}</small>
   </div>
 </template>
 
@@ -204,7 +221,7 @@ const onKeyDownEnter = (e) => {
 .base-input {
   margin-bottom: 1rem;
 }
-.help-text {
+.helper-text {
   color: rgb(141, 141, 141);
 }
 .hint-area {
