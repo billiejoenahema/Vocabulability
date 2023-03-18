@@ -225,13 +225,6 @@ li {
 .logout:hover {
   color: rgb(212, 212, 212);
 }
-.is-invalid {
-  border: solid 1px red;
-}
-.invalidFeedback {
-  color: red;
-  font-size: 0.6rem;
-}
 .csv-import-input-area {
   margin: 0 0 16px;
 }
@@ -322,11 +315,11 @@ li {
   max-width: 400px;
 }
 .invalid-feedback {
-  color: red;
+  color: #dc3545;
   font-size: 0.6rem;
 }
 .is-invalid {
-  border-color: red;
+  border-color: #dc3545;
 }
 .submit {
   width: 160px;

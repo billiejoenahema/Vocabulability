@@ -54,6 +54,7 @@ const invalidInputClassName = reactive({
   month: '',
   day: '',
 });
+// propsを「年」「月」「日」に分割する
 const date = computed(() => {
   const [year, month, day] = props.modelValue
     ? props.modelValue.split('-')
@@ -65,58 +66,53 @@ const date = computed(() => {
   };
 });
 const invalidInputFeedback = ref('');
-// 整数または空文字であるかどうか
-const isNumberOnly = (v) => v.match(/^[0-9]*$/);
-// 有効な年であるかどうか
-const validYear = (v) => {
-  console.log(!v.startsWith('0'));
-  return v === '' || (1 <= Number(v) && !v.startsWith('0'));
+const setInvalidInputFeedback = () => {
+  invalidInputFeedback.value = '無効な日付が入力されています。';
 };
-// 有効な月であるかどうか
-const validMonth = (v) => {
-  return v === '' || (1 <= Number(v) && Number(v) <= 12);
+const invalidYear = () => {
+  const year = yearRef.value.value;
+  return Number(year) < 1 || Number(year) > 10000 || year.startsWith('0');
 };
-// 有効な日であるかどうか
-const validDay = (v) => {
-  return v === '' || (1 <= Number(v) && Number(v) <= 31);
+const invalidMonth = () => {
+  const month = monthRef.value.value;
+  return Number(month) < 1 || Number(month) > 12;
+};
+const invalidDay = () => {
+  const day = dayRef.value.value;
+  return Number(day) < 1 || Number(day) > 31;
+};
+// 無効な日付の場合はエラーメッセージを表示
+const setErrors = () => {
+  if (!isDateFilled()) return;
+  const regex = /^[0-9]*$/;
+  if (!yearRef.value.value.match(regex) || invalidYear()) {
+    invalidInputClassName.year = 'is-invalid';
+    setInvalidInputFeedback();
+  }
+  if (!monthRef.value.value.match(regex) || invalidMonth()) {
+    invalidInputClassName.month = 'is-invalid';
+    setInvalidInputFeedback();
+  }
+  if (!dayRef.value.value.match(regex) || invalidDay()) {
+    invalidInputClassName.day = 'is-invalid';
+    setInvalidInputFeedback();
+  }
+};
+// 「年」「月」「日」すべて入力済みかどうか
+const isDateFilled = () => {
+  return (
+    yearRef.value.value !== '' &&
+    monthRef.value.value !== '' &&
+    dayRef.value.value !== ''
+  );
 };
 
 const onInput = (e) => {
-  // 初期化
+  // エラー表示の初期化
   invalidInputFeedback.value = '';
   Object.keys(invalidInputClassName).forEach((key) => {
     invalidInputClassName[key] = '';
   });
-  // 入力値が数字以外の文字を含む場合は入力欄を赤くする
-  if (!isNumberOnly(yearRef.value.value) && !e.isComposing) {
-    invalidInputClassName.year = 'invalid-input';
-    invalidInputFeedback.value = '年は半角数字で入力してください。';
-  }
-  if (!validYear(yearRef.value.value)) {
-    invalidInputClassName.year = 'invalid-input';
-    invalidInputFeedback.value =
-      invalidInputFeedback.value.concat('存在しない年が入力されています。');
-  }
-  if (!isNumberOnly(monthRef.value.value)) {
-    invalidInputClassName.month = 'invalid-input';
-    invalidInputFeedback.value =
-      invalidInputFeedback.value.concat('月は半角数字で入力してください。');
-  }
-  if (!validMonth(monthRef.value.value)) {
-    invalidInputClassName.month = 'invalid-input';
-    invalidInputFeedback.value =
-      invalidInputFeedback.value.concat('存在しない月が入力されています。');
-  }
-  if (!isNumberOnly(dayRef.value.value)) {
-    invalidInputClassName.day = 'invalid-input';
-    invalidInputFeedback.value =
-      invalidInputFeedback.value.concat('日は半角数字で入力してください。');
-  }
-  if (!validDay(dayRef.value.value)) {
-    invalidInputClassName.day = 'invalid-input';
-    invalidInputFeedback.value =
-      invalidInputFeedback.value.concat('存在しない日が入力されています。');
-  }
   // 「年」が4桁入力されたら「月」に移動し入力値を選択した状態にする
   if (
     e.target === yearRef.value &&
@@ -133,8 +129,10 @@ const onInput = (e) => {
   ) {
     dayRef.value.select();
   }
-  // 入力値を'Y-m-d'の形式に変換して親コンポーネントに渡す
   const updatedDate = `${yearRef.value.value}-${monthRef.value.value}-${dayRef.value.value}`;
+  // エラー表示
+  setErrors();
+
   emit('update:modelValue', updatedDate);
 };
 // Enterキー押下で次の入力欄へフォーカスをを移動する
@@ -204,9 +202,6 @@ const onKeyDownEnter = (e) => {
 </template>
 
 <style>
-.invalid-input {
-  border-color: red;
-}
 .input-year {
   width: 4rem;
   margin-right: 8px;
