@@ -4,6 +4,7 @@ import { computed, onUnmounted, reactive, ref } from 'vue';
 import 'vue-select/dist/vue-select.css';
 import { useStore } from 'vuex';
 import YubinBango from 'yubinbango-core2';
+import InputDateSplit2 from '../components/InputDateSplit2.vue';
 import InputPostalCode from '../components/InputPostalCode.vue';
 import InputTel from '../components/InputTel.vue';
 import InputText from '../components/InputText.vue';
@@ -26,6 +27,7 @@ const state = reactive({
   postal_code: '',
   remarks: '',
   long_text: '',
+  date: null,
 });
 const invalidFeedback = computed(
   () => store.getters['profile/invalidFeedback']
@@ -88,6 +90,9 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
   </div>
   <div>
     <button @click="sendMail()">メール送信</button>
+  </div>
+  <div class="input-text">
+    <InputDateSplit2 v-model="state.date" id="date" />
   </div>
   <div class="mw-400">
     <div class="input-text">
