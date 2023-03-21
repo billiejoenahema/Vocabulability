@@ -161,20 +161,4 @@ const onKeyDownEnter = (e) => {
 .helper-text {
   color: rgb(141, 141, 141);
 }
-.hint-area {
-  position: relative;
-}
-.hint-text {
-  position: absolute;
-  top: 0;
-  padding: 16px;
-  background: rgb(222, 222, 222);
-}
-.backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-}
 </style>
