@@ -81,7 +81,7 @@ const onInput = (e) => {
 // Enterキー押下で次の入力欄へフォーカスをを移動する
 const onKeyDownEnter = (e) => {
   // 文字変換中なら何もしない
-  if (e.isComposing || e.keyCode === 229) return;
+  if (e.isComposing) return;
   // 文字変換中でなければEnter押下で次の入力欄へ移動し入力値を選択した状態にする
   if (e.target === yearRef.value) monthRef.value.select();
   if (e.target === monthRef.value) dayRef.value.select();
