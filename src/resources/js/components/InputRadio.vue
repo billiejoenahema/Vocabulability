@@ -21,9 +21,9 @@ defineProps({
     type: String,
   },
   invalidFeedback: {
-    default: () => [],
+    default: '',
     required: false,
-    type: Array,
+    type: String,
   },
   legend: {
     default: '',
@@ -48,29 +48,26 @@ const updateModelValue = (event) => {
 </script>
 
 <template>
-  <fieldset class="mb-2 row">
+  <fieldset class="mb-2">
     <legend>{{ legend }}</legend>
     <div class="checkbox-body">
       <div v-for="option in options" :key="option.id" class="options">
         <input
           type="radio"
-          :id="'gender_' + option.id"
-          :name="'gender_' + option.id"
+          :id="option.id"
+          :name="id"
           :value="option.id"
           :checked="option.id === modelValue"
           @input="updateModelValue"
         />
-        <label :for="'gender_' + option.id">{{ option.name }}</label>
+        <label :for="option.id">{{ option.name }}</label>
       </div>
-      <small class="help-text">{{ helperText }}</small>
+      <small class="helper-text">{{ helperText }}</small>
+    </div>
+    <div class="invalid-feedback">
+      {{ invalidFeedback }}
     </div>
   </fieldset>
-
-  <div class="invalid-feedback">
-    <div v-for="error in invalidFeedback" :key="error">
-      {{ error }}
-    </div>
-  </div>
 </template>
 
 <style>
