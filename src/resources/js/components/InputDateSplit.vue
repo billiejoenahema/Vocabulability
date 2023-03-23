@@ -152,7 +152,8 @@ const onKeyDownEnter = (e) => {
     <!-- 年 -->
     <input
       :aria-describedby="`${id}HelpBlockYear`"
-      :class="'form-control border-dark input-year ' + className.year"
+      class="form-control border-dark input-year"
+      :class="className.year"
       :disabled="disabled"
       :id="id"
       maxlength="4"
@@ -167,7 +168,8 @@ const onKeyDownEnter = (e) => {
     <!-- 月 -->
     <input
       :aria-describedby="`${id}HelpBlockMonth`"
-      :class="'form-control border-dark input-month-day ' + className.month"
+      class="form-control border-dark input-month-day"
+      :class="className.month"
       :disabled="disabled"
       :id="id"
       maxlength="2"
@@ -182,7 +184,8 @@ const onKeyDownEnter = (e) => {
     <!-- 日 -->
     <input
       :aria-describedby="`${id}HelpBlockDay`"
-      :class="'form-control border-dark input-month-day ' + className.day"
+      class="form-control border-dark input-month-day"
+      :class="className.day"
       :disabled="disabled"
       :id="id"
       maxlength="2"
@@ -202,7 +205,7 @@ const onKeyDownEnter = (e) => {
   </div>
 </template>
 
-<style>
+<style scoped>
 .input-year {
   width: 4rem;
   margin-right: 8px;

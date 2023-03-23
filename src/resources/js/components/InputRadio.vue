@@ -54,6 +54,7 @@ const updateModelValue = (event) => {
       <div v-for="option in options" :key="option.id" class="options">
         <input
           type="radio"
+          :class="classValue"
           :id="option.id"
           :value="option.id"
           :checked="option.id === modelValue"

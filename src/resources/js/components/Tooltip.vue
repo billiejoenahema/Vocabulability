@@ -49,7 +49,7 @@ const setTooltipPosition = (e) => {
   </div>
 </template>
 
-<style>
+<style scoped>
 .tooltip-wrapper {
   position: relative;
   cursor: pointer;

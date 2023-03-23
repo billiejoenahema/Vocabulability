@@ -14,7 +14,7 @@ defineProps({
   </div>
 </template>
 
-<style>
+<style scoped>
 .result-info {
   margin-bottom: 8px;
 }

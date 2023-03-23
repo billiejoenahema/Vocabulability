@@ -143,7 +143,8 @@ const textMuted = computed(() =>
       :aria-describedby="`${id}HelpBlock`"
       :autocomplete="autocomplete"
       :autocorrect="autocorrect"
-      :class="'form-control border-dark ' + classValue"
+      class="form-control border-dark"
+      :class="classValue"
       :disabled="disabled"
       :id="id"
       :inputmode="inputmode"
@@ -188,6 +189,6 @@ const textMuted = computed(() =>
   justify-content: space-between;
 }
 .form-text {
-  font-size: 0.6em;
+  font-size: 0.6rem;
 }
 </style>

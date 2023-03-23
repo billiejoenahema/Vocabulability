@@ -87,7 +87,8 @@ const determineCorrectInput = (input) => {
     <input
       :aria-describedby="`${id}HelpBlock`"
       :autocomplete="autocomplete"
-      :class="'form-control border-dark ' + inputClassName"
+      class="form-control border-dark"
+      :class="inputClassName"
       :disabled="disabled"
       :id="id"
       inputmode="tel"
