@@ -50,13 +50,12 @@ const updateModelValue = (event) => {
 <template>
   <fieldset class="mb-2">
     <legend>{{ legend }}</legend>
-    <div class="checkbox-body">
+    <div class="radio-body">
       <div v-for="option in options" :key="option.id" class="options">
         <input
           type="radio"
           :class="classValue"
           :id="option.id"
-          :name="id"
           :value="option.id"
           :checked="option.id === modelValue"
           @input="updateModelValue"
@@ -71,11 +70,8 @@ const updateModelValue = (event) => {
   </fieldset>
 </template>
 
-<style scoped>
-.base-input {
-  margin-bottom: 1rem;
-}
-.checkbox-body {
+<style>
+.radio-body {
   display: flex;
   flex-direction: column;
 }
