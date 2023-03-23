@@ -108,7 +108,7 @@ const textMuted = computed(() =>
   </div>
 </template>
 
-<style>
+<style scoped>
 .textarea {
   margin: 0;
 }

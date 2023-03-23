@@ -40,7 +40,7 @@ const linkLabel = (label) => {
   </nav>
 </template>
 
-<style>
+<style scoped>
 .page-link {
   user-select: none;
 }

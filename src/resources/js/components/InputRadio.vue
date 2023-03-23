@@ -54,6 +54,7 @@ const updateModelValue = (event) => {
       <div v-for="option in options" :key="option.id" class="options">
         <input
           type="radio"
+          :class="classValue"
           :id="option.id"
           :name="id"
           :value="option.id"
@@ -70,7 +71,7 @@ const updateModelValue = (event) => {
   </fieldset>
 </template>
 
-<style>
+<style scoped>
 .base-input {
   margin-bottom: 1rem;
 }

@@ -74,9 +74,8 @@ const determineCorrectInput = (input) => {
         :aria-describedby="`${id}HelpBlock`"
         autocorrect="postal-code"
         :autocomplete="autocomplete"
-        :class="
-          'form-control border-dark me-2 ' + inputClassName + incorrectInput
-        "
+        class="form-control border-dark me-2"
+        :class="inputClassName + incorrectInput"
         :disabled="disabled"
         :id="id"
         inputmode="numeric"
