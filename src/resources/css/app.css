@@ -356,6 +356,28 @@ li {
 .text-muted {
   color: #6c757d;
 }
+.form-check {
+  display: block;
+  min-height: 1.5rem;
+  padding-left: 1.5em;
+  margin-bottom: 0.125rem;
+}
+.form-check-inline {
+  display: inline-block;
+  margin-right: 1rem;
+}
+.form-check-input {
+  margin-right: 0.5rem;
+}
+.form-check-label {
+  display: inline-block;
+}
+.required-badge {
+  color: #dc3545;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-left: 1rem;
+}
 
 @media screen and (max-width: 600px) {
   /* スクリーンサイズが600px以下の場合に適用 */
