@@ -46,10 +46,9 @@ const props = defineProps({
   },
 });
 const incorrectInput = ref('');
-const emit = defineEmits(['update:modelValue']);
-const updateModelValue = (event) => {
-  emit('update:modelValue', event.target.value);
-  determineCorrectInput(event.target.value);
+const emit = defineEmits(['update:modelValue', 'search']);
+const updateModelValue = (e) => {
+  emit('update:modelValue', e.target.value);
 };
 const search = () => {
   emit('search', props.modelValue);
@@ -57,13 +56,14 @@ const search = () => {
 const inputClassName = computed(() => {
   return `${props.classValue}`;
 });
-// 不正な値が入力されたら入力欄を赤くする
-//   半角数字のみ許可 /[^0-9]/g
-//   数字のみ許可 /[^０-９0-9]/g
-//   数字とハイフンのみ許可 /[^０-９0-9-－]/g
-const determineCorrectInput = (input) => {
-  const inputtedString = input.match(/[^0-9]/g);
-  incorrectInput.value = inputtedString?.length ? 'is-invalid' : '';
+// 7桁の半角数字かどうかを判定する
+const determineInputValue = (e) => {
+  if (e.target.value === '') {
+    incorrectInput.value = '';
+    return;
+  }
+  const regex = /\d{7}/;
+  incorrectInput.value = regex.test(e.target.value) ? 'is-valid' : 'is-invalid';
 };
 </script>
 
@@ -84,17 +84,21 @@ const determineCorrectInput = (input) => {
         type="text"
         :value="modelValue"
         @input="updateModelValue"
+        @blur="determineInputValue"
       />
       <button class="address-search-button" type="button" @click="search">
         住所を検索
       </button>
     </form>
-    <div class="form-text-area">
+    <div class="form-text-wrapper">
       <div :id="`${id}HelpBlock`" class="form-text text-muted">
         {{ helperText }}
       </div>
     </div>
     <div class="invalid-feedback">
+      <div v-if="incorrectInput === 'is-invalid' && !invalidFeedback">
+        7桁の半角数字で入力してください。
+      </div>
       {{ invalidFeedback }}
     </div>
   </div>
@@ -114,11 +118,8 @@ const determineCorrectInput = (input) => {
 .address-search-button {
   white-space: nowrap;
 }
-.form-text-area {
+.form-text-wrapper {
   display: flex;
   justify-content: space-between;
-}
-.form-text {
-  font-size: 0.6em;
 }
 </style>
