@@ -138,7 +138,7 @@ const textMuted = computed(() =>
 </script>
 
 <template>
-  <div class="input-text-wrapper">
+  <div class="input-wrapper">
     <input
       :aria-describedby="`${id}HelpBlock`"
       :autocomplete="autocomplete"
@@ -175,14 +175,14 @@ const textMuted = computed(() =>
 </template>
 
 <style scoped>
-.input-text-wrapper {
+.input-wrapper {
   position: relative;
 }
 .inputting-placeholder {
   position: absolute;
   top: 0;
   left: 8px;
-  font-size: 0.6rem;
+  font-size: 0.5rem;
 }
 .form-text-area {
   display: flex;

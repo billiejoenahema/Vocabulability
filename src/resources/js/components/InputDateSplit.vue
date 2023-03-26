@@ -148,61 +148,59 @@ const onKeyDownEnter = (e) => {
 </script>
 
 <template>
-  <div class="base-input">
-    <!-- 年 -->
-    <input
-      :aria-describedby="`${id}HelpBlockYear`"
-      class="form-control border-dark input-year"
-      :class="className.year"
-      :disabled="disabled"
-      :id="id"
-      maxlength="4"
-      :placeholder="placeholderYear"
-      type="text"
-      :value="date.year"
-      ref="yearRef"
-      @input="onInput"
-      @keydown.enter="onKeyDownEnter"
-    />
-    <span>年</span>
-    <!-- 月 -->
-    <input
-      :aria-describedby="`${id}HelpBlockMonth`"
-      class="form-control border-dark input-month-day"
-      :class="className.month"
-      :disabled="disabled"
-      :id="id"
-      maxlength="2"
-      :placeholder="placeholderMonth"
-      type="text"
-      :value="date.month"
-      ref="monthRef"
-      @input="onInput"
-      @keydown.enter="onKeyDownEnter"
-    />
-    <span>月</span>
-    <!-- 日 -->
-    <input
-      :aria-describedby="`${id}HelpBlockDay`"
-      class="form-control border-dark input-month-day"
-      :class="className.day"
-      :disabled="disabled"
-      :id="id"
-      maxlength="2"
-      :placeholder="placeholderDay"
-      type="text"
-      :value="date.day"
-      ref="dayRef"
-      @input="onInput"
-      @keydown.enter="onKeyDownEnter"
-    />
-    <span>日</span>
-    <div class="invalid-feedback">
-      {{ invalidFeedback }}
-    </div>
-    <div class="invalid-feedback">{{ invalidInputFeedback }}</div>
-    <small class="helper-text">{{ helperText }}</small>
+  <!-- 年 -->
+  <input
+    :aria-describedby="`${id}HelpBlockYear`"
+    class="form-control border-dark input-year"
+    :class="className.year"
+    :disabled="disabled"
+    :id="id"
+    maxlength="4"
+    :placeholder="placeholderYear"
+    type="text"
+    :value="date.year"
+    ref="yearRef"
+    @input="onInput"
+    @keydown.enter="onKeyDownEnter"
+  />
+  <span>年</span>
+  <!-- 月 -->
+  <input
+    :aria-describedby="`${id}HelpBlockMonth`"
+    class="form-control border-dark input-month-day"
+    :class="className.month"
+    :disabled="disabled"
+    :id="id"
+    maxlength="2"
+    :placeholder="placeholderMonth"
+    type="text"
+    :value="date.month"
+    ref="monthRef"
+    @input="onInput"
+    @keydown.enter="onKeyDownEnter"
+  />
+  <span>月</span>
+  <!-- 日 -->
+  <input
+    :aria-describedby="`${id}HelpBlockDay`"
+    class="form-control border-dark input-month-day"
+    :class="className.day"
+    :disabled="disabled"
+    :id="id"
+    maxlength="2"
+    :placeholder="placeholderDay"
+    type="text"
+    :value="date.day"
+    ref="dayRef"
+    @input="onInput"
+    @keydown.enter="onKeyDownEnter"
+  />
+  <span>日</span>
+  <div class="invalid-feedback">
+    {{ invalidFeedback }}
   </div>
+  <div class="invalid-feedback">{{ invalidInputFeedback }}</div>
+  <small class="helper-text">{{ helperText }}</small>
 </template>
 
 <style scoped>
@@ -216,9 +214,6 @@ const onKeyDownEnter = (e) => {
   margin-right: 8px;
   margin-left: 16px;
   text-align: right;
-}
-.base-input {
-  margin-bottom: 1rem;
 }
 .helper-text {
   color: rgb(141, 141, 141);

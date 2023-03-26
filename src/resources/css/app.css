@@ -292,9 +292,6 @@ li {
 .d-flex {
   display: flex;
 }
-.input-text {
-  padding: 8px;
-}
 .mb-1 {
   margin-bottom: 8px;
 }
@@ -377,6 +374,11 @@ li {
   font-size: 0.8rem;
   font-weight: 600;
   margin-left: 1rem;
+}
+.input-text {
+  margin-bottom: 1rem;
+  position: relative;
+  padding: 8px;
 }
 
 @media screen and (max-width: 600px) {
