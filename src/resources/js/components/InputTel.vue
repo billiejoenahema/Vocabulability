@@ -83,7 +83,7 @@ const determineCorrectInput = (input) => {
 </script>
 
 <template>
-  <div class="input-text-wrapper">
+  <div class="input-wrapper">
     <input
       :aria-describedby="`${id}HelpBlock`"
       :autocomplete="autocomplete"
@@ -119,18 +119,14 @@ const determineCorrectInput = (input) => {
 </template>
 
 <style scoped>
-.input-text-wrapper {
-  margin-bottom: 1rem;
+.input-wrapper {
   position: relative;
-}
-.show-inputting-placeholder {
-  padding: 1rem 0.5rem 0.5rem;
 }
 .inputting-placeholder {
   position: absolute;
   top: 0;
   left: 8px;
-  font-size: 0.6rem;
+  font-size: 0.5rem;
 }
 .form-text-area {
   display: flex;

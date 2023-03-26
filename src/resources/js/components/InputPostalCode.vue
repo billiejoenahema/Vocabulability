@@ -68,7 +68,7 @@ const determineCorrectInput = (input) => {
 </script>
 
 <template>
-  <div class="input-text-wrapper">
+  <div class="input-wrapper">
     <form @submit.prevent="search" class="input-area">
       <input
         :aria-describedby="`${id}HelpBlock`"
@@ -101,8 +101,7 @@ const determineCorrectInput = (input) => {
 </template>
 
 <style scoped>
-.input-text-wrapper {
-  margin-bottom: 1rem;
+.input-wrapper {
   position: relative;
 }
 .input-area {
