@@ -60,9 +60,8 @@ const props = defineProps({
 });
 const incorrectInput = ref('');
 const emit = defineEmits(['update:modelValue']);
-const updateModelValue = (event) => {
-  emit('update:modelValue', event.target.value);
-  determineCorrectInput(event.target.value);
+const updateModelValue = (e) => {
+  emit('update:modelValue', e.target.value);
 };
 const inputClassName = computed(() => {
   return props.inputtingPlaceholder === 'on'
@@ -72,13 +71,17 @@ const inputClassName = computed(() => {
 const showInputtingPlaceholder = computed(
   () => props.inputtingPlaceholder === 'on' && props.modelValue
 );
-// 不正な値が入力されたら入力欄を赤くする
-//   半角数字のみ許可 /[^0-9]/g
-//   数字のみ許可 /[^０-９0-9]/g
-//   数字とハイフンのみ許可 /[^０-９0-9-－]/g
-const determineCorrectInput = (input) => {
-  const inputtedString = input.match(/[^0-9]/g);
-  incorrectInput.value = inputtedString?.length ? 'is-invalid' : '';
+// 正しい入力値かどうかを判定する
+//   半角数字のみ許可 /[0-9]/g
+//   数字のみ許可 /[０-９0-9]/g
+//   数字とハイフンのみ許可 /[０-９0-9-－]/g
+const determineInputValue = (e) => {
+  if (e.target.value === '') {
+    incorrectInput.value = '';
+    return;
+  }
+  const regex = /[0-9]/g;
+  incorrectInput.value = regex.test(e.target.value) ? 'is-valid' : 'is-invalid';
 };
 </script>
 
@@ -97,6 +100,7 @@ const determineCorrectInput = (input) => {
       type="tel"
       :value="modelValue"
       @input="updateModelValue"
+      @blur="determineInputValue"
     />
     <div
       v-if="showInputtingPlaceholder"
@@ -104,13 +108,13 @@ const determineCorrectInput = (input) => {
     >
       {{ placeholder }}
     </div>
-    <div class="form-text-area">
+    <div class="form-text-wrapper">
       <div :id="`${id}HelpBlock`" class="form-text text-muted">
         {{ helperText }}
       </div>
     </div>
     <div class="invalid-feedback">
-      <div v-if="incorrectInput && !invalidFeedback">
+      <div v-if="incorrectInput === 'is-invalid' && !invalidFeedback">
         半角数字のみで入力してください。
       </div>
       {{ invalidFeedback }}
@@ -128,11 +132,8 @@ const determineCorrectInput = (input) => {
   left: 8px;
   font-size: 0.5rem;
 }
-.form-text-area {
+.form-text-wrapper {
   display: flex;
   justify-content: space-between;
-}
-.form-text {
-  font-size: 0.6em;
 }
 </style>

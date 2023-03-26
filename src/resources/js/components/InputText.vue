@@ -160,7 +160,7 @@ const textMuted = computed(() =>
     >
       {{ placeholder }}
     </div>
-    <div class="form-text-area">
+    <div class="form-text-wrapper">
       <div :id="`${id}HelpBlock`" class="form-text text-muted">
         {{ helperText }}
       </div>
@@ -184,11 +184,8 @@ const textMuted = computed(() =>
   left: 8px;
   font-size: 0.5rem;
 }
-.form-text-area {
+.form-text-wrapper {
   display: flex;
   justify-content: space-between;
-}
-.form-text {
-  font-size: 0.6rem;
 }
 </style>

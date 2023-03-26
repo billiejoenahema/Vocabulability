@@ -318,6 +318,9 @@ li {
 .is-invalid {
   border-color: #dc3545;
 }
+.is-valid {
+  border-color: #198754;
+}
 .submit {
   width: 160px;
 }
@@ -352,6 +355,9 @@ li {
 }
 .text-muted {
   color: #6c757d;
+}
+.form-text {
+  font-size: 0.6em;
 }
 .form-check {
   display: block;

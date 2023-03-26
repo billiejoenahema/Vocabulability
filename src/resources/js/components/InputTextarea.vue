@@ -95,7 +95,7 @@ const textMuted = computed(() =>
     :value="modelValue"
     @input="updateModelValue"
   ></textarea>
-  <div class="form-text-area">
+  <div class="form-text-wrapper">
     <div :id="`${id}HelpBlock`" class="form-text text-muted">
       {{ helperText }}
     </div>
@@ -112,11 +112,8 @@ const textMuted = computed(() =>
 .textarea {
   margin: 0;
 }
-.form-text-area {
+.form-text-wrapper {
   display: flex;
   justify-content: space-between;
-}
-.form-text {
-  font-size: 0.6em;
 }
 </style>
