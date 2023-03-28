@@ -4,7 +4,9 @@ import { computed, onUnmounted, reactive, ref } from 'vue';
 import 'vue-select/dist/vue-select.css';
 import { useStore } from 'vuex';
 import YubinBango from 'yubinbango-core2';
+import InputCheckbox from '../components/InputCheckbox.vue';
 import InputDateSplit from '../components/InputDateSplit.vue';
+import InputEmail from '../components/InputEmail.vue';
 import InputPostalCode from '../components/InputPostalCode.vue';
 import InputTel from '../components/InputTel.vue';
 import InputText from '../components/InputText.vue';
@@ -28,6 +30,7 @@ const state = reactive({
   remarks: '',
   long_text: '',
   birth_date: '1970-12-03',
+  tags: [],
 });
 const invalidFeedback = computed(
   () => store.getters['profile/invalidFeedback']
@@ -41,23 +44,27 @@ const changeFile = (e) => {
 };
 // 入力された郵便番号から住所を自動入力
 const setAddress = (code) => {
-  // 7文字の半角数字でなければエラーメッセージを表示する
-  if (!code.match(/^\d{7}/)) {
-    store.commit('profile/setErrors', {
-      postal_code: ['半角数字7文字で入力してください。'],
-    });
-    return false;
-  }
+  store.commit('profile/setErrors', {});
+  // 7文字の半角数字でなければ処理を終了する
+  if (!code.match(/^\d{7}/)) return false;
   new YubinBango.Core(code, (address) => {
     state.address = `${address.region}${address.locality}${address.street}`;
-    if (!address.region) {
-      store.commit('profile/setErrors', {
-        postal_code: ['該当する住所が見つかりませんでした。'],
-      });
-    }
+    store.commit(
+      'profile/setErrors',
+      address.region
+        ? {}
+        : {
+            postal_code: ['該当する住所が見つかりませんでした。'],
+          }
+    );
   });
 };
 const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const tagOptions = [
+  { id: 1, name: 'blue' },
+  { id: 2, name: 'yellow' },
+  { id: 3, name: 'red' },
+];
 onUnmounted(() => URL.revokeObjectURL(fileUrl));
 </script>
 
@@ -91,6 +98,11 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
   <div>
     <button @click="sendMail()">メール送信</button>
   </div>
+  <hr />
+  <div class="input-checkbox">
+    <label>チェックボックス</label>
+    <InputCheckbox v-model="state.tags" :options="tagOptions" id="tags" />
+  </div>
   <div class="input-text">
     <InputDateSplit v-model="state.birth_date" id="birth_date" />
   </div>
@@ -110,7 +122,10 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
         @search="setAddress"
       />
     </div>
-    <div>住所: {{ state.address }}</div>
+    <div class="input-text">
+      <label>住所</label>
+      <input type="text" v-model="state.address" />
+    </div>
     <div class="input-text">
       <label>TEL</label>
       <InputTel
@@ -120,16 +135,18 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
         type="tel"
         placeholder="例）09012345678"
         inputting-placeholder="on"
+        maxlength="15"
       />
     </div>
     <div class="input-text">
       <label>Email</label>
-      <InputText
+      <InputEmail
         v-model="state.email"
         autocomplete="on"
         id="email"
         type="email"
         placeholder="例）example@example.com"
+        inputting-placeholder="on"
       />
     </div>
     <div class="input-text">
@@ -143,6 +160,7 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
         :maxlength="1000"
         input-counter="on"
         :rows="6"
+        placeholder="改行を含んだ長文を入力できます。"
       />
     </div>
     <div class="input-text">
@@ -177,13 +195,3 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
     </div>
   </div>
 </template>
-<style>
-pre {
-  opacity: 1;
-  margin: 0;
-  padding: 0;
-}
-.input-postal-code {
-  margin-right: 2rem;
-}
-</style>
