@@ -3,8 +3,9 @@ import { computed, onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import YubinBango from 'yubinbango-core2';
-import InputCheckbox from '../../components/InputCheckbox.vue';
 import InputDateSplit from '../../components/InputDateSplit.vue';
+import InputRadio from '../../components/InputRadio.vue';
+import InputTel from '../../components/InputTel.vue';
 import InputText from '../../components/InputText.vue';
 import ModalSubmit from '../../components/ModalSubmit.vue';
 
@@ -63,15 +64,17 @@ const submit = async () => {
     </div>
     <form class="mw-400">
       <div class="mb-2">
-        <label for="name" class="mb-1">名前</label>
+        <label for="name" class="mb-1"
+          >名前<span class="required-badge">必須</span></label
+        >
         <InputText
           type="text"
-          :class-value="'form-control' + isInvalid('name')"
+          :class-value="isInvalid('name')"
+          helper-text="50文字以内で入力"
           id="name"
+          input-counter="on"
           :invalid-feedback="invalidFeedback('name')"
           maxlength="50"
-          input-counter="on"
-          helper-text="名前は50文字以内で入力してください。"
           placeholder="例）山田 太郎"
           v-model="user.name"
         />
@@ -80,8 +83,10 @@ const submit = async () => {
         <label for="kana_name" class="mb-1">フリガナ</label>
         <InputText
           type="text"
-          :class-value="'form-control ' + isInvalid('kana_name')"
+          :class-value="isInvalid('kana_name')"
+          helper-text="カタカナ50文字以内で入力"
           id="kana_name"
+          input-counter="on"
           :invalid-feedback="invalidFeedback('kana_name')"
           maxlength="50"
           placeholder="例）ヤマダ タロウ"
@@ -94,23 +99,23 @@ const submit = async () => {
           id="birth_date"
           :class-value="isInvalid('birth_date')"
           :invalid-feedback="invalidFeedback('birth_date')"
-          :helper-text="'半角数字で入力してください。'"
+          :helper-text="'半角数字で入力'"
           v-model="user.birth_date"
         />
       </div>
-      <InputCheckbox
+      <InputRadio
         id="gender"
-        :class-value="'form-control ' + isInvalid('gender')"
+        :class-value="isInvalid('gender')"
         :invalid-feedback="invalidFeedback('gender')"
-        :options="genderFormOptions"
         legend="性別"
+        :options="genderFormOptions"
         v-model="user.gender"
       />
       <div class="mb-2">
         <label for="phone" class="mb-1">電話番号</label>
-        <InputText
-          type="text"
-          :class-value="'form-control' + isInvalid('phone')"
+        <InputTel
+          :class-value="isInvalid('phone')"
+          :helper-text="'半角数字で入力'"
           id="phone"
           :invalid-feedback="invalidFeedback('phone')"
           maxlength="14"
@@ -122,7 +127,7 @@ const submit = async () => {
         <label for="postcode" class="mb-1">郵便番号</label>
         <InputText
           :type="'text'"
-          :class-value="'form-control ' + isInvalid('postcode')"
+          :class-value="isInvalid('postcode')"
           :id="'postcode'"
           :invalid-feedback="invalidFeedback('postcode')"
           autocorrect="postal-code"
@@ -136,7 +141,7 @@ const submit = async () => {
         <label for="address" class="mb-1">住所</label>
         <InputText
           :type="'text'"
-          :class-value="'form-control ' + isInvalid('address')"
+          :class-value="isInvalid('address')"
           :id="'address'"
           :invalid-feedback="invalidFeedback('address')"
           maxlength="50"
