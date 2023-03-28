@@ -56,6 +56,7 @@ li {
   display: flex;
 }
 .nav-icon-group {
+  position: relative;
   align-items: center;
 }
 .nav-item {
@@ -337,18 +338,11 @@ li {
   font-size: 1rem;
   font-weight: 600;
 }
-.backdrop {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-}
 .user-menu {
   position: absolute;
-  top: 40px;
-  right: 10%;
-  background: rgb(66, 66, 66);
+  top: 24px;
+  right: -8px;
+  background: #333333;
 }
 .text-decoration-none {
   text-decoration: none;
