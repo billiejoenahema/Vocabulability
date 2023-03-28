@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import Avatar from '../components/Avatar.vue';
@@ -15,6 +15,23 @@ onMounted(() => {
 });
 
 const showMenu = ref(false);
+const avatarRef = ref(null);
+const menuRef = ref(null);
+const clickOutside = (e) => {
+  if (avatarRef.value?.contains(e.target)) return;
+  // メニュー以外をクリックしたらメニューを閉じる
+  if (e.target instanceof Node && !menuRef.value?.contains(e.target)) {
+    showMenu.value = false;
+  }
+};
+
+// windowにセットしたイベントはremoveするのを忘れずに
+onMounted(() => {
+  addEventListener('click', clickOutside);
+});
+onBeforeUnmount(() => {
+  removeEventListener('click', clickOutside);
+});
 
 const logout = async () => {
   if (confirm('ログアウトしますか？')) {
@@ -35,14 +52,15 @@ const logout = async () => {
     <router-link to="/item_create" class="nav-item">ItemCreate</router-link>
     <div class="row nav-icon-group">
       <a class="logout" @click.prevent.stop="logout()">Logout</a>
-      <div class="nav-item" @click="showMenu = !showMenu">
+      <div class="nav-item" ref="avatarRef" @click="showMenu = !showMenu">
         <Avatar :avatar="user.avatar" />
       </div>
-    </div>
-  </nav>
-  <teleport to="body">
-    <div class="backdrop" v-if="showMenu" @click.self="showMenu = false">
-      <ul class="dropdown-menu user-menu">
+      <ul
+        v-if="showMenu"
+        ref="menuRef"
+        @click.self="showMenu = false"
+        class="dropdown-menu user-menu"
+      >
         <li>
           <router-link to="/" class="dropdown-item" @click="showMenu = false"
             >Home</router-link
@@ -98,5 +116,5 @@ const logout = async () => {
         </li>
       </ul>
     </div>
-  </teleport>
+  </nav>
 </template>
