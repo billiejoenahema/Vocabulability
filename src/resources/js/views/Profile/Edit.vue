@@ -8,6 +8,7 @@ import InputRadio from '../../components/InputRadio.vue';
 import InputTel from '../../components/InputTel.vue';
 import InputText from '../../components/InputText.vue';
 import ModalSubmit from '../../components/ModalSubmit.vue';
+import { scrollToInvalidInput } from '../../functions/scrollToInvalidInput.js';
 
 const router = useRouter();
 const store = useStore();
@@ -48,12 +49,15 @@ const setAddress = (input) => {
     user.address = `${address.region}${address.locality}${address.street}`;
   });
 };
+// バリデーションエラーが表示されている項目までスクロールさせる
 
 const submit = async () => {
   await store.dispatch('profile/post', user);
-  if (!hasErrors.value) {
-    router.push('/profile');
+  if (hasErrors.value) {
+    scrollToInvalidInput();
+    return;
   }
+  router.push('/profile');
 };
 </script>
 

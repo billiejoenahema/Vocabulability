@@ -43,7 +43,7 @@ const logout = async () => {
 </script>
 
 <template>
-  <nav class="header-nav">
+  <nav id="navigation">
     <router-link to="/" class="brand-logo">Vocabulability</router-link>
     <router-link to="/word_check" class="nav-item">WordCheck</router-link>
     <router-link to="/word_list" class="nav-item">WordList</router-link>
