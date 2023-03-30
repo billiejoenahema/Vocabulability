@@ -62,10 +62,10 @@ const updateModelValue = (event) => {
         />
         <label :for="option.id">{{ option.name }}</label>
       </div>
-      <small class="helper-text">{{ helperText }}</small>
-    </div>
-    <div class="invalid-feedback">
-      {{ invalidFeedback }}
+      <div class="invalid-feedback">
+        {{ invalidFeedback }}
+      </div>
+      <small class="form-text">{{ helperText }}</small>
     </div>
   </fieldset>
 </template>
