@@ -75,6 +75,14 @@ const onInput = (e) => {
   ) {
     dayRef.value.select();
   }
+  // 「日」が2桁入力されたらフォーカスを外す
+  if (
+    e.target === dayRef.value &&
+    dayRef.value?.value.length === 2 &&
+    !e.isComposing
+  ) {
+    dayRef.value.blur();
+  }
   const updatedDate = `${yearRef.value.value}-${monthRef.value.value}-${dayRef.value.value}`;
   emit('update:modelValue', updatedDate);
 };
@@ -141,7 +149,7 @@ const onKeyDownEnter = (e) => {
   <div class="invalid-feedback">
     {{ invalidFeedback }}
   </div>
-  <small class="helper-text">{{ helperText }}</small>
+  <small class="form-text">{{ helperText }}</small>
 </template>
 
 <style scoped>
@@ -155,8 +163,5 @@ const onKeyDownEnter = (e) => {
   margin-right: 8px;
   margin-left: 16px;
   text-align: right;
-}
-.helper-text {
-  color: rgb(141, 141, 141);
 }
 </style>

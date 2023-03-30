@@ -70,50 +70,7 @@ const invalidInputFeedback = ref('');
 const setInvalidInputFeedback = () => {
   invalidInputFeedback.value = '無効な日付が入力されています。';
 };
-const invalidYear = () => {
-  const year = yearRef.value.value;
-  return Number(year) < 1 || Number(year) > 10000 || year.startsWith('0');
-};
-const invalidMonth = () => {
-  const month = monthRef.value.value;
-  return Number(month) < 1 || Number(month) > 12;
-};
-const invalidDay = () => {
-  const day = dayRef.value.value;
-  return Number(day) < 1 || Number(day) > 31;
-};
-// 無効な日付の場合はエラーメッセージを表示
-const setErrors = () => {
-  if (!isDateFilled()) return;
-  const regex = /^[0-9]*$/;
-  if (!yearRef.value.value.match(regex) || invalidYear()) {
-    invalidInputClassName.year = 'is-invalid';
-    setInvalidInputFeedback();
-  }
-  if (!monthRef.value.value.match(regex) || invalidMonth()) {
-    invalidInputClassName.month = 'is-invalid';
-    setInvalidInputFeedback();
-  }
-  if (!dayRef.value.value.match(regex) || invalidDay()) {
-    invalidInputClassName.day = 'is-invalid';
-    setInvalidInputFeedback();
-  }
-};
-// 「年」「月」「日」すべて入力済みかどうか
-const isDateFilled = () => {
-  return (
-    yearRef.value.value !== '' &&
-    monthRef.value.value !== '' &&
-    dayRef.value.value !== ''
-  );
-};
-
 const onInput = (e) => {
-  // エラー表示の初期化
-  invalidInputFeedback.value = '';
-  Object.keys(invalidInputClassName).forEach((key) => {
-    invalidInputClassName[key] = '';
-  });
   // 「年」が4桁入力されたら「月」に移動し入力値を選択した状態にする
   if (
     e.target === yearRef.value &&
@@ -130,20 +87,77 @@ const onInput = (e) => {
   ) {
     dayRef.value.select();
   }
+  // 「日」が2桁入力されたらフォーカスを外す
+  if (
+    e.target === dayRef.value &&
+    dayRef.value?.value.length === 2 &&
+    !e.isComposing
+  ) {
+    dayRef.value.blur();
+  }
   const updatedDate = `${yearRef.value.value}-${monthRef.value.value}-${dayRef.value.value}`;
-  // エラー表示
-  setErrors();
-
   emit('update:modelValue', updatedDate);
 };
 // Enterキー押下で次の入力欄へフォーカスをを移動する
-const onKeyDownEnter = (e) => {
+const onKeydownEnter = (e) => {
   // 文字変換中なら何もしない
   if (e.isComposing) return;
   // 文字変換中でなければEnter押下で次の入力欄へ移動し入力値を選択した状態にする
   if (e.target === yearRef.value) monthRef.value.select();
   if (e.target === monthRef.value) dayRef.value.select();
   if (e.target === dayRef.value) dayRef.value.blur();
+};
+// 「年」「月」「日」すべて入力済みかどうか
+const isDateFilled = () => {
+  return (
+    yearRef.value.value !== '' &&
+    monthRef.value.value !== '' &&
+    dayRef.value.value !== ''
+  );
+};
+// 無効な年かどうか
+const isInvalidYear = () => {
+  const year = yearRef.value.value;
+  return (
+    !year.match(/^[0-9]*$/) ||
+    Number(year) < 1 ||
+    Number(year) > 10000 ||
+    year.startsWith('0')
+  );
+};
+// 無効な月かどうか
+const isInvalidMonth = () => {
+  const month = monthRef.value.value;
+  return !month.match(/^[0-9]*$/) || Number(month) < 1 || Number(month) > 12;
+};
+// 無効な日かどうか
+const isInvalidDay = () => {
+  const day = dayRef.value.value;
+  return !day.match(/^[0-9]*$/) || Number(day) < 1 || Number(day) > 31;
+};
+// フォームからフォーカスが外れたら正しい入力値がどうかを判定する
+const onBlur = (e) => {
+  // エラー表示の初期化
+  invalidInputFeedback.value = '';
+  Object.keys(invalidInputClassName).forEach((key) => {
+    invalidInputClassName[key] = '';
+  });
+
+  // 年月日すべてが入力済みでなければなにもしない
+  if (!isDateFilled()) return;
+
+  if (isInvalidYear()) {
+    invalidInputClassName.year = 'is-invalid';
+    setInvalidInputFeedback();
+  }
+  if (isInvalidMonth()) {
+    invalidInputClassName.month = 'is-invalid';
+    setInvalidInputFeedback();
+  }
+  if (isInvalidDay()) {
+    invalidInputClassName.day = 'is-invalid';
+    setInvalidInputFeedback();
+  }
 };
 </script>
 
@@ -161,7 +175,8 @@ const onKeyDownEnter = (e) => {
     :value="date.year"
     ref="yearRef"
     @input="onInput"
-    @keydown.enter="onKeyDownEnter"
+    @keydown.enter="onKeydownEnter"
+    @blur="onBlur"
   />
   <span>年</span>
   <!-- 月 -->
@@ -177,7 +192,8 @@ const onKeyDownEnter = (e) => {
     :value="date.month"
     ref="monthRef"
     @input="onInput"
-    @keydown.enter="onKeyDownEnter"
+    @keydown.enter="onKeydownEnter"
+    @blur="onBlur"
   />
   <span>月</span>
   <!-- 日 -->
@@ -193,14 +209,15 @@ const onKeyDownEnter = (e) => {
     :value="date.day"
     ref="dayRef"
     @input="onInput"
-    @keydown.enter="onKeyDownEnter"
+    @keydown.enter="onKeydownEnter"
+    @blur="onBlur"
   />
   <span>日</span>
   <div class="invalid-feedback">
     {{ invalidFeedback }}
   </div>
   <div class="invalid-feedback">{{ invalidInputFeedback }}</div>
-  <small class="helper-text">{{ helperText }}</small>
+  <small class="form-text">{{ helperText }}</small>
 </template>
 
 <style scoped>
@@ -214,8 +231,5 @@ const onKeyDownEnter = (e) => {
   margin-right: 8px;
   margin-left: 16px;
   text-align: right;
-}
-.helper-text {
-  color: rgb(141, 141, 141);
 }
 </style>
