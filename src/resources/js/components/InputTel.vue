@@ -108,16 +108,14 @@ const determineInputValue = (e) => {
     >
       {{ placeholder }}
     </div>
-    <div class="form-text-wrapper">
-      <div :id="`${id}HelpBlock`" class="form-text text-muted">
-        {{ helperText }}
-      </div>
-    </div>
     <div class="invalid-feedback">
       <div v-if="incorrectInput === 'is-invalid' && !invalidFeedback">
         半角数字のみで入力してください。
       </div>
       {{ invalidFeedback }}
+    </div>
+    <div :id="`${id}HelpBlock`" class="form-text text-muted">
+      {{ helperText }}
     </div>
   </div>
 </template>

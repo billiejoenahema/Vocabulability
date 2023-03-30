@@ -12,10 +12,3 @@ defineProps({
     {{ invalidFeedback }}
   </div>
 </template>
-
-<style scoped>
-.invalidFeedback {
-  color: red;
-  font-size: 0.6rem;
-}
-</style>

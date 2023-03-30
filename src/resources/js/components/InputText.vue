@@ -160,6 +160,9 @@ const textMuted = computed(() =>
     >
       {{ placeholder }}
     </div>
+    <div class="invalid-feedback">
+      {{ invalidFeedback }}
+    </div>
     <div class="form-text-wrapper">
       <div :id="`${id}HelpBlock`" class="form-text text-muted">
         {{ helperText }}
@@ -167,9 +170,6 @@ const textMuted = computed(() =>
       <div v-if="showInputCounter" :class="'form-text ' + textMuted">
         {{ modelValue?.length ?? 0 }}/{{ maxlength }}
       </div>
-    </div>
-    <div class="invalid-feedback">
-      {{ invalidFeedback }}
     </div>
   </div>
 </template>

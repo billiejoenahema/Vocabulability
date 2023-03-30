@@ -65,7 +65,7 @@ const model = computed({
       {{ option.name }}
     </label>
   </div>
-  <small class="helper-text">{{ helperText }}</small>
+  <small class="form-text">{{ helperText }}</small>
   <div class="invalid-feedback">
     {{ invalidFeedback }}
   </div>
