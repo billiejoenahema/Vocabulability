@@ -25,12 +25,12 @@ class SaveRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:50',
-            'kana_name' => 'nullable|string|max:50',
-            'birth_date' => 'nullable|date:Y-m-d',
-            'gender' => 'nullable',
-            'phone' => 'nullable|string|max:14|regex:/^[0-9]+$/',
-            'postcode' => 'nullable|string|size:7|regex:/^[0-9]+$/',
-            'address' => 'nullable|string|max:50',
+            'kana_name' => 'required|string|max:50',
+            'birth_date' => 'required|date:Y-m-d',
+            'gender' => 'required',
+            'phone' => 'required|string|max:14|regex:/^[0-9]+$/',
+            'postcode' => 'required|string|size:7|regex:/^[0-9]+$/',
+            'address' => 'required|string|max:50',
         ];
     }
 
@@ -76,7 +76,6 @@ class SaveRequest extends FormRequest
         $this->merge([
             'postcode' => toNumberOnly($this->postcode),
             'phone' => toNumberOnly($this->phone),
-            'last_login_at' => null,
         ]);
     }
 }

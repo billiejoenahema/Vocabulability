@@ -18,7 +18,6 @@ if (!function_exists('toNumberOnly')) {
         $value = mb_convert_kana($value, "n");
         // ハイフンを取り除く
         $value = preg_replace('/[-－ー-−―‐ー-−ｰ]/', '', $value);
-        info($value);
 
         return $value;
     }

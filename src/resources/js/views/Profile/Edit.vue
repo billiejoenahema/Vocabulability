@@ -72,9 +72,8 @@ const submit = async () => {
           >名前<span class="required-badge">必須</span></label
         >
         <InputText
-          type="text"
           :class-value="isInvalid('name')"
-          helper-text="50文字以内で入力"
+          helper-text="50文字以内"
           id="name"
           input-counter="on"
           :invalid-feedback="invalidFeedback('name')"
@@ -84,11 +83,12 @@ const submit = async () => {
         />
       </div>
       <div class="mb-2">
-        <label for="kana_name" class="mb-1">フリガナ</label>
+        <label for="kana_name" class="mb-1"
+          >フリガナ<span class="required-badge">必須</span></label
+        >
         <InputText
-          type="text"
           :class-value="isInvalid('kana_name')"
-          helper-text="カタカナ50文字以内で入力"
+          helper-text="カタカナ50文字以内"
           id="kana_name"
           input-counter="on"
           :invalid-feedback="invalidFeedback('kana_name')"
@@ -98,12 +98,14 @@ const submit = async () => {
         />
       </div>
       <div class="mb-2">
-        <label for="birth_date" class="mb-1">生年月日</label>
+        <label for="birth_date" class="mb-1"
+          >生年月日<span class="required-badge">必須</span></label
+        >
         <InputDateSplit
-          id="birth_date"
           :class-value="isInvalid('birth_date')"
+          id="birth_date"
           :invalid-feedback="invalidFeedback('birth_date')"
-          :helper-text="'半角数字で入力'"
+          :helper-text="'半角数字'"
           v-model="user.birth_date"
         />
       </div>
@@ -116,10 +118,12 @@ const submit = async () => {
         v-model="user.gender"
       />
       <div class="mb-2">
-        <label for="phone" class="mb-1">電話番号</label>
+        <label for="phone" class="mb-1"
+          >電話番号<span class="required-badge">必須</span></label
+        >
         <InputTel
           :class-value="isInvalid('phone')"
-          :helper-text="'半角数字で入力'"
+          :helper-text="'半角数字'"
           id="phone"
           :invalid-feedback="invalidFeedback('phone')"
           maxlength="14"
@@ -128,13 +132,15 @@ const submit = async () => {
         />
       </div>
       <div class="mb-2">
-        <label for="postcode" class="mb-1">郵便番号</label>
+        <label for="postcode" class="mb-1"
+          >郵便番号<span class="required-badge">必須</span></label
+        >
         <InputText
-          :type="'text'"
+          autocorrect="postal-code"
           :class-value="isInvalid('postcode')"
           :id="'postcode'"
           :invalid-feedback="invalidFeedback('postcode')"
-          autocorrect="postal-code"
+          :helper-text="'半角数字7文字'"
           maxlength="8"
           placeholder="例）1010001"
           v-model="user.postcode"
@@ -142,12 +148,15 @@ const submit = async () => {
         />
       </div>
       <div class="mb-2">
-        <label for="address" class="mb-1">住所</label>
+        <label for="address" class="mb-1"
+          >住所<span class="required-badge">必須</span></label
+        >
         <InputText
-          :type="'text'"
           :class-value="isInvalid('address')"
           :id="'address'"
+          input-counter="on"
           :invalid-feedback="invalidFeedback('address')"
+          :helper-text="'50文字以内'"
           maxlength="50"
           placeholder="例）東京都千代田区丸の内１丁目９"
           v-model="user.address"
