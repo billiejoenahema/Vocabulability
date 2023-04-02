@@ -46,24 +46,29 @@ const props = defineProps({
   },
 });
 const incorrectInput = ref('');
+const regex = /\d{7}/;
 const emit = defineEmits(['update:modelValue', 'search']);
 const updateModelValue = (e) => {
   emit('update:modelValue', e.target.value);
 };
 const search = () => {
+  if (regex.test(props.modelValue)) {
+    incorrectInput.value = '';
+  }
   emit('search', props.modelValue);
 };
 const inputClassName = computed(() => {
   return `${props.classValue}`;
 });
 // 7桁の半角数字かどうかを判定する
-const determineInputValue = (e) => {
-  if (e.target.value === '') {
+const determineInputValue = () => {
+  if (props.modelValue === '') {
     incorrectInput.value = '';
     return;
   }
-  const regex = /\d{7}/;
-  incorrectInput.value = regex.test(e.target.value) ? 'is-valid' : 'is-invalid';
+  incorrectInput.value = regex.test(props.modelValue)
+    ? 'is-valid'
+    : 'is-invalid';
 };
 </script>
 
