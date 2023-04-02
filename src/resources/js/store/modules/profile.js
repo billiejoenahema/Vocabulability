@@ -56,6 +56,7 @@ const actions = {
   },
   async post({ commit }, data) {
     setLoading(commit, true);
+    delete data.last_login_at;
     await axios
       .post('/api/profile', data)
       .then((res) => {
