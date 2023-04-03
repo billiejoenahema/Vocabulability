@@ -66,15 +66,17 @@ const props = defineProps({
     type: String,
   },
 });
-const incorrectInput = ref('');
+const inputCorrectness = ref('');
+const emailRegex =
+  /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 const emit = defineEmits(['update:modelValue']);
 const updateModelValue = (e) => {
   emit('update:modelValue', e.target.value);
 };
 const inputClassName = computed(() => {
   return props.inputtingPlaceholder === 'on'
-    ? `${props.classValue} ${incorrectInput.value} show-inputting-placeholder`
-    : `${props.classValue} ${incorrectInput.value}`;
+    ? `${props.classValue} ${inputCorrectness.value} show-inputting-placeholder`
+    : `${props.classValue} ${inputCorrectness.value}`;
 });
 const showInputtingPlaceholder = computed(
   () => props.inputtingPlaceholder === 'on' && props.modelValue
@@ -82,13 +84,12 @@ const showInputtingPlaceholder = computed(
 // 正しいメールアドレスかどうかを判定する
 const determineInputValue = (e) => {
   if (e.target.value === '') {
-    incorrectInput.value = '';
-
+    inputCorrectness.value = '';
     return;
   }
-  const regex =
-    /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9]$/;
-  incorrectInput.value = regex.test(e.target.value) ? 'is-valid' : 'is-invalid';
+  inputCorrectness.value = emailRegex.test(e.target.value)
+    ? 'is-valid'
+    : 'is-invalid';
 };
 </script>
 
@@ -122,7 +123,7 @@ const determineInputValue = (e) => {
       </div>
     </div>
     <div class="invalid-feedback">
-      <div v-if="incorrectInput === 'is-invalid' && !invalidFeedback">
+      <div v-if="inputCorrectness === 'is-invalid' && !invalidFeedback">
         正しい形式で入力してください。
       </div>
       {{ invalidFeedback }}
