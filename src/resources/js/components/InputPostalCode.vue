@@ -45,7 +45,7 @@ const props = defineProps({
     type: String,
   },
 });
-const incorrectInput = ref('');
+const inputCorrectness = ref('');
 const regex = /\d{7}/;
 const emit = defineEmits(['update:modelValue', 'search']);
 const updateModelValue = (e) => {
@@ -53,7 +53,7 @@ const updateModelValue = (e) => {
 };
 const search = () => {
   if (regex.test(props.modelValue)) {
-    incorrectInput.value = '';
+    inputCorrectness.value = '';
   }
   emit('search', props.modelValue);
 };
@@ -63,10 +63,10 @@ const inputClassName = computed(() => {
 // 7桁の半角数字かどうかを判定する
 const determineInputValue = () => {
   if (props.modelValue === '') {
-    incorrectInput.value = '';
+    inputCorrectness.value = '';
     return;
   }
-  incorrectInput.value = regex.test(props.modelValue)
+  inputCorrectness.value = regex.test(props.modelValue)
     ? 'is-valid'
     : 'is-invalid';
 };
@@ -80,7 +80,7 @@ const determineInputValue = () => {
         autocorrect="postal-code"
         :autocomplete="autocomplete"
         class="form-control border-dark me-2"
-        :class="inputClassName + incorrectInput"
+        :class="inputClassName + inputCorrectness"
         :disabled="disabled"
         :id="id"
         inputmode="numeric"
@@ -101,7 +101,7 @@ const determineInputValue = () => {
       </div>
     </div>
     <div class="invalid-feedback">
-      <div v-if="incorrectInput === 'is-invalid' && !invalidFeedback">
+      <div v-if="inputCorrectness === 'is-invalid' && !invalidFeedback">
         7桁の半角数字で入力してください。
       </div>
       {{ invalidFeedback }}
