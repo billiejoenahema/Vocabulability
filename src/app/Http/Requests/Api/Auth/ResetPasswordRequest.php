@@ -24,7 +24,7 @@ class ResetPasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'string', 'max:255', 'email:rfc,spoof'],
+            'email' => ['required', 'string', 'max:255', 'email:rfc,spoof,filter'],
             'password' => ['required', 'regex:/^[¥x20-¥x7F]+$/', 'min:8', 'max:128'],
             'token' => ['required', 'string'],
         ];
