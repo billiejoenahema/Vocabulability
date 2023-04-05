@@ -66,6 +66,7 @@ const tagOptions = [
   { id: 3, name: 'red' },
 ];
 onUnmounted(() => URL.revokeObjectURL(fileUrl));
+const search = () => console.log('search!');
 </script>
 
 <template>
@@ -98,6 +99,11 @@ onUnmounted(() => URL.revokeObjectURL(fileUrl));
   <div>
     <button @click="sendMail()">メール送信</button>
   </div>
+  <hr />
+  <form @submit.prevent="search" class="search-input-wrapper needs-validation">
+    <label>検索</label>
+    <input type="search" />
+  </form>
   <hr />
   <div class="input-checkbox">
     <label>チェックボックス</label>
