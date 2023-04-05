@@ -1,16 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { store } from '../store/index';
+import ItemCreate from '../views/Item/ItemCreate';
+import ItemList from '../views/Item/ItemList';
 import Login from '../views/Login';
 import Main from '../views/Main';
 import NotFound from '../views/NotFound';
 import PasswordReset from '../views/PasswordReset';
+import ProfileDetail from '../views/Profile/Detail';
+import ProfileEdit from '../views/Profile/Edit';
 import WordCheck from '../views/Word/WordCheck';
 import WordCreate from '../views/Word/WordCreate';
 import WordList from '../views/Word/WordList';
-import ItemCreate from '../views/Item/ItemCreate';
-import ItemList from '../views/Item/ItemList';
-import ProfileDetail from '../views/Profile/Detail';
-import ProfileEdit from '../views/Profile/Edit';
-import { store } from '../store/index';
 
 const routes = [
   {
@@ -87,6 +87,7 @@ router.beforeEach(async (to, _from, next) => {
     // ログインせずに非公開ページにアクセスしたらログインページにリダイレクトさせる
     next('/login');
   } else {
+    store.dispatch('consts/getIfNeeded');
     next();
   }
 });

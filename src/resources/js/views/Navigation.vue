@@ -7,13 +7,6 @@ import Avatar from '../components/Avatar.vue';
 const store = useStore();
 const router = useRouter();
 const user = computed(() => store.getters['profile/data']);
-const isLogin = computed(() => store.getters['profile/isLogin']);
-
-onMounted(() => {
-  // ログイン中のときのみ定数を取得する
-  isLogin.value && store.dispatch('consts/getIfNeeded');
-});
-
 const showMenu = ref(false);
 const avatarRef = ref(null);
 const menuRef = ref(null);
