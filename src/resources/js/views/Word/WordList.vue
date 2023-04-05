@@ -99,7 +99,7 @@ const changePage = (page = null) => {
     </div>
     <div class="wrap">
       <div class="row" v-for="alphabet in alphabets" :key="alphabet">
-        <span v-if="index">/</span>
+        <span v-if="alphabet !== 'a'">/</span>
         <div
           class="index-item"
           :class="alphabet === params.filter && 'current-alphabet'"
@@ -155,6 +155,7 @@ const changePage = (page = null) => {
         <div v-else @click="onEdit(index)" class="list-item">
           {{ question.correct_answer }}
         </div>
+        <div></div>
         <button
           v-if="editable[index]"
           @click="updateQuestion(question, id)"
@@ -178,7 +179,7 @@ const changePage = (page = null) => {
           @click="deleteQuestion(question.id)"
           title="削除"
         >
-          <font-awesome-icon class="minus-icon" icon="minus" />
+          <font-awesome-icon class="trash-icon" icon="trash-can" />
         </button>
         <div v-else @click="onEdit(index)"></div>
         <InvalidFeedback
