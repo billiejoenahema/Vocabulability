@@ -4,10 +4,10 @@ import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import YubinBango from 'yubinbango-core2';
 import InputDateSplit from '../../components/InputDateSplit.vue';
+import InputEmail from '../../components/InputEmail.vue';
 import InputRadio from '../../components/InputRadio.vue';
 import InputTel from '../../components/InputTel.vue';
 import InputText from '../../components/InputText.vue';
-import ModalSubmit from '../../components/ModalSubmit.vue';
 import { scrollToInvalidInput } from '../../functions/scrollToInvalidInput.js';
 
 const router = useRouter();
@@ -66,7 +66,7 @@ const submit = async () => {
     <div class="row header">
       <div class="title">プロフィール編集</div>
     </div>
-    <form class="mw-400">
+    <form class="mw-400 needs-validation mb-2">
       <div class="mb-2">
         <label for="name" class="mb-1"
           >名前<span class="required-badge">必須</span></label
@@ -119,6 +119,19 @@ const submit = async () => {
       />
       <div class="mb-2">
         <label for="phone" class="mb-1"
+          >メールアドレス<span class="required-badge">必須</span></label
+        >
+        <InputEmail
+          :class-value="isInvalid('email')"
+          id="email"
+          :invalid-feedback="invalidFeedback('email')"
+          maxlength="255"
+          placeholder="例）example@example.com"
+          v-model="user.email"
+        />
+      </div>
+      <div class="mb-2">
+        <label for="phone" class="mb-1"
           >電話番号<span class="required-badge">必須</span></label
         >
         <InputTel
@@ -164,16 +177,8 @@ const submit = async () => {
       </div>
       <div class="between">
         <button type="button" @click="cancel" class="cancel">キャンセル</button>
-        <button
-          type="button"
-          class="submit"
-          data-bs-toggle="modal"
-          data-bs-target="#submit"
-        >
-          保存
-        </button>
+        <button type="button" class="submit" @click="submit">保存</button>
       </div>
     </form>
   </div>
-  <ModalSubmit @submit="submit" id="submit" />
 </template>
