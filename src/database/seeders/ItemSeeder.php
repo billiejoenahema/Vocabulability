@@ -15,6 +15,10 @@ class ItemSeeder extends Seeder
      */
     public function run()
     {
+        // 開発環境でのみ実行する
+        if (env('APP_ENV') !== 'local') {
+            return;
+        }
         $items = Item::factory()->count(10)->create();
         foreach ($items as $item) {
             Precedent::factory()->count(2)->create([

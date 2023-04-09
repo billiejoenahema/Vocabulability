@@ -15,6 +15,10 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        // 開発環境でのみ実行する
+        if (env('APP_ENV') !== 'local') {
+            return;
+        }
         // ゲストユーザー
         User::create([
             'name' => 'guest_user',
