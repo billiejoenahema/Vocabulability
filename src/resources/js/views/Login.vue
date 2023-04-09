@@ -12,7 +12,6 @@ const user = reactive({
   password: '',
 });
 const hasErrors = computed(() => store.getters['auth/hasErrors']);
-const isInvalid = computed(() => store.getters['auth/isInvalid']);
 const isForgotPassword = ref(false);
 
 const login = async () => {
