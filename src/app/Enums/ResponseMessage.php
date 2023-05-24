@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum ResponseEnum: string
+enum ResponseMessage: string
 {
     case LOGGED_IN = 'ログインにしました。';
     case LOGGED_OUT = 'ログアウトしました。';

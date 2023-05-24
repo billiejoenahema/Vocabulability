@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum CategoryEnum: string
+enum Category: string
 {
     case PERSON = '01';
 

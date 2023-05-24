@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum AuthorityEnum: int
+enum Authority: int
 {
     case ADMIN = 1;
     case GENERAL = 0;
