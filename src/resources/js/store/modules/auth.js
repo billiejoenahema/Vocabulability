@@ -27,7 +27,7 @@ const getters = {
 const actions = {
   async guestLogin({ commit }) {
     await axios
-      .get('http://localhost:8080/sanctum/csrf-cookie')
+      .get(`${process.env.MIX_APP_ENV_API_URL}/sanctum/csrf-cookie`)
       .then(async (res) => {
         await axios
           .post('/login', guest)
@@ -44,7 +44,7 @@ const actions = {
   },
   async login({ commit }, data) {
     await axios
-      .get('http://localhost:8080/sanctum/csrf-cookie')
+      .get(`${process.env.MIX_APP_ENV_API_URL}/sanctum/csrf-cookie`)
       .then(async (res) => {
         await axios
           .post('/login', data)

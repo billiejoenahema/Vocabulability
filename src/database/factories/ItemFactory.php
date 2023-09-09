@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Enums\CategoryEnum;
+use App\Enums\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,7 +21,7 @@ class ItemFactory extends Factory
         return [
             'name' => $this->faker->realText(10, 5),
             'name_kana' => config('const.JAPANESE_SYLLABARY')[$index],
-            'category' => CategoryEnum::PERSON->value,
+            'category' => Category::PERSON->value,
         ];
     }
 }

@@ -10,17 +10,16 @@ class ResetPasswordNotification extends Notification
 {
     use Queueable;
 
-    private $token;
-
-    private const PASSWORD_RESET_ENDPOINT = 'http://localhost:8080/password-reset';
+    private string $token;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct(string $token)
     {
+        $this->passwordResetEndpoint = env('APP_URL') . '/password-reset';
         $this->token = $token;
     }
 
@@ -30,7 +29,7 @@ class ResetPasswordNotification extends Notification
      */
     protected function resetUrl($notifiable): string
     {
-        return self::PASSWORD_RESET_ENDPOINT . '?' . http_build_query([
+        return $this->passwordResetEndpoint . '?' . http_build_query([
             'token' => $this->token,
             'email' => $notifiable->getEmailForPasswordReset(),
         ]);
