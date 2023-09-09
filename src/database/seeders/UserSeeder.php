@@ -15,8 +15,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // 開発環境でのみ実行する
-        if (env('APP_ENV') !== 'local') {
+        // 本番環境なら何もしない
+        if (env('APP_ENV') === 'production') {
             return;
         }
         // ゲストユーザー

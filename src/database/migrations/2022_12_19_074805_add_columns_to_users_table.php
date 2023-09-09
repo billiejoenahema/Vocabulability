@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('phone')->comment('電話番号')->nullable();
             $table->string('postcode')->comment('郵便番号')->nullable();
             $table->string('address')->comment('住所')->nullable();
-            $table->dropColumn('pref');
         });
     }
 
@@ -42,7 +41,6 @@ return new class extends Migration
                 'postcode',
                 'address',
             ]);
-            $table->integer('pref')->nullable()->comment('都道府県');
         });
     }
 };
