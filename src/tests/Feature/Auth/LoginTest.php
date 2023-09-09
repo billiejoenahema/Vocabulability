@@ -39,7 +39,7 @@ class LoginTest extends TestCase
      */
     public function test_guestLoginSuccess()
     {
-        $this->getJson('http://localhost:8080/sanctum/csrf-cookie');
+        $this->getJson(env('APP_URL') . '/sanctum/csrf-cookie');
         $this->postJson('/login', $this->correctData)->assertOk();
     }
 
@@ -50,7 +50,7 @@ class LoginTest extends TestCase
      */
     public function test_guestLoginFailure()
     {
-        $this->getJson('http://localhost:8080/sanctum/csrf-cookie');
+        $this->getJson(env('APP_URL') . '/sanctum/csrf-cookie');
         $this->postJson('/login', $this->incorrectData)->assertUnauthorized();
     }
 }

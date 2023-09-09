@@ -32,8 +32,8 @@ const actions = {
       .then((res) => {
         commit('setData', res.data);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        commit('setData', {});
       });
   },
   async getIfNeeded({ dispatch, getters }) {
