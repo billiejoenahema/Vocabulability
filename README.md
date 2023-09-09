@@ -4,8 +4,8 @@ This application allows you to learn English vocabulary necessary for engineers.
 
 ## Container structures
 
-├── app
-├── web
+├── app<br>
+├── web<br>
 └── db
 
 ### app container
