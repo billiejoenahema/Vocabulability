@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Enums\ResponseEnum;
+use App\Enums\ResponseMessage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ImportRequest;
 use App\Http\Requests\Item\IndexRequest;
@@ -61,7 +61,7 @@ class ItemController extends Controller
             $item->precedents()->createMany($data['precedents']);
         });
 
-        return response()->json(['message' => ResponseEnum::CREATED->value], Response::HTTP_CREATED);
+        return response()->json(['message' => ResponseMessage::CREATED->value], Response::HTTP_CREATED);
     }
 
     /**
@@ -75,7 +75,7 @@ class ItemController extends Controller
     {
         Excel::import(new ItemImport, $request->file('file'));
 
-        return response()->json(['message' => ResponseEnum::CREATED->value], Response::HTTP_CREATED);
+        return response()->json(['message' => ResponseMessage::CREATED->value], Response::HTTP_CREATED);
     }
 
 
@@ -95,7 +95,7 @@ class ItemController extends Controller
             $item->precedents()->upsert($data['precedents'], ['id']);
         });
 
-        return response()->json(['message' => ResponseEnum::UPDATED->value], Response::HTTP_OK);
+        return response()->json(['message' => ResponseMessage::UPDATED->value], Response::HTTP_OK);
     }
 
     /**
@@ -108,6 +108,6 @@ class ItemController extends Controller
     {
         $item->delete();
 
-        return response()->json(['message' => ResponseEnum::DELETED->value], Response::HTTP_OK);
+        return response()->json(['message' => ResponseMessage::DELETED->value], Response::HTTP_OK);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Enums\ResponseEnum;
+use App\Enums\ResponseMessage;
 use App\Http\Controllers\Controller;
 use App\Models\Precedent;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,6 +20,6 @@ class PrecedentController extends Controller
     {
         $precedent->delete();
 
-        return response()->json(['message' => ResponseEnum::DELETED->value], Response::HTTP_OK);
+        return response()->json(['message' => ResponseMessage::DELETED->value], Response::HTTP_OK);
     }
 }

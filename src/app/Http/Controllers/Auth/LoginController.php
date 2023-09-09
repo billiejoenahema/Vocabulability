@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Enums\ResponseEnum;
+use App\Enums\ResponseMessage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Auth\AuthenticationException;
@@ -39,7 +39,7 @@ final class LoginController extends Controller
             });
 
             return new JsonResponse([
-                'message' => ResponseEnum::LOGGED_IN->value,
+                'message' => ResponseMessage::LOGGED_IN->value,
             ]);
         }
 

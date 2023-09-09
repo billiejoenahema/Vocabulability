@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Enums\ResponseEnum;
+use App\Enums\ResponseMessage;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -43,7 +43,7 @@ class ItemPolicy
         if ($user->id === auth()->id() && $user->is_admin) {
             return true;
         }
-        return abort(403, ResponseEnum::POLICY_ABORT->value);
+        return abort(403, ResponseMessage::POLICY_ABORT->value);
     }
 
     /**
@@ -57,7 +57,7 @@ class ItemPolicy
         if ($user->id === auth()->id() && $user->is_admin) {
             return true;
         }
-        return abort(403, ResponseEnum::POLICY_ABORT->value);
+        return abort(403, ResponseMessage::POLICY_ABORT->value);
     }
 
     /**
@@ -71,6 +71,6 @@ class ItemPolicy
         if ($user->id === auth()->id() && $user->is_admin) {
             return true;
         }
-        return abort(403, ResponseEnum::POLICY_ABORT->value);
+        return abort(403, ResponseMessage::POLICY_ABORT->value);
     }
 }

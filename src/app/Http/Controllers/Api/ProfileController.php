@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Enums\ResponseEnum;
+use App\Enums\ResponseMessage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\SaveRequest;
 use Illuminate\Http\JsonResponse;
@@ -36,6 +36,6 @@ class ProfileController extends Controller
             $user->fill($data)->save();
         });
 
-        return response()->json(['message' => ResponseEnum::UPDATED->value], Response::HTTP_OK);
+        return response()->json(['message' => ResponseMessage::UPDATED->value], Response::HTTP_OK);
     }
 }

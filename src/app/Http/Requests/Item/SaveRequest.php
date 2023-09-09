@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Item;
 
-use App\Enums\CategoryEnum;
+use App\Enums\Category;
 use App\Rules\EnglishWord;
 use App\Rules\Hiragana;
 use App\Rules\NotOnlyEnglish;
@@ -31,7 +31,7 @@ class SaveRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:50', Rule::unique('items')->ignore($this->id), new NotOnlyEnglish],
             'name_kana' => ['required', 'string', 'max:50', new Hiragana],
-            'category' => ['required', 'string', Rule::in(CategoryEnum::values())],
+            'category' => ['required', 'string', Rule::in(Category::values())],
             'precedents' => 'required|array',
             'precedents.*.name' => ['required', 'string', 'max:50', new EnglishWord],
             'description' => 'nullable|string|max:200'

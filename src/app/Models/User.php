@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\AuthorityEnum;
+use App\Enums\Authority;
 use App\Notifications\Api\Auth\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -129,7 +129,7 @@ class User extends Authenticatable
     protected function authority(): Attribute
     {
         return Attribute::make(
-            get: fn () => AuthorityEnum::tryFrom($this->is_admin)->text(),
+            get: fn () => Authority::tryFrom($this->is_admin)->text(),
         );
     }
 
