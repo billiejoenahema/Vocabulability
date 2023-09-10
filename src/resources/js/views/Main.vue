@@ -1,4 +1,5 @@
 <script setup>
+import { useDropZone } from '@vueuse/core';
 import 'floating-vue/dist/style.css';
 import { computed, onUnmounted, reactive, ref } from 'vue';
 import 'vue-select/dist/vue-select.css';
@@ -14,6 +15,22 @@ import InputTextarea from '../components/InputTextarea.vue';
 import Tooltip from '../components/Tooltip.vue';
 
 const store = useStore();
+
+const filesData = ref([])
+function onDrop(files) {
+  filesData.value = []
+  if (files) {
+    filesData.value = files.map(file => ({
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      lastModified: file.lastModified,
+    }))
+  }
+}
+
+const dropZoneRef = ref()
+const { isOverDropZone } = useDropZone(dropZoneRef, onDrop)
 
 const sendMail = () => {
   store.dispatch('test_mail/send');
@@ -83,6 +100,18 @@ const search = () => console.log('search!');
     </ul>
   </div>
   <hr />
+    <div ref="dropZoneRef" class="drop-zone">
+      <div>ここへファイルをドロップ</div>
+      <div> isOverDropZone: <BooleanDisplay :value="isOverDropZone" /></div>
+      <div class="flex flex-wrap justify-center items-center">
+        <div v-for="(file, index) in filesData" :key="index" class="w-200px bg-black-200/10 ma-2 pa-6">
+          <p>ファイル名: {{ file.name }}</p>
+          <p>サイズ: {{ file.size }}</p>
+          <p>種別: {{ file.type }}</p>
+          <p>最終更新日: {{ file.lastModified }}</p>
+        </div>
+      </div>
+    </div>
   <VTooltip :triggers="['click']" auto-hide>
     <p>テキストテキストテキスト...</p>
     <template #popper>
