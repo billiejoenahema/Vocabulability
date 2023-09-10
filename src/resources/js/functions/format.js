@@ -2,6 +2,9 @@ import dayjs from 'dayjs';
 
 // 郵便番号フォーマット
 export const formatPostcode = (value = '') => {
+  if (!value) return '';
+  if (value.length !== 7) return value;
+
   const code1 = value.slice(0, 3);
   const code2 = value.slice(3);
   return `〒${code1}-${code2}`;
