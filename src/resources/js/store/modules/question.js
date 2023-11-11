@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { shuffle } from '../../functions/shuffle';
 
 const setLoading = (commit, bool) =>
   commit('loading/setLoading', bool, { root: true });
@@ -26,9 +25,6 @@ const getters = {
   },
   params(state) {
     return state.params ?? {};
-  },
-  randomData(state) {
-    return shuffle(Object.entries(state.data?.data));
   },
   hasErrors(state) {
     return Object.keys(state.errors).length > 0;
@@ -59,6 +55,19 @@ const actions = {
     setLoading(commit, true);
     await axios
       .get('/api/questions', { params })
+      .then((res) => {
+        commit('setErrors', {});
+        commit('setData', res);
+      })
+      .catch((err) => {
+        commit('setErrors', err.response.data.errors);
+      });
+    setLoading(commit, false);
+  },
+  async getRandom({ commit }) {
+    setLoading(commit, true);
+    await axios
+      .get('/api/questions/random')
       .then((res) => {
         commit('setErrors', {});
         commit('setData', res);

@@ -3,14 +3,14 @@ import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
-store.dispatch('question/get');
-const questions = computed(() => store.getters['question/randomData']);
+store.dispatch('question/getRandom');
+const questions = computed(() => store.getters['question/data']);
 const index = ref(0);
 const isShowAnswer = ref(false);
 const isLastQuestion = ref(false);
 const toNextQuestion = async () => {
   if (isLastQuestion.value) {
-    await store.dispatch('question/get');
+    await store.dispatch('question/getRandom');
     index.value = 0;
     isLastQuestion.value = false;
     return;

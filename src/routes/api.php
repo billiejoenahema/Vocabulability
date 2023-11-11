@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // 問題
     Route::get('/questions', [QuestionController::class, 'index'])->can('viewAny', Question::class);
+    Route::get('/questions/random', [QuestionController::class, 'randomIndex'])->can('viewAny', Question::class);
     Route::post('/questions', [QuestionController::class, 'store'])->can('create', Question::class);
     Route::post('/questions/import', [QuestionController::class, 'importCSV'])->can('create', Question::class);
     Route::patch('/questions/{question}', [QuestionController::class, 'update'])->can('update', Question::class);

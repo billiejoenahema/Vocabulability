@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 class QuestionController extends Controller
 {
     private const PER_PAGE = 10;
+    private const PER_PAGE_FOR_RANDOM = 100;
 
     /**
      * 問題一覧を取得する。
@@ -45,6 +46,20 @@ class QuestionController extends Controller
             $query->sortByWordAsc();
         }
         $questions = $query->paginate(self::PER_PAGE);
+
+        return QuestionResource::collection($questions);
+    }
+    /**
+     * ランダムな並びの問題一覧を取得する。
+     *
+     * @param IndexRequest $request
+     * @return AnonymousResourceCollection
+     */
+    public function randomIndex(IndexRequest $request): AnonymousResourceCollection
+    {
+        $query = Question::query();
+        $query->randomSort();
+        $questions = $query->paginate(self::PER_PAGE_FOR_RANDOM);
 
         return QuestionResource::collection($questions);
     }

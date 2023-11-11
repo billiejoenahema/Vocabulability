@@ -30,6 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @method static \Illuminate\Database\Eloquent\Builder|Question sortByColumn($column, $order)
  * @method static \Illuminate\Database\Eloquent\Builder|Question sortByWordAsc()
+ * @method static \Illuminate\Database\Eloquent\Builder|Question randomSort()
  */
 class Question extends Model
 {
@@ -76,6 +77,19 @@ class Question extends Model
     public function scopeSortByWordAsc($query): Builder|Question
     {
         $query->orderBy('word', 'asc');
+
+        return $query;
+    }
+
+    /**
+     * ランダムな並びでソートするスコープ
+     *
+     * @param Builder|Question $query
+     * @return Builder|Question
+     */
+    public function scopeRandomSort($query): Builder|Question
+    {
+        $query->inRandomOrder();
 
         return $query;
     }
