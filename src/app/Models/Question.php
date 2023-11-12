@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use function in_array;
 
 /**
  * App\Models\Question
@@ -56,7 +59,7 @@ class Question extends Model
      * @param string $order
      * @return Builder|Question
      */
-    public function scopeSortByColumn($query, $column, $order): Builder|Question
+    public function scopeSortByColumn($query, $column, $order): Builder|self
     {
         $columns = [
             'word',
@@ -74,7 +77,7 @@ class Question extends Model
      * @param Builder|Question $query
      * @return Builder|Question
      */
-    public function scopeSortByWordAsc($query): Builder|Question
+    public function scopeSortByWordAsc($query): Builder|self
     {
         $query->orderBy('word', 'asc');
 
@@ -87,7 +90,7 @@ class Question extends Model
      * @param Builder|Question $query
      * @return Builder|Question
      */
-    public function scopeRandomSort($query): Builder|Question
+    public function scopeRandomSort($query): Builder|self
     {
         $query->inRandomOrder();
 

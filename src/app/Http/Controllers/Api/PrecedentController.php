@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Enums\ResponseMessage;
@@ -13,7 +15,7 @@ class PrecedentController extends Controller
     /**
      * 事例を削除する。
      *
-     * @param  Precedent $precedent
+     * @param Precedent $precedent
      * @return JsonResponse
      */
     public function destroy(Precedent $precedent): JsonResponse

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Item;
 
 use App\Models\Item;
@@ -17,7 +19,7 @@ class DeleteTest extends TestCase
     /**
      * テスト前の共通処理
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Item;
 
 use App\Models\Item;
@@ -17,7 +19,7 @@ class IndexSortTest extends TestCase
     /**
      * テスト前の共通処理
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -44,7 +46,7 @@ class IndexSortTest extends TestCase
 
         $response->assertStatus(200);
         $actual = collect($response->json('data'));
-        $this->assertEquals(
+        $this->assertSame(
             $actual->sortByDesc('word')->pluck('word'),
             $actual->pluck('word')
         );
@@ -61,7 +63,7 @@ class IndexSortTest extends TestCase
 
         $response->assertStatus(200);
         $actual = collect($response->json('data'));
-        $this->assertEquals(
+        $this->assertSame(
             $actual->sortBy('name_kana')->pluck('name'),
             $actual->pluck('name')
         );

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\Api\Auth\ForgotPasswordController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\ItemController;
@@ -27,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/forgot-password', ForgotPasswordController::class);
 Route::post('/reset-password', ResetPasswordController::class);
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::group(['middleware' => ['auth:sanctum']], static function () {
 
     // ログインユーザー情報
     Route::get('/profile', [ProfileController::class, 'index']);
@@ -37,7 +39,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/test-mail', MailTestController::class);
 
     // 定数
-    Route::get('/const', fn () => config('const'));
+    Route::get('/const', static fn () => config('const'));
 
     // 問題
     Route::get('/questions', [QuestionController::class, 'index'])->can('viewAny', Question::class);

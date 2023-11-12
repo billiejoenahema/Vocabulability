@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Question;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -42,7 +44,7 @@ class IndexRequest extends FormRequest
             'word',
             'correct_answer',
         ];
-        $column = Arr::first($columns, function ($value) use ($key) {
+        $column = Arr::first($columns, static function ($value) use ($key) {
             return $value === $key;
         }, null);
 

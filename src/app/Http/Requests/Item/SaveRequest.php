@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Item;
 
 use App\Enums\Category;
@@ -73,7 +75,7 @@ class SaveRequest extends FormRequest
      */
     public function isInputted($array): bool
     {
-        $filtered = collect($array)->filter(function ($key, $value) {
+        $filtered = collect($array)->filter(static function ($key, $value) {
             return filled($value);
         });
 

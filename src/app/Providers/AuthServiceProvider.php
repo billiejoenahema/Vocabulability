@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Models\Item;
@@ -30,7 +32,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        ResetPassword::createUrlUsing(function ($user, string $token) {
+        ResetPassword::createUrlUsing(static function ($user, string $token) {
             return env('HOME_URL') . '/password-reset?email=' . $user->email . '&token=' . $token;
         });
     }

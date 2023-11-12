@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Imports;
 
 use App\Models\Item;
@@ -24,7 +26,7 @@ class ItemImport implements ToCollection
                 'item_id' => $item->id,
                 'name' => $row[2], // 行の3列目
             ]);
-            if (!empty($row[3])) {
+            if (! empty($row[3])) {
                 Precedent::create([
                     'item_id' => $item->id,
                     'name' => $row[3], // 行の4列目

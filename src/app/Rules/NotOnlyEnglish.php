@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Rules;
 
+use Closure;
 use Illuminate\Contracts\Validation\InvokableRule;
 
 class NotOnlyEnglish implements InvokableRule
@@ -9,9 +12,9 @@ class NotOnlyEnglish implements InvokableRule
     /**
      * 英字のみは許可しない。
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
-     * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     * @param string $attribute
+     * @param mixed $value
+     * @param Closure(string): \Illuminate\Translation\PotentiallyTranslatedString $fail
      * @return void
      */
     public function __invoke($attribute, $value, $fail)

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-if (!function_exists('toNumberOnly')) {
+if (! function_exists('toNumberOnly')) {
     /**
      * 全角数字を半角に変換し、ハイフンを取り除く。
      *
@@ -11,7 +11,7 @@ if (!function_exists('toNumberOnly')) {
      */
     function toNumberOnly($value): ?string
     {
-        if (is_null($value)) {
+        if (null === $value) {
             return null;
         }
         // 数字を半角に変換する
@@ -23,7 +23,7 @@ if (!function_exists('toNumberOnly')) {
     }
 }
 
-if (!function_exists('toHalfWidth')) {
+if (! function_exists('toHalfWidth')) {
     /**
      * 全角数字を半角に変換する。
      *
@@ -32,7 +32,7 @@ if (!function_exists('toHalfWidth')) {
      */
     function toHalfWidth($value): ?string
     {
-        if (is_null($value)) {
+        if (null === $value) {
             return null;
         }
         // 数字を半角に変換する

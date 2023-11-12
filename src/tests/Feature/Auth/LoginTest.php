@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Auth;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,7 +17,7 @@ class LoginTest extends TestCase
     /**
      * テスト前の共通処理
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

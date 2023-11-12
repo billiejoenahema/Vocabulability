@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Enums\ResponseMessage;
@@ -56,7 +58,7 @@ class ItemController extends Controller
     public function store(SaveRequest $request): JsonResponse
     {
         $data = $request->all();
-        DB::transaction(function () use ($data) {
+        DB::transaction(static function () use ($data) {
             $item = Item::create($data);
             $item->precedents()->createMany($data['precedents']);
         });
@@ -82,15 +84,15 @@ class ItemController extends Controller
     /**
      * 項目を更新する。
      *
-     * @param  SaveRequest  $request
-     * @param  Item $item
+     * @param SaveRequest $request
+     * @param Item $item
      * @return JsonResponse
      */
     public function update(SaveRequest $request, Item $item): JsonResponse
     {
         $data = $request->all();
 
-        DB::transaction(function () use ($data, $item) {
+        DB::transaction(static function () use ($data, $item) {
             $item->fill($data)->save();
             $item->precedents()->upsert($data['precedents'], ['id']);
         });
@@ -101,7 +103,7 @@ class ItemController extends Controller
     /**
      * 項目を削除する。
      *
-     * @param  Item $item
+     * @param Item $item
      * @return JsonResponse
      */
     public function destroy(Item $item): JsonResponse

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Item;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -45,9 +47,9 @@ class IndexRequest extends FormRequest
             'precedent',
         ];
 
-        $key = array_search($this->column, $columns);
+        $key = array_search($this->column, $columns, true);
 
-        if (!$key) {
+        if (! $key) {
             return 'id';
         }
 

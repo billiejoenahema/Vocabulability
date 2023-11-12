@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
-use App\Models\Precedent;
 use App\Models\Item;
+use App\Models\Precedent;
 use Illuminate\Database\Seeder;
 
 class ItemSeeder extends Seeder

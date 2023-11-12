@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Enums\ResponseMessage;
@@ -24,7 +26,7 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  SaveRequest $request
+     * @param SaveRequest $request
      * @return \Illuminate\Http\Response
      */
     public function update(SaveRequest $request)
@@ -32,7 +34,7 @@ class ProfileController extends Controller
         $user = auth()->user();
         $data = $request->all();
 
-        DB::transaction(function () use ($data, $user) {
+        DB::transaction(static function () use ($data, $user) {
             $user->fill($data)->save();
         });
 

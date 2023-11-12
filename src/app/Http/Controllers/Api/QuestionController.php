@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Enums\ResponseMessage;
@@ -74,7 +76,7 @@ class QuestionController extends Controller
     public function store(SaveRequest $request): JsonResponse
     {
         $data = $request->all();
-        DB::transaction(function () use ($data) {
+        DB::transaction(static function () use ($data) {
             Question::create($data);
         });
 
@@ -98,14 +100,14 @@ class QuestionController extends Controller
     /**
      * 問題を更新する。
      *
-     * @param SaveRequest  $request
-     * @param  Question  $question
+     * @param SaveRequest $request
+     * @param Question $question
      * @return JsonResponse
      */
     public function update(SaveRequest $request, Question $question): JsonResponse
     {
         $data = $request->all();
-        DB::transaction(function () use ($data, $question) {
+        DB::transaction(static function () use ($data, $question) {
             $question->fill($data)->save();
         });
 
@@ -115,7 +117,7 @@ class QuestionController extends Controller
     /**
      * 問題を削除する。
      *
-     * @param  Question  $question
+     * @param Question $question
      * @return JsonResponse
      */
     public function destroy(Question $question): JsonResponse

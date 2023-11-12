@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
@@ -20,7 +22,7 @@ class ResetPasswordController extends Controller
     {
         $credentials = request()->only(['email', 'token', 'password']);
 
-        $status = Password::reset($credentials, function (User $user, string $password) {
+        $status = Password::reset($credentials, static function (User $user, string $password) {
             $user->password = bcrypt($password);
             $user->save();
         });

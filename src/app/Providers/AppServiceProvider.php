@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Collection;
@@ -30,9 +32,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // Model::shouldBeStrict(!$this->app->isProduction());
-        Model::preventLazyLoading(!$this->app->isProduction());
+        Model::preventLazyLoading(! $this->app->isProduction());
         // Model::preventSilentlyDiscardingAttributes(!$this->app->isProduction());
-        Model::preventAccessingMissingAttributes(!$this->app->isProduction());
+        Model::preventAccessingMissingAttributes(! $this->app->isProduction());
 
         JsonResource::withoutWrapping();
 

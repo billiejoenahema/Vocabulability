@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Models\User;
@@ -32,7 +34,7 @@ class GenerateAdminUser extends Command
         $userName = $this->argument('userName');
         $password = str()->random(32);
 
-        $user = DB::transaction(function () use ($userName, $password) {
+        $user = DB::transaction(static function () use ($userName, $password) {
             $user = User::create([
                 'name' => $userName,
                 'email' => $userName . '@example.com',

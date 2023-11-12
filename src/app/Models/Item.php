@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Http\Requests\Item\IndexRequest;
@@ -10,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use function in_array;
 
 /**
  * App\Models\Item
@@ -84,7 +87,7 @@ class Item extends Model
      * @param IndexRequest $request
      * @return Builder|Item
      */
-    public function scopeSearchCondition($query, $request): Builder|Item
+    public function scopeSearchCondition($query, $request): Builder|self
     {
         if ($request['keyword']) {
             $query->where('name', 'like', "%{$request['keyword']}%")
@@ -105,7 +108,7 @@ class Item extends Model
      * @param string $order
      * @return Builder|Item
      */
-    public function scopeSortByColumn($query, $column, $order): Builder|Item
+    public function scopeSortByColumn($query, $column, $order): Builder|self
     {
         $itemColumns = [
             'id',
@@ -131,11 +134,11 @@ class Item extends Model
     {
         $items = $query->get();
         if ($direction === 'asc') {
-            $items = collect($items)->sortBy(function ($item) {
+            $items = collect($items)->sortBy(static function ($item) {
                 return implode(' ', $item->precedents->pluck('name')->toArray());
             })->values();
         } else {
-            $items = collect($items)->sortByDesc(function ($item) {
+            $items = collect($items)->sortByDesc(static function ($item) {
                 return implode(' ', $item->precedents->pluck('name')->toArray());
             })->values();
         }
@@ -149,7 +152,7 @@ class Item extends Model
      * @param Builder|Item $query
      * @return Builder|Item
      */
-    public function scopeSortByIdDesc($query): Builder|Item
+    public function scopeSortByIdDesc($query): Builder|self
     {
         $query->orderBy('id', 'desc');
 
