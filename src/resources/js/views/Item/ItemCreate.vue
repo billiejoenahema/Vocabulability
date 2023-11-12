@@ -142,7 +142,7 @@ const importCSV = async () => {
           ref="csvRef"
           :class="isInvalid('file')"
         />
-        <invalid-feedback :errors="invalidFeedback('file')" />
+        <Invalid-feedback :invalid-feedback="invalidFeedback('file')" />
       </div>
       <button @click="importCSV()">CSVファイルをインポート</button>
     </div>
