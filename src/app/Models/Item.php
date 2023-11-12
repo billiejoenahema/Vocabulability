@@ -18,7 +18,6 @@ use Illuminate\Support\Collection;
  * @method static \Illuminate\Database\Eloquent\Builder|Item newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Item newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Item query()
- * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Example[] $examples
  * @property-read int|null $examples_count
  * @method static \Illuminate\Database\Query\Builder|Item onlyTrashed()
@@ -48,6 +47,7 @@ use Illuminate\Support\Collection;
  * @property string|null $description 説明
  * @method static \Illuminate\Database\Eloquent\Builder|Item sortByPrecedentsColumn($order)
  * @method static \Illuminate\Database\Eloquent\Builder|Item whereDescription($value)
+ * @mixin \Eloquent
  */
 class Item extends Model
 {

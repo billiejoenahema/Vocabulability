@@ -27,10 +27,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereWord($value)
- * @mixin \Eloquent
  * @method static \Illuminate\Database\Eloquent\Builder|Question sortByColumn($column, $order)
  * @method static \Illuminate\Database\Eloquent\Builder|Question sortByWordAsc()
  * @method static \Illuminate\Database\Eloquent\Builder|Question randomSort()
+ * @mixin \Eloquent
  */
 class Question extends Model
 {

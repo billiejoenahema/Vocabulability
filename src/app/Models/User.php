@@ -53,9 +53,11 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereKanaName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePostcode($value)
- * @mixin \Eloquent
  * @property string|null $last_login_at 最終ログイン
  * @method static \Illuminate\Database\Eloquent\Builder|User whereLastLoginAt($value)
+ * @property int|null $pref 都道府県
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePref($value)
+ * @mixin \Eloquent
  */
 class User extends Authenticatable
 {

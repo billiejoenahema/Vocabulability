@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Example newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Example newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Example query()
- * @mixin \Eloquent
  * @property-read \App\Models\Item|null $item
  * @method static \Illuminate\Database\Query\Builder|Example onlyTrashed()
  * @method static \Illuminate\Database\Query\Builder|Example withTrashed()
@@ -31,6 +30,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Example whereItemId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Example whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Example whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Precedent extends Model
 {
