@@ -388,6 +388,9 @@ li {
   position: relative;
   padding: 8px;
 }
+.cursor-pointer {
+  cursor: pointer;
+}
 
 @media screen and (max-width: 600px) {
   /* スクリーンサイズが600px以下の場合に適用 */

@@ -157,7 +157,7 @@ const changePage = (page = null) => {
     </div>
     <ResultInfo :meta="meta" />
     <div class="row list-header">
-      <div class="row" @click="sort('name_kana')">
+      <div class="row cursor-pointer" @click="sort('name_kana')">
         <div class="list-column-title">項目</div>
         <SortIcon
           :is-asc="params?.is_asc"
@@ -166,12 +166,8 @@ const changePage = (page = null) => {
       </div>
       <div class="row" @click="sort('precedent')">
         <div class="list-column-title">カラム名</div>
-        <SortIcon
-          :is-asc="params?.is_asc"
-          :active="params?.column === 'precedent'"
-        />
       </div>
-      <div class="row" @click="sort('description')">
+      <div class="row cursor-pointer" @click="sort('description')">
         <div class="list-column-title">説明</div>
         <SortIcon
           :is-asc="params?.is_asc"

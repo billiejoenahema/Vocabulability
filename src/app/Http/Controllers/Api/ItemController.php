@@ -40,9 +40,6 @@ class ItemController extends Controller
 
         // ソート
         $query->sortByColumn($column, $direction);
-        if ($column === 'precedent') {
-            $query = $query->sortByPrecedentsColumn($direction);
-        }
 
         $items = $query->paginate(self::PER_PAGE);
 

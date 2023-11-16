@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
 use function in_array;
 
 /**
@@ -69,6 +68,13 @@ class Item extends Model
         'description',
     ];
 
+    /** @var array ソート可能なカラムリスト */
+    public const SORTABLE_COLUMNS = [
+        'id',
+        'name_kana',
+        'description',
+    ];
+
     /**
      * 所有する事例を取得する。
      *
@@ -110,40 +116,13 @@ class Item extends Model
      */
     public function scopeSortByColumn($query, $column, $order): Builder|self
     {
-        $itemColumns = [
-            'id',
-            'name_kana',
-            'description',
-        ];
+        $itemColumns = self::SORTABLE_COLUMNS;
+
         if (in_array($column, $itemColumns, false)) {
             $query->orderByRaw("{$column} is null asc")->orderBy($column, $order);
         }
 
         return $query;
-    }
-
-    /**
-     * hasManyで紐づくモデルの属性でソートするスコープ
-     *
-     * @param Builder|Item $query
-     * @param string $column
-     * @param string $direction
-     * @return Collection
-     */
-    public function scopeSortByPrecedentsColumn($query, $direction): Collection
-    {
-        $items = $query->get();
-        if ($direction === 'asc') {
-            $items = collect($items)->sortBy(static function ($item) {
-                return implode(' ', $item->precedents->pluck('name')->toArray());
-            })->values();
-        } else {
-            $items = collect($items)->sortByDesc(static function ($item) {
-                return implode(' ', $item->precedents->pluck('name')->toArray());
-            })->values();
-        }
-
-        return $items;
     }
 
     /**

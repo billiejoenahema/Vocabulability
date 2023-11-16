@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Item;
 
+use App\Models\Item;
 use Illuminate\Foundation\Http\FormRequest;
 
 class IndexRequest extends FormRequest
@@ -40,12 +41,7 @@ class IndexRequest extends FormRequest
      */
     public function getSortColumn(): string
     {
-        $columns = [
-            'id',
-            'name_kana',
-            'description',
-            'precedent',
-        ];
+        $columns = Item::SORTABLE_COLUMNS;
 
         $key = array_search($this->column, $columns, true);
 
