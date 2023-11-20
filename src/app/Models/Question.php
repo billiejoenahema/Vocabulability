@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use function in_array;
 
+
 /**
  * App\Models\Question
  *
@@ -19,10 +20,13 @@ use function in_array;
  * @property string|null $deleted_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Database\Factories\QuestionFactory factory(...$parameters)
+ * @method static \Database\Factories\QuestionFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Question newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Question newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Question query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Question randomSort()
+ * @method static \Illuminate\Database\Eloquent\Builder|Question sort($column, $order)
+ * @method static \Illuminate\Database\Eloquent\Builder|Question sortByWordAsc()
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereCorrectAnswer($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereDeletedAt($value)
@@ -30,9 +34,6 @@ use function in_array;
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereWord($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Question sortByColumn($column, $order)
- * @method static \Illuminate\Database\Eloquent\Builder|Question sortByWordAsc()
- * @method static \Illuminate\Database\Eloquent\Builder|Question randomSort()
  * @mixin \Eloquent
  */
 class Question extends Model
@@ -59,7 +60,7 @@ class Question extends Model
      * @param string $order
      * @return Builder|Question
      */
-    public function scopeSortByColumn($query, $column, $order): Builder|self
+    public function scopeSort($query, $column, $order): Builder|self
     {
         $columns = [
             'word',

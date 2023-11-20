@@ -13,42 +13,38 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use function in_array;
 
+
 /**
  * App\Models\Item
  *
- * @method static \Database\Factories\ItemFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Item newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Item newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Item query()
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Example[] $examples
- * @property-read int|null $examples_count
- * @method static \Illuminate\Database\Query\Builder|Item onlyTrashed()
- * @method static \Illuminate\Database\Query\Builder|Item withTrashed()
- * @method static \Illuminate\Database\Query\Builder|Item withoutTrashed()
  * @property int $id
  * @property string $name 項目名
+ * @property string $name_kana 項目名ふりがな
  * @property string $category カテゴリ
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $description 説明
+ * @property Carbon|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Precedent> $precedents
+ * @property-read int|null $precedents_count
+ * @method static \Database\Factories\ItemFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Item newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Item newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Item onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Item query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Item searchCondition($request)
+ * @method static \Illuminate\Database\Eloquent\Builder|Item sort($column, $order)
+ * @method static \Illuminate\Database\Eloquent\Builder|Item sortByIdDesc()
  * @method static \Illuminate\Database\Eloquent\Builder|Item whereCategory($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Item whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Item whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Item whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Item whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Item whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Item whereUpdatedAt($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Precedent[] $precedents
- * @property-read int|null $precedents_count
- * @property string $name_kana 項目名ふりがな
- * @method static \Illuminate\Database\Eloquent\Builder|Item sortByNameKana()
  * @method static \Illuminate\Database\Eloquent\Builder|Item whereNameKana($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Item sortByIdDesc()
- * @method static \Illuminate\Database\Eloquent\Builder|Item sortByNameKanaAsc()
- * @method static \Illuminate\Database\Eloquent\Builder|Item sortByColumn($column, $order)
- * @method static \Illuminate\Database\Eloquent\Builder|Item searchCondition($request)
- * @property string|null $description 説明
- * @method static \Illuminate\Database\Eloquent\Builder|Item sortByPrecedentsColumn($order)
- * @method static \Illuminate\Database\Eloquent\Builder|Item whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Item whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Item withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Item withoutTrashed()
  * @mixin \Eloquent
  */
 class Item extends Model
@@ -114,11 +110,9 @@ class Item extends Model
      * @param string $order
      * @return Builder|Item
      */
-    public function scopeSortByColumn($query, $column, $order): Builder|self
+    public function scopeSort($query, $column, $order): Builder|self
     {
-        $itemColumns = self::SORTABLE_COLUMNS;
-
-        if (in_array($column, $itemColumns, false)) {
+        if (in_array($column, self::SORTABLE_COLUMNS, false)) {
             $query->orderByRaw("{$column} is null asc")->orderBy($column, $order);
         }
 
