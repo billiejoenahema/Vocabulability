@@ -14,7 +14,6 @@ class ForgotPasswordController extends Controller
 {
     /**
      * @param ForgotPasswordRequest $request
-     * @return JsonResponse
      * @throws ValidationException
      */
     public function __invoke(ForgotPasswordRequest $request): JsonResponse

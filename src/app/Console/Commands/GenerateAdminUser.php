@@ -26,10 +26,8 @@ class GenerateAdminUser extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(): void
     {
         $userName = $this->argument('userName');
         $password = str()->random(32);

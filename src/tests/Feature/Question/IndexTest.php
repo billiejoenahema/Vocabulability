@@ -30,10 +30,8 @@ class IndexTest extends TestCase
 
     /**
      * 一般ユーザーが問題一覧を取得できることを確認するテスト。
-     *
-     * @return void
      */
-    public function test_generalUserCanGetQuestions()
+    public function test_generalUserCanGetQuestions(): void
     {
         // 実行
         $response = $this->actingAs($this->user)->get('/api/questions');
@@ -44,10 +42,8 @@ class IndexTest extends TestCase
 
     /**
      * 管理ユーザーが問題一覧を取得できることを確認するテスト。
-     *
-     * @return void
      */
-    public function test_adminUserCanGetQuestions()
+    public function test_adminUserCanGetQuestions(): void
     {
         // 実行
         $response = $this->actingAs($this->user)->get('/api/questions');

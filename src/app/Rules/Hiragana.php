@@ -15,9 +15,8 @@ class Hiragana implements InvokableRule
      * @param string $attribute
      * @param mixed $value
      * @param Closure $fail
-     * @return void
      */
-    public function __invoke($attribute, $value, $fail)
+    public function __invoke($attribute, $value, $fail): void
     {
         if (! preg_match("/^([　 \t\r\n]|[ぁ-ん]|[ー])+$/u", $value)) {
             $fail(':attributeはひらがなで指定してください。');

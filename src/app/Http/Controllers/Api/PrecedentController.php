@@ -16,7 +16,6 @@ class PrecedentController extends Controller
      * 事例を削除する。
      *
      * @param Precedent $precedent
-     * @return JsonResponse
      */
     public function destroy(Precedent $precedent): JsonResponse
     {

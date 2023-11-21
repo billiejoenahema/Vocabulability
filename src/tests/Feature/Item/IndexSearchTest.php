@@ -40,10 +40,8 @@ class IndexSearchTest extends TestCase
 
     /**
      * created_atで一覧を検索できるか確認するテスト
-     *
-     * @return void
      */
-    public function test_searchIndexByCreated_at()
+    public function test_searchIndexByCreated_at(): void
     {
         $response = $this->actingAs($this->user)->getJson('/api/items?created_at_from=' . $this->created_at_from);
 
@@ -53,10 +51,8 @@ class IndexSearchTest extends TestCase
 
     /**
      * 項目名で一覧を検索できるか確認するテスト
-     *
-     * @return void
      */
-    public function test_searchIndexByName()
+    public function test_searchIndexByName(): void
     {
         $response = $this->actingAs($this->user)->getJson('/api/items?keyword=' . $this->name);
 

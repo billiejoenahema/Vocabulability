@@ -30,10 +30,8 @@ class DeleteTest extends TestCase
 
     /**
      * 一般ユーザーが項目を削除できないことを確認するテスト。
-     *
-     * @return void
      */
-    public function test_generalUserCannotDeleteItem()
+    public function test_generalUserCannotDeleteItem(): void
     {
         $response = $this->actingAs($this->user)->deleteJson('/api/items/' . $this->item->id);
         $response->assertForbidden();
@@ -41,10 +39,8 @@ class DeleteTest extends TestCase
 
     /**
      * 管理者ユーザーが項目を削除できることを確認するテスト。
-     *
-     * @return void
      */
-    public function test_adminUserCanDeleteItem()
+    public function test_adminUserCanDeleteItem(): void
     {
         $this->user->is_admin = true;
         $this->user->save();

@@ -12,12 +12,11 @@ class ResetPasswordNotification extends Notification
 {
     use Queueable;
 
+    private string $passwordResetEndpoint;
     private string $token;
 
     /**
      * Create a new notification instance.
-     *
-     * @return void
      */
     public function __construct(string $token)
     {
@@ -27,7 +26,6 @@ class ResetPasswordNotification extends Notification
 
     /**
      * @param mixed $notifiable
-     * @return string
      */
     protected function resetUrl($notifiable): string
     {
@@ -39,10 +37,8 @@ class ResetPasswordNotification extends Notification
 
     /**
      * Get the notification's delivery channels.
-     *
-     * @return array
      */
-    public function via()
+    public function via(): array
     {
         return ['mail'];
     }
@@ -51,9 +47,8 @@ class ResetPasswordNotification extends Notification
      * Get the mail representation of the notification.
      *
      * @param mixed $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
             ->line('アカウントのパスワードリセットリクエストを受けつけました。')

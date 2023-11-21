@@ -27,10 +27,8 @@ class IndexSortTest extends TestCase
 
     /**
      * 単語で一覧を昇順ソートできるか確認するテスト
-     *
-     * @return void
      */
-    public function test_sortIndexByWordAsc()
+    public function test_sortIndexByWordAsc(): void
     {
         $response = $this->actingAs($this->user)->getJson('/api/questions?column=word&is_asc=true');
 
@@ -44,10 +42,8 @@ class IndexSortTest extends TestCase
 
     /**
      * 単語で一覧を降順ソートできるか確認するテスト
-     *
-     * @return void
      */
-    public function test_sortIndexByWordDesc()
+    public function test_sortIndexByWordDesc(): void
     {
         $response = $this->actingAs($this->user)->getJson('/api/questions?column=word&is_asc=false');
 
@@ -61,10 +57,8 @@ class IndexSortTest extends TestCase
 
     /**
      * 正答で一覧を昇順ソートできるか確認するテスト
-     *
-     * @return void
      */
-    public function test_sortIndexByCorrectAnswerAsc()
+    public function test_sortIndexByCorrectAnswerAsc(): void
     {
         $response = $this->actingAs($this->user)->getJson('/api/questions?column=correct_answer&is_asc=true');
 
@@ -78,10 +72,8 @@ class IndexSortTest extends TestCase
 
     /**
      * 正答で一覧を降順ソートできるか確認するテスト
-     *
-     * @return void
      */
-    public function test_sortIndexByCorrectAnswerDesc()
+    public function test_sortIndexByCorrectAnswerDesc(): void
     {
         $response = $this->actingAs($this->user)->getJson('/api/questions?column=correct_answer&is_asc=false');
 

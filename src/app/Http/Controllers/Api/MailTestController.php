@@ -13,8 +13,6 @@ class MailTestController extends Controller
 {
     /**
      * Handle the incoming request.
-     *
-     * @return Response
      */
     public function __invoke(): Response
     {

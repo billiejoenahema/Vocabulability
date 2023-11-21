@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Question;
 
+use App\Models\Question;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 
@@ -11,20 +12,16 @@ class IndexRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'keyword' => 'nullable|string',
@@ -34,17 +31,11 @@ class IndexRequest extends FormRequest
 
     /**
      * ソート対象のカラム名を返す
-     *
-     * @return string|null
      */
     public function getSortColumn(): ?string
     {
         $key = $this->column;
-        $columns = [
-            'word',
-            'correct_answer',
-        ];
-        $column = Arr::first($columns, static function ($value) use ($key) {
+        $column = Arr::first(Question::SORTABLE_COLUMNS, static function ($value) use ($key) {
             return $value === $key;
         }, null);
 
@@ -53,8 +44,6 @@ class IndexRequest extends FormRequest
 
     /**
      * ソートの方向を返す。
-     *
-     * @return string
      */
     public function getSortDirection(): string
     {

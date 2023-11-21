@@ -36,10 +36,8 @@ class LoginTest extends TestCase
 
     /**
      * 正しいメールアドレスとパスワードでゲストログインできることを確認するテスト。
-     *
-     * @return void
      */
-    public function test_guestLoginSuccess()
+    public function test_guestLoginSuccess(): void
     {
         $this->getJson(env('APP_URL') . '/sanctum/csrf-cookie');
         $this->postJson('/login', $this->correctData)->assertOk();
@@ -47,8 +45,6 @@ class LoginTest extends TestCase
 
     /**
      * 誤ったメールアドレスとパスワードではゲストログインできないことを確認するテスト。
-     *
-     * @return void
      */
     public function test_guestLoginFailure()
     {

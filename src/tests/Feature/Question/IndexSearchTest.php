@@ -30,10 +30,8 @@ class IndexSearchTest extends TestCase
 
     /**
      * 単語で一覧を検索できるか確認するテスト
-     *
-     * @return void
      */
-    public function test_searchIndexByWord()
+    public function test_searchIndexByWord(): void
     {
         $response = $this->actingAs($this->user)->getJson('/api/questions?keyword=' . $this->word);
 

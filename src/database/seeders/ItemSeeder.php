@@ -12,10 +12,8 @@ class ItemSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         // 開発環境でのみ実行する
         if (env('APP_ENV') !== 'local') {

@@ -10,8 +10,6 @@ enum Category: string
 
     /**
      * value値の配列に変換する。
-     *
-     * @return array
      */
     public static function values(): array
     {

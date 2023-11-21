@@ -73,9 +73,6 @@ class Item extends Model
 
     /**
      * 所有する事例を取得する。
-     *
-     * @return HasMany
-     *
      */
     public function precedents(): HasMany
     {
@@ -87,7 +84,6 @@ class Item extends Model
      *
      * @param Builder|Item $query
      * @param IndexRequest $request
-     * @return Builder|Item
      */
     public function scopeSearchCondition($query, $request): Builder|self
     {
@@ -108,7 +104,6 @@ class Item extends Model
      * @param Builder|Item $query
      * @param string $column
      * @param string $order
-     * @return Builder|Item
      */
     public function scopeSort($query, $column, $order): Builder|self
     {
@@ -123,7 +118,6 @@ class Item extends Model
      * IDの降順でソートするスコープ
      *
      * @param Builder|Item $query
-     * @return Builder|Item
      */
     public function scopeSortByIdDesc($query): Builder|self
     {

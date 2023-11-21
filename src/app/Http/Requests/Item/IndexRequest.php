@@ -11,20 +11,16 @@ class IndexRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'column' => 'nullable|string',
@@ -36,26 +32,20 @@ class IndexRequest extends FormRequest
 
     /**
      * ソート対象のカラムを返す。nullならデフォルト値の'id'を返す。
-     *
-     * @return string
      */
     public function getSortColumn(): string
     {
-        $columns = Item::SORTABLE_COLUMNS;
-
-        $key = array_search($this->column, $columns, true);
+        $key = array_search($this->column, Item::SORTABLE_COLUMNS, true);
 
         if (! $key) {
             return 'id';
         }
 
-        return $columns[$key];
+        return Item::SORTABLE_COLUMNS[$key];
     }
 
     /**
      * ソートの方向を返す。
-     *
-     * @return string
      */
     public function getSortDirection(): string
     {

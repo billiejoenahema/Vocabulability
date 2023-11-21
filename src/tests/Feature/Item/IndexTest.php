@@ -36,10 +36,8 @@ class IndexTest extends TestCase
 
     /**
      * 一般ユーザーが項目一覧を取得できることを確認するテスト。
-     *
-     * @return void
      */
-    public function test_generalUserCanGetItems()
+    public function test_generalUserCanGetItems(): void
     {
         // 実行
         $response = $this->actingAs($this->user)->get('/api/items');
@@ -50,10 +48,8 @@ class IndexTest extends TestCase
 
     /**
      * 管理ユーザーが項目一覧を取得できることを確認するテスト。
-     *
-     * @return void
      */
-    public function test_adminUserCanGetItems()
+    public function test_adminUserCanGetItems(): void
     {
         // 実行
         $response = $this->actingAs($this->user)->get('/api/items');

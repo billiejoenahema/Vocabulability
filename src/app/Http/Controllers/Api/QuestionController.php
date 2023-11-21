@@ -27,7 +27,6 @@ class QuestionController extends Controller
      * 問題一覧を取得する。
      *
      * @param IndexRequest $request
-     * @return AnonymousResourceCollection
      */
     public function index(IndexRequest $request): AnonymousResourceCollection
     {
@@ -43,7 +42,7 @@ class QuestionController extends Controller
         $order = $request->getSortDirection();
         $column = $request->getSortColumn();
         if ($column) {
-            $query->sortByColumn($column, $order);
+            $query->sort($column, $order);
         } else {
             $query->sortByWordAsc();
         }
@@ -53,11 +52,8 @@ class QuestionController extends Controller
     }
     /**
      * ランダムな並びの問題一覧を取得する。
-     *
-     * @param IndexRequest $request
-     * @return AnonymousResourceCollection
      */
-    public function randomIndex(IndexRequest $request): AnonymousResourceCollection
+    public function randomIndex(): AnonymousResourceCollection
     {
         $query = Question::query();
         $query->randomSort();
@@ -70,8 +66,6 @@ class QuestionController extends Controller
      * 問題を追加する。
      *
      * @param SaveRequest $request
-     *
-     * @return JsonResponse
      */
     public function store(SaveRequest $request): JsonResponse
     {
@@ -87,8 +81,6 @@ class QuestionController extends Controller
      * CSVファイルから問題を追加する。
      *
      * @param ImportRequest $request
-     *
-     * @return JsonResponse
      */
     public function importCSV(ImportRequest $request): JsonResponse
     {
@@ -102,7 +94,6 @@ class QuestionController extends Controller
      *
      * @param SaveRequest $request
      * @param Question $question
-     * @return JsonResponse
      */
     public function update(SaveRequest $request, Question $question): JsonResponse
     {
@@ -118,7 +109,6 @@ class QuestionController extends Controller
      * 問題を削除する。
      *
      * @param Question $question
-     * @return JsonResponse
      */
     public function destroy(Question $question): JsonResponse
     {

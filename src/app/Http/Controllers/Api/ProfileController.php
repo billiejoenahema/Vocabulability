@@ -15,8 +15,6 @@ class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index(): JsonResponse
     {
@@ -27,9 +25,8 @@ class ProfileController extends Controller
      * Update the specified resource in storage.
      *
      * @param SaveRequest $request
-     * @return \Illuminate\Http\Response
      */
-    public function update(SaveRequest $request)
+    public function update(SaveRequest $request): Response
     {
         $user = auth()->user();
         $data = $request->all();

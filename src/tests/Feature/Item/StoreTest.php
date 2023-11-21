@@ -37,10 +37,8 @@ class StoreTest extends TestCase
 
     /**
      * 一般ユーザーが項目を追加できないことを確認するテスト。
-     *
-     * @return void
      */
-    public function test_generalUserCannotPostItem()
+    public function test_generalUserCannotPostItem(): void
     {
         $response = $this->actingAs($this->user)->postJson('/api/items', $this->data);
 
@@ -50,10 +48,8 @@ class StoreTest extends TestCase
 
     /**
      * 管理ユーザーが項目を追加できることを確認するテスト。
-     *
-     * @return void
      */
-    public function test_adminUserCanPostItem()
+    public function test_adminUserCanPostItem(): void
     {
         $this->user->is_admin = true;
         $this->user->save();

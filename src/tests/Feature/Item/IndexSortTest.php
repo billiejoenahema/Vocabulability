@@ -37,10 +37,8 @@ class IndexSortTest extends TestCase
 
     /**
      * 項目名で一覧を降順ソートできるか確認するテスト
-     *
-     * @return void
      */
-    public function test_sortIndexByNameDesc()
+    public function test_sortIndexByNameDesc(): void
     {
         $response = $this->actingAs($this->user)->getJson('/api/items?column=name&is_asc=false');
 
@@ -54,10 +52,8 @@ class IndexSortTest extends TestCase
 
     /**
      * 項目名で一覧を昇順ソートできるか確認するテスト
-     *
-     * @return void
      */
-    public function test_sortIndexByNameAsc()
+    public function test_sortIndexByNameAsc(): void
     {
         $response = $this->actingAs($this->user)->getJson('/api/items?column=name_kana&is_asc=true');
 

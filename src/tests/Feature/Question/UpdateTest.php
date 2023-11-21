@@ -35,10 +35,8 @@ class UpdateTest extends TestCase
 
     /**
      * 一般ユーザーが問題を更新できないことを確認するテスト。
-     *
-     * @return void
      */
-    public function test_generalUserCannotUpdateQuestion()
+    public function test_generalUserCannotUpdateQuestion(): void
     {
         // 実行
         $response = $this->actingAs($this->user)->patchJson('/api/questions/' . $this->question->id, $this->data);
@@ -47,10 +45,8 @@ class UpdateTest extends TestCase
 
     /**
      * 管理ユーザーが問題を更新できることを確認するテスト。
-     *
-     * @return void
      */
-    public function test_adminUserCanUpdateQuestion()
+    public function test_adminUserCanUpdateQuestion(): void
     {
         $this->user->is_admin = true;
         $this->user->save();

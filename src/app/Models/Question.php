@@ -52,21 +52,22 @@ class Question extends Model
         'example' => 'string',
     ];
 
+    /** @var array ソート可能なカラムリスト */
+    public const SORTABLE_COLUMNS = [
+        'word',
+        'correct_answer',
+    ];
+
     /**
      * 指定のカラムでソートするスコープ
      *
      * @param Builder|Question $query
      * @param string $column
      * @param string $order
-     * @return Builder|Question
      */
     public function scopeSort($query, $column, $order): Builder|self
     {
-        $columns = [
-            'word',
-            'correct_answer',
-        ];
-        if (in_array($column, $columns, false)) {
+        if (in_array($column, self::SORTABLE_COLUMNS, false)) {
             $query->orderBy($column, $order);
         }
         return $query;
@@ -76,7 +77,6 @@ class Question extends Model
      * 単語の昇順でソートするスコープ
      *
      * @param Builder|Question $query
-     * @return Builder|Question
      */
     public function scopeSortByWordAsc($query): Builder|self
     {
@@ -89,7 +89,6 @@ class Question extends Model
      * ランダムな並びでソートするスコープ
      *
      * @param Builder|Question $query
-     * @return Builder|Question
      */
     public function scopeRandomSort($query): Builder|self
     {

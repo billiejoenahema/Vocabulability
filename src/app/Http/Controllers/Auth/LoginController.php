@@ -25,7 +25,6 @@ final class LoginController extends Controller
 
     /**
      * @param LoginRequest $request
-     * @return JsonResponse
      * @throws AuthenticationException
      */
     public function __invoke(LoginRequest $request): JsonResponse

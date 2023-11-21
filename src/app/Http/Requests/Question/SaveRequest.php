@@ -13,20 +13,16 @@ class SaveRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'word' => ['required', 'string', 'max:255', Rule::unique('questions')->ignore($this->id), new EnglishWord],
@@ -36,10 +32,8 @@ class SaveRequest extends FormRequest
 
     /**
      * バリデーションエラーのカスタム属性の取得
-     *
-     * @return array
      */
-    public function attributes()
+    public function attributes(): array
     {
         return [
             'word' => '単語',

@@ -9,9 +9,6 @@ enum Authority: int
     case ADMIN = 1;
     case GENERAL = 0;
 
-    /**
-     * @return string
-     */
     public function text(): string
     {
         return match ($this) {

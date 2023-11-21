@@ -52,8 +52,6 @@ class Precedent extends Model
 
     /**
      * 紐づく項目を取得する。
-     *
-     * @return BelongsTo
      */
     public function item(): BelongsTo
     {

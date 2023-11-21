@@ -15,9 +15,8 @@ class NotOnlyEnglish implements InvokableRule
      * @param string $attribute
      * @param mixed $value
      * @param Closure(string): \Illuminate\Translation\PotentiallyTranslatedString $fail
-     * @return void
      */
-    public function __invoke($attribute, $value, $fail)
+    public function __invoke($attribute, $value, $fail): void
     {
         $attribute = match ($attribute) {
             'correct_answer' => '正解',

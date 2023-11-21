@@ -15,9 +15,8 @@ class EnglishWord implements InvokableRule
      * @param string $attribute
      * @param mixed $value
      * @param Closure(string): \Illuminate\Translation\PotentiallyTranslatedString $fail
-     * @return void
      */
-    public function __invoke($attribute, $value, $fail)
+    public function __invoke($attribute, $value, $fail): void
     {
         if (! preg_match('/^[[:graph:]|[:space:]]+$/i', $value)) {
             $fail('半角英数字記号以外は使用できません。');

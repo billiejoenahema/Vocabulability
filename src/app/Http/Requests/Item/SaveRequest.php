@@ -15,20 +15,16 @@ class SaveRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => ['required', 'string', 'max:50', Rule::unique('items')->ignore($this->id), new NotOnlyEnglish],
@@ -42,10 +38,8 @@ class SaveRequest extends FormRequest
 
     /**
      * バリデーションエラーのカスタム属性の取得
-     *
-     * @return array
      */
-    public function attributes()
+    public function attributes(): array
     {
         return [
             'name' => '項目名',
@@ -57,10 +51,8 @@ class SaveRequest extends FormRequest
 
     /**
      * 定義済みバリデーションルールのエラーメッセージ取得
-     *
-     * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'name_kana.regex' => 'ふりがなには、ひらがなを指定してください。',
@@ -71,7 +63,6 @@ class SaveRequest extends FormRequest
      * 少なくともひとつはnullでない属性が存在するかどうか
      *
      * @param array $array
-     * @return bool
      */
     public function isInputted($array): bool
     {

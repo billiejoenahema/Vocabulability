@@ -10,20 +10,16 @@ class ImportRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'file' => 'required|mimes:csv',
@@ -32,10 +28,8 @@ class ImportRequest extends FormRequest
 
     /**
      * バリデーションエラーのカスタム属性の取得
-     *
-     * @return array
      */
-    public function attributes()
+    public function attributes(): array
     {
         return [
             'file' => 'ファイル',
@@ -44,10 +38,8 @@ class ImportRequest extends FormRequest
 
     /**
      * 定義済みバリデーションルールのエラーメッセージ取得
-     *
-     * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'file.required' => 'ファイルを指定してください。',

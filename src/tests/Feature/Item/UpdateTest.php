@@ -54,10 +54,8 @@ class UpdateTest extends TestCase
 
     /**
      * 一般ユーザーが項目を更新できないことを確認するテスト。
-     *
-     * @return void
      */
-    public function test_generalUserCannotUpdateItem()
+    public function test_generalUserCannotUpdateItem(): void
     {
         // 実行
         $response = $this->actingAs($this->user)->patchJson('/api/items/' . $this->item->id, $this->data);
@@ -66,10 +64,8 @@ class UpdateTest extends TestCase
 
     /**
      * 管理ユーザーが項目を更新できることを確認するテスト。
-     *
-     * @return void
      */
-    public function test_adminUserCanUpdateItem()
+    public function test_adminUserCanUpdateItem(): void
     {
         $this->user->is_admin = true;
         $this->user->save();

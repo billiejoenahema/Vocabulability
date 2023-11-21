@@ -17,7 +17,7 @@ class ItemFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         $index = array_rand(config('const.JAPANESE_SYLLABARY'));
         return [

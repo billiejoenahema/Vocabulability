@@ -17,8 +17,6 @@ class TestMail extends Mailable
 
     /**
      * Create a new message instance.
-     *
-     * @return void
      */
     public function __construct($name, $mail)
     {
@@ -28,10 +26,8 @@ class TestMail extends Mailable
 
     /**
      * Build the message.
-     *
-     * @return $this
      */
-    public function build()
+    public function build(): self
     {
         return $this->to($this->mail)
             ->subject('テストメール')

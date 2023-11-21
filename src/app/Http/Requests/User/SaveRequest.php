@@ -10,20 +10,16 @@ class SaveRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required|string|max:50',
@@ -39,10 +35,8 @@ class SaveRequest extends FormRequest
 
     /**
      * バリデーションエラーのカスタム属性の取得
-     *
-     * @return array
      */
-    public function attributes()
+    public function attributes(): array
     {
         return [
             'name' => '名前',
@@ -58,10 +52,8 @@ class SaveRequest extends FormRequest
 
     /**
      * 定義済みバリデーションルールのエラーメッセージ取得
-     *
-     * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'phone.regex' => '電話番号は数字とハイフンのみで入力してください。',
@@ -71,10 +63,8 @@ class SaveRequest extends FormRequest
 
     /**
      * バリーデーションのためにデータを準備
-     *
-     * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         // 郵便番号、電話番号のハイフンを取り除き全角数字を半角に変換する
         $this->merge([

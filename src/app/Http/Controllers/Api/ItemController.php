@@ -26,7 +26,6 @@ class ItemController extends Controller
      * 項目一覧を取得する。
      *
      * @param IndexRequest $request
-     * @return AnonymousResourceCollection
      */
     public function index(IndexRequest $request): AnonymousResourceCollection
     {
@@ -39,7 +38,7 @@ class ItemController extends Controller
         $column = $request->getSortColumn();
 
         // ソート
-        $query->sortByColumn($column, $direction);
+        $query->sort($column, $direction);
 
         $items = $query->paginate(self::PER_PAGE);
 
@@ -50,7 +49,6 @@ class ItemController extends Controller
      * 項目を追加する。
      *
      * @param SaveRequest $request
-     * @return JsonResponse
      */
     public function store(SaveRequest $request): JsonResponse
     {
@@ -67,8 +65,6 @@ class ItemController extends Controller
      * CSVファイルから項目を追加する。
      *
      * @param ImportRequest $request
-     *
-     * @return JsonResponse
      */
     public function importCSV(ImportRequest $request): JsonResponse
     {
@@ -83,7 +79,6 @@ class ItemController extends Controller
      *
      * @param SaveRequest $request
      * @param Item $item
-     * @return JsonResponse
      */
     public function update(SaveRequest $request, Item $item): JsonResponse
     {
@@ -101,7 +96,6 @@ class ItemController extends Controller
      * 項目を削除する。
      *
      * @param Item $item
-     * @return JsonResponse
      */
     public function destroy(Item $item): JsonResponse
     {

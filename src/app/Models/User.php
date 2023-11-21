@@ -119,7 +119,6 @@ class User extends Authenticatable
 
     /**
      * @param string $token
-     * @return void
      */
     public function sendPasswordResetNotification($token): void
     {
@@ -128,8 +127,6 @@ class User extends Authenticatable
 
     /**
      * 権限レベルの取得
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     protected function authority(): Attribute
     {
@@ -140,8 +137,6 @@ class User extends Authenticatable
 
     /**
      * 郵便番号を含む住所の取得
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     protected function fullAddress(): Attribute
     {

@@ -14,10 +14,8 @@ class IndexTest extends TestCase
 
     /**
      * ログインユーザーが自身のプロフィールを取得できることを確認するテスト。
-     *
-     * @return void
      */
-    public function test_getAuthUserProfile()
+    public function test_getAuthUserProfile(): void
     {
         /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
         $user = User::factory()->create();

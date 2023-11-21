@@ -30,10 +30,8 @@ class DeleteTest extends TestCase
 
     /**
      * 一般ユーザーが問題を削除できないことを確認するテスト。
-     *
-     * @return void
      */
-    public function test_generalUserCannotDeleteQuestion()
+    public function test_generalUserCannotDeleteQuestion(): void
     {
         $response = $this->actingAs($this->user)->deleteJson('/api/questions/' . $this->question->id);
         $response->assertForbidden();
@@ -41,10 +39,8 @@ class DeleteTest extends TestCase
 
     /**
      * 管理者ユーザーが問題を削除できることを確認するテスト。
-     *
-     * @return void
      */
-    public function test_adminUserCanDeleteQuestion()
+    public function test_adminUserCanDeleteQuestion(): void
     {
         $this->user->is_admin = true;
         $this->user->save();

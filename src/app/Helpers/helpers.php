@@ -7,7 +7,6 @@ if (! function_exists('toNumberOnly')) {
      * 全角数字を半角に変換し、ハイフンを取り除く。
      *
      * @param string|null $value
-     * @return ?string
      */
     function toNumberOnly($value): ?string
     {
@@ -28,7 +27,6 @@ if (! function_exists('toHalfWidth')) {
      * 全角数字を半角に変換する。
      *
      * @param string|null $value
-     * @return ?string
      */
     function toHalfWidth($value): ?string
     {
