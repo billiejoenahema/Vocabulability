@@ -30,13 +30,17 @@ class IndexSortTest extends TestCase
      */
     public function test_sortIndexByWordAsc(): void
     {
-        $response = $this->actingAs($this->user)->getJson('/api/questions?column=word&is_asc=true');
+        $column = 'word';
+        $response = $this->actingAs($this->user)->getJson('/api/questions?column=' . $column . '&is_asc=true');
 
         $response->assertStatus(200);
-        $actual = collect($response->json('data'));
-        $this->assertEquals(
-            $actual->sortBy('word')->pluck('word'),
-            $actual->pluck('word')
+        $data = collect($response->json('data'));
+        $expected = $data->sortBy($column)->pluck($column)->values()->all();
+        $actual = $data->pluck($column)->values()->all();
+
+        $this->assertSame(
+            $expected,
+            $actual,
         );
     }
 
@@ -45,13 +49,17 @@ class IndexSortTest extends TestCase
      */
     public function test_sortIndexByWordDesc(): void
     {
-        $response = $this->actingAs($this->user)->getJson('/api/questions?column=word&is_asc=false');
+        $column = 'word';
+        $response = $this->actingAs($this->user)->getJson('/api/questions?column=' . $column . '&is_asc=false');
 
         $response->assertStatus(200);
-        $actual = collect($response->json('data'));
-        $this->assertEquals(
-            $actual->sortByDesc('word')->pluck('word'),
-            $actual->pluck('word')
+        $data = collect($response->json('data'));
+        $expected = $data->sortByDesc($column)->pluck($column)->values()->all();
+        $actual = $data->pluck($column)->values()->all();
+
+        $this->assertSame(
+            $expected,
+            $actual,
         );
     }
 
@@ -60,13 +68,17 @@ class IndexSortTest extends TestCase
      */
     public function test_sortIndexByCorrectAnswerAsc(): void
     {
-        $response = $this->actingAs($this->user)->getJson('/api/questions?column=correct_answer&is_asc=true');
+        $column = 'correct_answer';
+        $response = $this->actingAs($this->user)->getJson('/api/questions?column=' . $column . '&is_asc=true');
 
         $response->assertStatus(200);
-        $actual = collect($response->json('data'));
-        $this->assertEquals(
-            $actual->sortBy('correct_answer')->pluck('correct_answer'),
-            $actual->pluck('correct_answer')
+        $data = collect($response->json('data'));
+        $expected = $data->sortBy($column)->pluck($column)->values()->all();
+        $actual = $data->pluck($column)->values()->all();
+
+        $this->assertSame(
+            $expected,
+            $actual,
         );
     }
 
@@ -75,13 +87,17 @@ class IndexSortTest extends TestCase
      */
     public function test_sortIndexByCorrectAnswerDesc(): void
     {
-        $response = $this->actingAs($this->user)->getJson('/api/questions?column=correct_answer&is_asc=false');
+        $column = 'correct_answer';
+        $response = $this->actingAs($this->user)->getJson('/api/questions?column=' . $column . '&is_asc=false');
 
         $response->assertStatus(200);
-        $actual = collect($response->json('data'));
-        $this->assertEquals(
-            $actual->sortByDesc('correct_answer')->pluck('correct_answer'),
-            $actual->pluck('correct_answer')
+        $data = collect($response->json('data'));
+        $expected = $data->sortByDesc($column)->pluck($column)->values()->all();
+        $actual = $data->pluck($column)->values()->all();
+
+        $this->assertSame(
+            $expected,
+            $actual,
         );
     }
 }

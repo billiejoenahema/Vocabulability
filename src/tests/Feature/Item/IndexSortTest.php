@@ -40,13 +40,18 @@ class IndexSortTest extends TestCase
      */
     public function test_sortIndexByNameDesc(): void
     {
-        $response = $this->actingAs($this->user)->getJson('/api/items?column=name&is_asc=false');
+        /** @var string $column ソート対象のカラム */
+        $column = 'name';
+        $response = $this->actingAs($this->user)->getJson('/api/items?column=' . $column . '&is_asc=false');
 
         $response->assertStatus(200);
-        $actual = collect($response->json('data'));
-        $this->assertEquals(
-            $actual->sortByDesc('name')->pluck('name'),
-            $actual->pluck('name')
+        $data = collect($response->json('data'));
+        $expected = $data->sortByDesc($column)->pluck($column)->values()->all();
+        $actual = $data->pluck($column)->values()->all();
+
+        $this->assertSame(
+            $expected,
+            $actual,
         );
     }
 
@@ -55,13 +60,17 @@ class IndexSortTest extends TestCase
      */
     public function test_sortIndexByNameAsc(): void
     {
-        $response = $this->actingAs($this->user)->getJson('/api/items?column=name&is_asc=true');
+        $column = 'name';
+        $response = $this->actingAs($this->user)->getJson('/api/items?column=' . $column . '&is_asc=true');
 
         $response->assertStatus(200);
-        $actual = collect($response->json('data'));
-        $this->assertEquals(
-            $actual->sortBy('name')->pluck('name'),
-            $actual->pluck('name')
+        $data = collect($response->json('data'));
+        $expected = $data->sortBy($column)->pluck($column)->values()->all();
+        $actual = $data->pluck($column)->values()->all();
+
+        $this->assertSame(
+            $expected,
+            $actual,
         );
     }
 }
