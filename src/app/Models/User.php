@@ -131,7 +131,7 @@ class User extends Authenticatable
     protected function authority(): Attribute
     {
         return Attribute::make(
-            get: fn () => Authority::tryFrom($this->is_admin)->text(),
+            get: fn () => Authority::tryFrom((int) $this->is_admin)->text(),
         );
     }
 

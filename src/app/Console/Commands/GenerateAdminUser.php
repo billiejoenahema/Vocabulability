@@ -40,7 +40,7 @@ class GenerateAdminUser extends Command
             ]);
             return $user;
         });
-        $user->is_admin = true;
+        $user->is_admin = 1;
         $user->save();
 
         $this->info("email: {$user->email}");
