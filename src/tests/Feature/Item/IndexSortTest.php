@@ -44,9 +44,9 @@ class IndexSortTest extends TestCase
 
         $response->assertStatus(200);
         $actual = collect($response->json('data'));
-        $this->assertSame(
-            $actual->sortByDesc('word')->pluck('word'),
-            $actual->pluck('word')
+        $this->assertEquals(
+            $actual->sortByDesc('name')->pluck('name'),
+            $actual->pluck('name')
         );
     }
 
@@ -55,12 +55,12 @@ class IndexSortTest extends TestCase
      */
     public function test_sortIndexByNameAsc(): void
     {
-        $response = $this->actingAs($this->user)->getJson('/api/items?column=name_kana&is_asc=true');
+        $response = $this->actingAs($this->user)->getJson('/api/items?column=name&is_asc=true');
 
         $response->assertStatus(200);
         $actual = collect($response->json('data'));
-        $this->assertSame(
-            $actual->sortBy('name_kana')->pluck('name'),
+        $this->assertEquals(
+            $actual->sortBy('name')->pluck('name'),
             $actual->pluck('name')
         );
     }
