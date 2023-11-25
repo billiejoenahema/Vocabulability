@@ -31,21 +31,16 @@ class QuestionController extends Controller
     public function index(IndexRequest $request): AnonymousResourceCollection
     {
         $query = Question::query();
-
+        // 検索
         if (isset($request['keyword'])) {
             $query->where('word', 'like', "%{$request['keyword']}%");
         }
         if (isset($request['filter'])) {
             $query->where('word', 'like', "{$request['filter']}%");
         }
-
-        $order = $request->getSortDirection();
-        $column = $request->getSortColumn();
-        if ($column) {
-            $query->sort($column, $order);
-        } else {
-            $query->sortByWordAsc();
-        }
+        // ソート
+        $query->sort($request);
+        // ページング
         $questions = $query->paginate(self::PER_PAGE);
 
         return QuestionResource::collection($questions);

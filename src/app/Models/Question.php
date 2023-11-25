@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Http\Requests\Question\IndexRequest;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -62,25 +63,18 @@ class Question extends Model
      * 指定のカラムでソートするスコープ
      *
      * @param Builder|Question $query
-     * @param string $column
-     * @param string $order
+     * @param IndexRequest $request
      */
-    public function scopeSort($query, $column, $order): Builder|self
+    public function scopeSort($query, $request): Builder|self
     {
+        $column = $request->getSortColumn();
+        $order = $request->getSortOrder();
+
         if (in_array($column, self::SORTABLE_COLUMNS, false)) {
             $query->orderBy($column, $order);
+        } else {
+            $query->orderBy('word', 'asc');
         }
-        return $query;
-    }
-
-    /**
-     * 単語の昇順でソートするスコープ
-     *
-     * @param Builder|Question $query
-     */
-    public function scopeSortByWordAsc($query): Builder|self
-    {
-        $query->orderBy('word', 'asc');
 
         return $query;
     }

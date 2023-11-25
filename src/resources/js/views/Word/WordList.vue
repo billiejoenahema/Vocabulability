@@ -41,12 +41,13 @@ const resetParams = () => {
   store.commit('question/resetParams');
   fetchData();
 };
-const onChangeSort = (label) => {
+const sort = (label) => {
   if (params.value.column === label) {
-    params.value.is_asc = !params.value.is_asc;
+    params.value.sort_order =
+      params.value.sort_order === 'desc' ? 'asc' : 'desc';
   } else {
     params.value.column = label;
-    params.value.is_asc = true;
+    params.value.sort_order = 'asc';
   }
   // ソートするときにページを1に戻す
   params.value.page = 1;
@@ -111,17 +112,17 @@ const changePage = (page = null) => {
     </div>
     <ResultInfo :meta="meta" />
     <div class="row list-header">
-      <div class="row" @click="onChangeSort('word')">
+      <div class="row" @click="sort('word')">
         <div class="list-column-title">単語</div>
         <SortIcon
-          :is-asc="params?.is_asc"
+          :is-asc="params?.sort_order"
           :active="params?.column === 'word'"
         />
       </div>
-      <div class="row" @click="onChangeSort('correct_answer')">
+      <div class="row" @click="sort('correct_answer')">
         <div class="list-column-title">正解</div>
         <SortIcon
-          :is-asc="params?.is_asc"
+          :is-asc="params?.sort_order"
           :active="params?.column === 'correct_answer'"
         />
       </div>

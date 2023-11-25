@@ -45,12 +45,8 @@ class IndexRequest extends FormRequest
     /**
      * ソートの方向を返す。
      */
-    public function getSortDirection(): string
+    public function getSortOrder(): string
     {
-        if ($this->is_asc === 'true') {
-            return 'asc';
-        } else {
-            return 'desc';
-        }
+        return $this->sort_order ?? 'desc';
     }
 }

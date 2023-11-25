@@ -30,16 +30,11 @@ class ItemController extends Controller
     public function index(IndexRequest $request): AnonymousResourceCollection
     {
         $query = Item::query()->with('precedents');
-
         // 検索
         $query->searchCondition($request);
-
-        $direction = $request->getSortDirection();
-        $column = $request->getSortColumn();
-
         // ソート
-        $query->sort($column, $direction);
-
+        $query->sort($request);
+        // ページング
         $items = $query->paginate(self::PER_PAGE);
 
         return ItemResource::collection($items);

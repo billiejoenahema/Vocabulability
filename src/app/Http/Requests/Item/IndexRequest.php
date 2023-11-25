@@ -24,7 +24,6 @@ class IndexRequest extends FormRequest
     {
         return [
             'column' => 'nullable|string',
-            'is_asc' => 'nullable|string',
             'keyword' => 'nullable|string',
             'filter' => 'nullable|string|regex:/[ぁ-ん]/', // ひらがな1文字
         ];
@@ -37,7 +36,7 @@ class IndexRequest extends FormRequest
     {
         $key = array_search($this->column, Item::SORTABLE_COLUMNS, true);
 
-        if (! $key) {
+        if (!$key) {
             return 'id';
         }
 
@@ -47,12 +46,8 @@ class IndexRequest extends FormRequest
     /**
      * ソートの方向を返す。
      */
-    public function getSortDirection(): string
+    public function getSortOrder(): string
     {
-        if ($this->is_asc === 'true') {
-            return 'asc';
-        } else {
-            return 'desc';
-        }
+        return $this->sort_order ?? 'desc';
     }
 }

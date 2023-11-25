@@ -47,10 +47,11 @@ const fetchData = () => {
 };
 const sort = (label) => {
   if (params.value.column === label) {
-    params.value.is_asc = !params.value.is_asc;
+    params.value.sort_order =
+      params.value.sort_order === 'desc' ? 'asc' : 'desc';
   } else {
     params.value.column = label;
-    params.value.is_asc = true;
+    params.value.sort_order = 'asc';
   }
   // ソートするときにページを1に戻す
   params.value.page = 1;
@@ -157,11 +158,11 @@ const changePage = (page = null) => {
     </div>
     <ResultInfo :meta="meta" />
     <div class="row list-header">
-      <div class="row cursor-pointer" @click="sort('name_kana')">
+      <div class="row cursor-pointer" @click="sort('name')">
         <div class="list-column-title">項目</div>
         <SortIcon
-          :is-asc="params?.is_asc"
-          :active="params?.column === 'name_kana'"
+          :is-asc="params?.sort_order"
+          :active="params?.column === 'name'"
         />
       </div>
       <div class="row" @click="sort('precedent')">
@@ -170,7 +171,7 @@ const changePage = (page = null) => {
       <div class="row cursor-pointer" @click="sort('description')">
         <div class="list-column-title">説明</div>
         <SortIcon
-          :is-asc="params?.is_asc"
+          :is-asc="params?.sort_order"
           :active="params?.column === 'description'"
         />
       </div>

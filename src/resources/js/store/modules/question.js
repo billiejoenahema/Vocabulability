@@ -5,7 +5,7 @@ const setLoading = (commit, bool) =>
 
 const defaultParams = {
   column: '',
-  is_asc: true,
+  sort_order: 'desc',
   keyword: '',
   filter: '',
 };

@@ -67,7 +67,7 @@ class Item extends Model
     /** @var array ソート可能なカラムリスト */
     public const SORTABLE_COLUMNS = [
         'id',
-        'name_kana',
+        'name',
         'description',
     ];
 
@@ -102,26 +102,18 @@ class Item extends Model
      * 指定のカラムでソートするスコープ
      *
      * @param Builder|Item $query
-     * @param string $column
-     * @param string $order
+     * @param IndexRequest $request
      */
-    public function scopeSort($query, $column, $order): Builder|self
+    public function scopeSort($query, $request): Builder|self
     {
+        $column = $request->getSortColumn();
+        $order = $request->getSortOrder();
+
         if (in_array($column, self::SORTABLE_COLUMNS, false)) {
             $query->orderByRaw("{$column} is null asc")->orderBy($column, $order);
+        } else {
+            $query->orderBy('id', 'desc');
         }
-
-        return $query;
-    }
-
-    /**
-     * IDの降順でソートするスコープ
-     *
-     * @param Builder|Item $query
-     */
-    public function scopeSortByIdDesc($query): Builder|self
-    {
-        $query->orderBy('id', 'desc');
 
         return $query;
     }
