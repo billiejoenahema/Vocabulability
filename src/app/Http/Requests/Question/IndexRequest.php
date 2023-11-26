@@ -30,16 +30,17 @@ class IndexRequest extends FormRequest
     }
 
     /**
-     * ソート対象のカラム名を返す
+     * ソート対象のカラムを返す(nullならデフォルト値を返す)
      */
-    public function getSortColumn(): ?string
+    public function getSortColumn(): string
     {
-        $key = $this->column;
-        $column = Arr::first(Question::SORTABLE_COLUMNS, static function ($value) use ($key) {
-            return $value === $key;
-        }, null);
+        $key = array_search($this->column, Question::SORTABLE_COLUMNS, true);
 
-        return $column;
+        if ($key === false) {
+            return Question::DEFAULT_SORT_COLUMN;
+        }
+
+        return Question::SORTABLE_COLUMNS[$key];
     }
 
     /**

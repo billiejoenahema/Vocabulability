@@ -30,14 +30,14 @@ class IndexRequest extends FormRequest
     }
 
     /**
-     * ソート対象のカラムを返す。nullならデフォルト値の'id'を返す。
+     * ソート対象のカラムを返す(nullならデフォルト値を返す)
      */
     public function getSortColumn(): string
     {
         $key = array_search($this->column, Item::SORTABLE_COLUMNS, true);
 
-        if (!$key) {
-            return 'id';
+        if ($key === false) {
+            return Item::DEFAULT_SORT_COLUMN;
         }
 
         return Item::SORTABLE_COLUMNS[$key];

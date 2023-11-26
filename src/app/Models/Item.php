@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Http\Requests\Item\IndexRequest;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -53,9 +54,9 @@ class Item extends Model
     use SoftDeletes;
 
     /**
-     * The attributes that are mass assignable.
+     * 複数代入可能な属性
      *
-     * @var array<int, string>
+     * @var array
      */
     protected $fillable = [
         'name',
@@ -64,12 +65,15 @@ class Item extends Model
         'description',
     ];
 
-    /** @var array ソート可能なカラムリスト */
+    /** @var array ソート対象カラム */
     public const SORTABLE_COLUMNS = [
         'id',
         'name',
         'description',
     ];
+
+    /** @var string デフォルトのソート対象カラム */
+    public const DEFAULT_SORT_COLUMN = 'id';
 
     /**
      * 所有する事例を取得する。
@@ -99,6 +103,16 @@ class Item extends Model
     }
 
     /**
+     * 登録日時を操作
+     */
+    public function createdAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
+        );
+    }
+
+    /**
      * 指定のカラムでソートするスコープ
      *
      * @param Builder|Item $query
@@ -112,14 +126,9 @@ class Item extends Model
         if (in_array($column, self::SORTABLE_COLUMNS, false)) {
             $query->orderByRaw("{$column} is null asc")->orderBy($column, $order);
         } else {
-            $query->orderBy('id', 'desc');
+            $query->orderBy(self::DEFAULT_SORT_COLUMN, 'desc');
         }
 
         return $query;
-    }
-
-    public function getCreatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('Y-m-d H:i:s');
     }
 }

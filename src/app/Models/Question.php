@@ -41,23 +41,36 @@ class Question extends Model
 {
     use HasFactory;
 
+    /**
+     * 複数代入可能な属性
+     *
+     * @var array
+     */
     protected $fillable = [
         'word',
         'correct_answer',
         'example',
     ];
 
+    /**
+     * キャストする必要のある属性
+     *
+     * @var array
+     */
     protected $casts = [
         'word' => 'string',
         'correct_answer' => 'string',
         'example' => 'string',
     ];
 
-    /** @var array ソート可能なカラムリスト */
+    /** @var array ソート対象カラム */
     public const SORTABLE_COLUMNS = [
         'word',
         'correct_answer',
     ];
+
+    /** @var string デフォルトのソート対象カラム */
+    public const DEFAULT_SORT_COLUMN = 'word';
 
     /**
      * 指定のカラムでソートするスコープ
@@ -73,7 +86,7 @@ class Question extends Model
         if (in_array($column, self::SORTABLE_COLUMNS, false)) {
             $query->orderBy($column, $order);
         } else {
-            $query->orderBy('word', 'asc');
+            $query->orderBy(self::DEFAULT_SORT_COLUMN, 'asc');
         }
 
         return $query;
