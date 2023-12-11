@@ -75,18 +75,15 @@ sql:
 redis:
 	docker-compose exec redis redis-cli
 ide-helper:
-	docker-compose exec app php artisan clear-compiled
-	docker-compose exec app php artisan ide-helper:generate
-	docker-compose exec app php artisan ide-helper:meta
-	docker-compose exec app php artisan ide-helper:models --write
-cs-fixer:
-	docker-compose exec app ./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix -v --diff
+	docker-compose exec app php artisan ide-helper:models --write --reset
+pint:
+	docker-compose exec app ./vendor/bin/pint
 phpstan:
 	docker-compose exec app ./vendor/bin/phpstan analyse
 check-all:
-	docker-compose exec app php artisan ide-helper:models --write
-	docker-compose exec app ./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix -v --diff
-	docker-compose exec app ./vendor/bin/phpstan analyse
-	docker-compose exec app php artisan test
+	@make ide-helper
+	@make pint
+	@make phpstan
+	@make test
 npm-watch:
 	docker-compose exec app npm run watch
