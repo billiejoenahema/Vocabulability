@@ -26,7 +26,7 @@ RUN apt-get update && \
     apt-get install -y nodejs && \
 
     # bashのエイリアスを設定
-    echo "alias ll='ls -l --color=auto'" >> /root/.bashrc
+    echo "alias ll='ls -lF --color=auto'" >> /root/.bashrc
 
 COPY ./php.ini /usr/local/etc/php/php.ini
 
