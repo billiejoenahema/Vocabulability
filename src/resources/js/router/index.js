@@ -2,8 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { store } from '../store/index';
 import ItemCreate from '../views/Item/ItemCreate';
 import ItemList from '../views/Item/ItemList';
-import Login from '../views/Login';
-import Main from '../views/Main';
+import UserLogin from '../views/UserLogin';
+import MainPage from '../views/MainPage';
 import NotFound from '../views/NotFound';
 import PasswordReset from '../views/PasswordReset';
 import ProfileDetail from '../views/Profile/Detail';
@@ -15,7 +15,7 @@ import WordList from '../views/Word/WordList';
 const routes = [
   {
     path: '/',
-    component: Main,
+    component: MainPage,
     meta: { isPublic: false },
   },
   {
@@ -55,7 +55,7 @@ const routes = [
   },
   {
     path: '/login',
-    component: Login,
+    component: UserLogin,
     meta: { isPublic: true },
   },
   {
